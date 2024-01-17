@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Store_Product {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profit Int @default(0)
+  salePrice Int 
+  company String
+  totalStock Int @default(0)
+  itemName String
+  noOfSoldUnit Int @default(0)
+  totalStockCost Int @default(0)
+  avgRatePerUnit Float @default(0)
+  product_SKU String @unique
+  totalSoldItemsPrice Int @default(0)
+  soldAvgPerUnitPrice Float @default(0)
+  bike_rikshawName String 
+
+  @@unique([itemName, company, bike_rikshawName])
+}
+
+model Shop_Product {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profit Int @default(0)
+  salePrice Int 
+  company String
+  totalStock Int @default(0)
+  itemName String
+  noOfSoldUnit Int @default(0)
+  totalStockCost Int @default(0)
+  avgRatePerUnit Float @default(0)
+  product_SKU String @unique
+  totalSoldItemsPrice Int @default(0)
+  soldAvgPerUnitPrice Float @default(0)
+  bike_rikshawName String 
+
+  @@unique([itemName, company, bike_rikshawName])
+}
+
+model Sale {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  totalSaleBill Int
+  inStore Boolean?
+  products Json[]
+}
+
+model Purchase {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  totalPurchaseBill Int
+  inStore Boolean?
+  products Json[]
+}

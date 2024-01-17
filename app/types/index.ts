@@ -1,0 +1,23 @@
+import { Sale } from "@prisma/client";
+
+export type SaleProductType = {
+  product_SKU: string;
+  totalSalePrice: number;
+  noOfUnitsToSale: number;
+  soldPricePerUnit: number;
+};
+
+export type SaleType = Sale & {
+  products: SaleProductType[];
+};
+
+export type PurchaseProductType = {
+  product_SKU: string;
+  perUnitPrice: number;
+  totalPurchaseBill: number;
+  noOfPurchasedUnit: number;
+};
+
+export type PurchaseType = Sale & {
+  products: SaleProductType[];
+};
