@@ -72,7 +72,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       width: 150,
       headerAlign: "left",
       valueGetter(params) {
-        return params.row.totalStockCost + " PKR";
+        return params.row.totalStockCost?.toFixed(2) + " PKR";
       },
     },
     {
@@ -98,7 +98,8 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       type: "number",
       headerAlign: "left",
       width: 100,
-      valueGetter: (params) => params.row.totalSoldItemsPrice + " PKR",
+      valueGetter: (params) =>
+        params.row.totalSoldItemsPrice?.toFixed(2) + " PKR",
     },
     {
       field: "profit",
@@ -106,7 +107,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       type: "number",
       headerAlign: "left",
       width: 100,
-      valueGetter: (params) => params.row.profit + " PKR",
+      valueGetter: (params) => params.row.profit?.toFixed(2) + " PKR",
     },
     {
       width: 100,
@@ -156,6 +157,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
         dataSourceApi="../../../../api/getVendorProducts"
         apiBodyOpts={{ getStoreProducts }}
         columnDefination={columns}
+        pageSize={400}
         count={count}
       />
 
