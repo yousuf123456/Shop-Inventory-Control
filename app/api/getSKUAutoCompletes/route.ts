@@ -34,6 +34,7 @@ export async function POST(req: Request) {
           pipeline: pipeline,
         });
 
+    console.log(autocompleteData);
     return NextResponse.json(autocompleteData);
   } catch (e) {
     console.log(e);

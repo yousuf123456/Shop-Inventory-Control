@@ -20,7 +20,9 @@ export const CustomGridToolbar = ({ setFilterButtonEl }: any) => {
   return (
     <div className="px-0 py-2 pb-6">
       <div className="flex justify-between items-center">
-        <GridToolbarQuickFilter />
+        <GridToolbarQuickFilter
+          sx={{ "& .MuiInputBase-root": { color: "black" } }}
+        />
 
         <div className="flex gap-3 items-center">
           <GridToolbarColumnsButton sx={SX} />

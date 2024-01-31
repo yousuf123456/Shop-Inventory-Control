@@ -38,7 +38,7 @@ export const ProductSoldSKUInfo: React.FC<ProductSoldSKUInfoProps> = ({
   }, [noOfSoldUnits, soldAvgPerUnitPrice]);
 
   useEffect(() => {
-    if (!soldAvgPerUnitPrice || !noOfSoldUnits || !avgPricePerUnit) return;
+    // if (!soldAvgPerUnitPrice || !noOfSoldUnits || !avgPricePerUnit) return;
 
     const soldPriceDiff = soldAvgPerUnitPrice - avgPricePerUnit;
     const profit = soldPriceDiff * noOfSoldUnits;

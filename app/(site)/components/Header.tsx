@@ -25,8 +25,8 @@ export const Header = () => {
   ];
 
   return (
-    <div className="py-4 px-32 w-full bg-transparent">
-      <div className="w-full flex justify-around items-center p-4">
+    <div className="py-4 px-32 w-full bg-white fixed top-0 left-0 z-[99999] shadow-sm">
+      <div className="w-full flex justify-around items-center p-4 ">
         <NavMenuLink label="Products" links={productLinks} />
 
         <NavMenuLink label="Add Product" links={addProductLinks} />

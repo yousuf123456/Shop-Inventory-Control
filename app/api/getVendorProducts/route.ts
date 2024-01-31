@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     pipeline[0] = {
       $match: {
-        ...pipeline[0].$match,
+        ...pipeline[0]?.$match,
         ...(paginationQueries.matchQueries
           ? { ...paginationQueries.matchQueries }
           : {}),
@@ -37,6 +37,9 @@ export async function POST(req: NextRequest) {
 
     if (paginationQueries.initialSortStage)
       pipeline.unshift(paginationQueries.initialSortStage);
+
+    pipeline.push({ $limit: pageSize });
+
     if (paginationQueries.finalSortStage)
       pipeline.push(paginationQueries.finalSortStage);
 

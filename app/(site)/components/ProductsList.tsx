@@ -45,9 +45,21 @@ export const ProductsList: React.FC<ProductsListProps> = ({
 
   const columns: GridColDef[] = [
     {
-      field: "product_SKU",
-      headerName: "Product SKU",
-      width: 300,
+      field: "itemName",
+      headerName: "Name",
+      width: 150,
+      headerAlign: "left",
+    },
+    {
+      field: "bike_rikshawName",
+      headerName: "Model",
+      width: 80,
+      headerAlign: "left",
+    },
+    {
+      field: "company",
+      headerName: "Company",
+      width: 100,
       headerAlign: "left",
     },
     {
@@ -87,7 +99,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       headerName: "Sold Price",
       type: "number",
       headerAlign: "left",
-      width: 100,
+      width: 130,
       valueGetter(params) {
         return params.row?.soldAvgPerUnitPrice?.toFixed(2) + " PKR";
       },
@@ -97,7 +109,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       headerName: "Sale",
       type: "number",
       headerAlign: "left",
-      width: 100,
+      width: 130,
       valueGetter: (params) =>
         params.row.totalSoldItemsPrice?.toFixed(2) + " PKR",
     },
@@ -106,7 +118,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       headerName: "Profit",
       type: "number",
       headerAlign: "left",
-      width: 100,
+      width: 130,
       valueGetter: (params) => params.row.profit?.toFixed(2) + " PKR",
     },
     {

@@ -9,6 +9,8 @@ export const addProduct = async (
   isEditing: boolean,
   productId?: string
 ) => {
+  delete data.id;
+
   if (!toShop) {
     if (isEditing) {
       const updatedProduct = await prisma.store_Product.update({

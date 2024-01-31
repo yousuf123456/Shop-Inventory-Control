@@ -1,4 +1,4 @@
-import { Edit, Plus } from "lucide-react";
+import { Delete, Edit, Plus } from "lucide-react";
 import { routes } from "./routes";
 
 export const getShopProductDataGridActions = (productId: string) => {
@@ -7,6 +7,11 @@ export const getShopProductDataGridActions = (productId: string) => {
       Icon: Edit,
       label: "Mangage Product",
       href: routes.addProduct + `?id=${productId}&toShop=true`,
+    },
+    {
+      Icon: Delete,
+      label: "Delete Product",
+      className: "text-red-500",
     },
   ];
 };

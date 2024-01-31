@@ -27,7 +27,7 @@ export const ProductSKUInfo: React.FC<ProductSKUInfoProps> = ({
   const [totalStock, avgRatePerUnit] = watch(["totalStock", "avgRatePerUnit"]);
 
   useEffect(() => {
-    if (!totalStock || !avgRatePerUnit) return;
+    // if (!totalStock || !avgRatePerUnit) return;
 
     const totalStockCost = totalStock * avgRatePerUnit;
     setValue("totalStockCost", totalStockCost);
