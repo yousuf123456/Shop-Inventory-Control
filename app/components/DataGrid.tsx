@@ -20,10 +20,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { SortAsc, SortDesc } from "lucide-react";
+import { Search, SortAsc, SortDesc } from "lucide-react";
 
 import { CustomNoRowsOverlay } from "./CustomNoRowsOverlay";
 import { ThemeProvider, createTheme } from "@mui/material";
+import { Input } from "@/components/ui/input";
 
 const darkTheme = createTheme({
   palette: {
@@ -75,14 +76,12 @@ export const DataGrid: React.FC<DataGridProps> = ({
     initialSelectionModel || []
   );
 
+  const [searchterm, setSearchterm] = useState("");
+
   //Server sort null means no server sort
   const [serverSort, setServerSort] = useState<null | { [key: string]: any }>(
     null
   );
-
-  const [cursor, setCursor] = useState<null | string>(null);
-  // const [isDataExplored, setIsDataExplored] = useState(false);
-  const [tieBreaker, setTieBreaker] = useState<null | string>(null);
 
   //Setting it to initial model just because of wierd remounting behaviuor of componnt when used in model
   const [paginationModel, setPaginationModel] = React.useState(
@@ -92,25 +91,16 @@ export const DataGrid: React.FC<DataGridProps> = ({
     }
   );
 
-  //Set goingNext to null means neither going next or back. Either server sorting the data or at initial stage
-  const [goingNext, setGoingNext] = useState<{
-    goingNext: boolean | null;
-    page: number;
-  } | null>(null);
-
   const { data, refetch, fetchStatus, isFetching, isRefetching, isLoading } =
     useQuery({
       queryKey: ["vendorProducts"],
       queryFn: async () => {
         const { data } = await axios.post(dataSourceApi, {
+          serverSort,
+          searchterm,
           ...apiBodyOpts,
-          pageSize: paginationModel.pageSize,
           pageNumber: paginationModel.page,
-          cursor: cursor,
-          //@ts-ignore
-          goingNext: goingNext === null ? null : goingNext.goingNext,
-          serverSort: serverSort,
-          tieBreaker: tieBreaker,
+          pageSize: paginationModel.pageSize,
         });
 
         return data;
@@ -124,74 +114,18 @@ export const DataGrid: React.FC<DataGridProps> = ({
   }, []);
 
   const onPaginationModelChange = (currentPaginationModel: any) => {
-    setGoingNext({
-      page: currentPaginationModel.page,
-      goingNext: currentPaginationModel.page > paginationModel.page,
-    });
-
-    // setIsDataExplored(true);
-
-    // setInitialPaginationModel &&
-    //   setInitialPaginationModel((prev: any) => currentPaginationModel);
     setPaginationModel((prev) => currentPaginationModel);
   };
 
   useEffect(() => {
-    setGoingNext({
-      // Setting the page in nextGoing object so it will cause the state change and fire the useEffect
-      page: Object.values(serverSort || {})[0] * -1,
-      goingNext: null,
-    });
-
-    // setInitialPaginationModel &&
-    //   setInitialPaginationModel({ page: 0, pageSize: pageSize || 5 });
     setPaginationModel({ page: 0, pageSize: pageSize || 5 });
   }, [serverSort]);
 
   useEffect(() => {
-    if (goingNext === null || Number.isNaN(goingNext.page)) return;
+    if (isRefetching) return;
 
-    //Checking if the data is being server sorted. If yes setting the cursor to different value so it fires the useEffect. Did not go down bcz it was always setting the same cursor again and again
-    if (goingNext.goingNext === null) {
-      return setCursor(String(goingNext.page) || null);
-    }
-
-    if (data?.length > 0) {
-      if (serverSort !== null) {
-        const serverSortField = Object.keys(serverSort)[0];
-        //Checking if field is createdAt and dealing with it accordingly. {createdAt : {$date : date}}
-        const specialCase =
-          serverSort[serverSortField] === "createdAt"
-            ? goingNext.goingNext
-              ? data[data.length - 1].createdAt.$date
-              : data[0].createdAt.$date
-            : null;
-
-        goingNext.goingNext
-          ? setTieBreaker(data[data.length - 1]._id.$oid)
-          : setTieBreaker(data[0]._id.$oid);
-
-        return goingNext.goingNext
-          ? setCursor(
-              specialCase ? specialCase : data[data.length - 1][serverSortField]
-            )
-          : setCursor(specialCase ? specialCase : data[0][serverSortField]);
-      }
-
-      goingNext.goingNext
-        ? setCursor(data[data.length - 1]._id.$oid)
-        : setCursor(data[0]._id.$oid);
-    }
-  }, [goingNext]);
-
-  useEffect(() => {
-    if (!isRefetching && !isFetching) {
-      if (serverSort !== null && goingNext?.goingNext && tieBreaker === null)
-        return;
-
-      refetch();
-    }
-  }, [cursor, tieBreaker]);
+    refetch();
+  }, [paginationModel]);
 
   useEffect(() => {
     if (rerenderWithThisState) {
@@ -213,8 +147,18 @@ export const DataGrid: React.FC<DataGridProps> = ({
     return getDataFromBuckets(data);
   };
 
+  const onSearch = () => {
+    setPaginationModel({ page: 0, pageSize: pageSize || 100 });
+    //@ts-ignore
+    setSearchterm(document.getElementById("search")?.value);
+  };
+
+  useEffect(() => {
+    if (!isRefetching && paginationModel.page == 0) refetch();
+  }, [searchterm, paginationModel]);
+
   return (
-    <div className="w-full flex flex-col gap-2 rounded-sm h-full">
+    <div className="w-full flex flex-col gap-2 rounded-sm h-full relative">
       {!noFilters && serverSorts && isMoreThanOnePage > 1 && (
         <div>
           <Popover>
@@ -242,6 +186,14 @@ export const DataGrid: React.FC<DataGridProps> = ({
         </div>
       )}
 
+      <div className="absolute left-0 top-0 z-30 w-96">
+        <Input placeholder="Search Products" id="search" />
+        <Search
+          onClick={onSearch}
+          className="absolute right-2 w-7 rounded-md h-7 cursor-pointer transition-all border-[1px] border-slate-200 hover:bg-slate-100 p-1 top-1/2 -translate-y-1/2"
+        />
+      </div>
+
       <ThemeProvider theme={darkTheme}>
         <MuiDataGrid
           sx={{
@@ -254,10 +206,10 @@ export const DataGrid: React.FC<DataGridProps> = ({
               background: "#f1f1f1",
             },
             "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb": {
-              backgroundColor: "#cbd5e1",
+              backgroundColor: "#e2e8f0",
             },
             "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover": {
-              background: "#94a3b8",
+              background: "#cbd5e1",
             },
             "& .MuiDataGrid-cell": {
               borderBottom: "none",
@@ -273,12 +225,12 @@ export const DataGrid: React.FC<DataGridProps> = ({
             "& .MuiDataGrid-row": {
               zIndex: "0",
               paddingY: "12px",
-              backgroundColor: "#f5f5f5",
+              backgroundColor: "#fafafa",
               fontFamily: "var(--font-roboto)",
               color: "black",
             },
             "& .MuiDataGrid-row:hover": {
-              backgroundColor: "#e5e5e5",
+              backgroundColor: "#f5f5f5",
             },
             "& .MuiDataGrid-footerContainer": {
               backgroundColor: "white",

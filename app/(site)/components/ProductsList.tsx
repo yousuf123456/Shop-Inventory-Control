@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -22,6 +23,9 @@ import { Button } from "@/components/ui/button";
 import { addToShop } from "@/app/serverActions/addToShop";
 import BackdropLoader from "@/app/components/BackdropLoader";
 import { useRouter } from "next/navigation";
+import clsx from "clsx";
+import { Check, Cross, X } from "lucide-react";
+import { deleteProduct } from "@/app/serverActions/deleteProduct";
 
 interface ProductsListProps {
   count: number;
@@ -36,11 +40,18 @@ export const ProductsList: React.FC<ProductsListProps> = ({
 
   const [stock, setStock] = useState(1);
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const [productId, setProductId] = useState("");
   const [product_SKU, setProduct_SKU] = useState("");
 
   const onAddToShop = (product_SKU: string) => {
     setOpen(true);
     setProduct_SKU(product_SKU);
+  };
+
+  const onDelete = (productId: string) => {
+    setOpen2(true);
+    setProductId(productId);
   };
 
   const columns: GridColDef[] = [
@@ -76,6 +87,23 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       type: "number",
       width: 100,
       headerAlign: "left",
+      renderCell: (params) => (
+        <div className="w-full flex items-center justify-between pr-4">
+          <p
+            className={clsx(
+              params.row.totalStock <= 5 ? "text-red-500" : "text-green-500"
+            )}
+          >
+            {params.row.totalStock}
+          </p>
+
+          {!params.row.correctInformation ? (
+            <X className="w-4 h-4 text-red-500" />
+          ) : (
+            <Check className="w-4 h-4 text-green-500" />
+          )}
+        </div>
+      ),
     },
     {
       field: "totalStockCost",
@@ -136,7 +164,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
                     params.row.product_SKU,
                     onAddToShop
                   )
-                : getShopProductDataGridActions(params.row._id.$oid)
+                : getShopProductDataGridActions(params.row._id.$oid, onDelete)
             }
           />
         );
@@ -145,10 +173,27 @@ export const ProductsList: React.FC<ProductsListProps> = ({
   ];
 
   const router = useRouter();
+
   const onAddStockToShop = () => {
     setIsLaoding(true);
 
     addToShop(product_SKU, stock)
+      .then((res) => {
+        if (res === "Something goes wrong") return toast.error(res);
+
+        router.refresh();
+        toast.success(res);
+      })
+      .finally(() => {
+        setOpen(false);
+        setIsLaoding(false);
+      });
+  };
+
+  const onDeleteProduct = () => {
+    setIsLaoding(true);
+
+    deleteProduct(productId)
       .then((res) => {
         if (res === "Something goes wrong") return toast.error(res);
 
@@ -199,6 +244,34 @@ export const ProductsList: React.FC<ProductsListProps> = ({
             </Button>
             <Button size={"sm"} onClick={onAddStockToShop}>
               Add Stock To Shop
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={open2} onOpenChange={setOpen2}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Product</DialogTitle>
+            <DialogDescription>
+              Are your sure you want to delete this product ?
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="w-full flex justify-end gap-6 mt-6">
+            <Button
+              size={"sm"}
+              variant={"ghost"}
+              onClick={() => setOpen2(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              size={"sm"}
+              variant={"destructive"}
+              onClick={onDeleteProduct}
+            >
+              Delete
             </Button>
           </div>
         </DialogContent>

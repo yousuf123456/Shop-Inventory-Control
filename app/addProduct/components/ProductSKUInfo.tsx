@@ -4,21 +4,25 @@ import { SectionHeading } from "@/app/components/SectionHeading";
 import { InputHeading } from "@/app/components/InputHeading";
 import { NumericInput } from "@/app/components/NumericInput";
 import {
+  Controller,
   FieldValues,
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
+import { Checkbox } from "@mui/material";
 
 interface ProductSKUInfoProps {
   register: UseFormRegister<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
   watch: UseFormWatch<FieldValues>;
+  control: any;
 }
 
 export const ProductSKUInfo: React.FC<ProductSKUInfoProps> = ({
-  register,
   watch,
+  control,
+  register,
   setValue,
 }) => {
   const fieldsSectionCs = "w-full flex items-center gap-36";
@@ -68,6 +72,16 @@ export const ProductSKUInfo: React.FC<ProductSKUInfoProps> = ({
 
             <NumericInput id="totalStockCost" register={register} />
           </div>
+        </div>
+
+        <div className="flex items-center gap-5">
+          <InputHeading>Correct Information</InputHeading>
+
+          <Controller
+            name="correctInformation"
+            control={control}
+            render={({ field }) => <Checkbox {...field} />}
+          />
         </div>
       </div>
     </Section>

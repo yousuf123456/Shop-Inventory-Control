@@ -35,7 +35,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <TanstackProvider>
           <ToasterContext />
-          <div className="px-16 flex flex-col gap-12 bg-white min-h-screen pb-16">
+          <div className="px-16 flex flex-col gap-12 bg-white min-h-screen py-44 pb-16">
             <Header />
 
             {children}

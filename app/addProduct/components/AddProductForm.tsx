@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { ProductInfo } from "./ProductInfo";
 import { ProductSKUInfo } from "./ProductSKUInfo";
@@ -23,22 +23,23 @@ export const AddProductForm: React.FC<AddProductForm> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, watch, setValue, handleSubmit } = useForm<FieldValues>({
-    defaultValues: product || {
-      profit: 0,
-      company: "",
-      itemName: "",
-      salePrice: 0,
-      totalStock: 0,
-      product_SKU: "",
-      noOfSoldUnit: 0,
-      avgRatePerUnit: 0,
-      totalStockCost: 0,
-      bike_rikshawName: "",
-      totalSoldItemsPrice: 0,
-      soldAvgPerUnitPrice: 0,
-    },
-  });
+  const { register, watch, setValue, control, handleSubmit } =
+    useForm<FieldValues>({
+      defaultValues: product || {
+        profit: 0,
+        company: "",
+        itemName: "",
+        salePrice: 0,
+        totalStock: 0,
+        product_SKU: "",
+        noOfSoldUnit: 0,
+        avgRatePerUnit: 0,
+        totalStockCost: 0,
+        bike_rikshawName: "",
+        totalSoldItemsPrice: 0,
+        soldAvgPerUnitPrice: 0,
+      },
+    });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -59,6 +60,7 @@ export const AddProductForm: React.FC<AddProductForm> = ({
           <ProductSKUInfo
             register={register}
             setValue={setValue}
+            control={control}
             watch={watch}
           />
 

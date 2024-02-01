@@ -36,7 +36,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.11.15",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
@@ -45,6 +45,10 @@
     "postcss": "^8",
     "prisma": "^5.6.0",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   }
 }

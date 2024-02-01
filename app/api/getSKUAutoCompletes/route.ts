@@ -26,15 +26,10 @@ export async function POST(req: Request) {
       },
     ];
 
-    const autocompleteData = toStore
-      ? await prisma.store_Product.aggregateRaw({
-          pipeline: pipeline,
-        })
-      : await prisma.shop_Product.aggregateRaw({
-          pipeline: pipeline,
-        });
+    const autocompleteData = await prisma.shop_Product.aggregateRaw({
+      pipeline: pipeline,
+    });
 
-    console.log(autocompleteData);
     return NextResponse.json(autocompleteData);
   } catch (e) {
     console.log(e);

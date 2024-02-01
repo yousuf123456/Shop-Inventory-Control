@@ -1,47 +1,45 @@
-import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../libs/prismadb";
-import { getPaginationQueries } from "@/app/utils/getPaginationQueries";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const {
-      pageSize,
-      cursor,
-      goingNext,
-      serverSort,
-      tieBreaker,
-      getStoreProducts,
-    } = await req.json();
+    const { pageSize, pageNumber, serverSort, searchterm, getStoreProducts } =
+      await req.json();
 
-    const pipeline = [
+    const toSkip = pageNumber * pageSize;
+
+    let pipeline = [
+      {
+        $skip: toSkip,
+      },
       {
         $limit: pageSize,
       },
     ] as any;
 
-    const paginationQueries = getPaginationQueries({
-      cursor,
-      goingNext,
-      serverSort,
-      tieBreaker,
-    });
+    if (serverSort) pipeline.unshift(serverSort);
 
-    pipeline[0] = {
-      $match: {
-        ...pipeline[0]?.$match,
-        ...(paginationQueries.matchQueries
-          ? { ...paginationQueries.matchQueries }
-          : {}),
-      },
-    };
+    if (searchterm) {
+      pipeline = [
+        {
+          $search: {
+            index: "search",
 
-    if (paginationQueries.initialSortStage)
-      pipeline.unshift(paginationQueries.initialSortStage);
-
-    pipeline.push({ $limit: pageSize });
-
-    if (paginationQueries.finalSortStage)
-      pipeline.push(paginationQueries.finalSortStage);
+            text: {
+              path: "itemName",
+              query: searchterm,
+              fuzzy: {},
+            },
+          },
+        },
+        {
+          $skip: toSkip,
+        },
+        {
+          $limit: pageSize,
+        },
+      ];
+    }
 
     if (getStoreProducts) {
       const vendorStoreProducts = await prisma.store_Product.aggregateRaw({

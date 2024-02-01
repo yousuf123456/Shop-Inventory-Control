@@ -1,7 +1,10 @@
 import { Delete, Edit, Plus } from "lucide-react";
 import { routes } from "./routes";
 
-export const getShopProductDataGridActions = (productId: string) => {
+export const getShopProductDataGridActions = (
+  productId: string,
+  onDelete: (productid: string) => any
+) => {
   return [
     {
       Icon: Edit,
@@ -12,6 +15,9 @@ export const getShopProductDataGridActions = (productId: string) => {
       Icon: Delete,
       label: "Delete Product",
       className: "text-red-500",
+      onClick: () => {
+        onDelete(productId);
+      },
     },
   ];
 };
