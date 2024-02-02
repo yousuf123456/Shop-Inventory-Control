@@ -78,8 +78,9 @@ export const ProductSKUInfo: React.FC<ProductSKUInfoProps> = ({
           <InputHeading>Correct Information</InputHeading>
 
           <Controller
-            name="correctInformation"
             control={control}
+            defaultValue={false}
+            name="correctInformation"
             render={({ field }) => <Checkbox {...field} />}
           />
         </div>

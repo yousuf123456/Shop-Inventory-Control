@@ -17,7 +17,12 @@ export async function POST(req: NextRequest) {
       },
     ] as any;
 
-    if (serverSort) pipeline.unshift(serverSort);
+    if (serverSort)
+      pipeline.unshift({
+        $sort: {
+          [Object.keys(serverSort)[0]]: Object.values(serverSort)[0],
+        },
+      });
 
     if (searchterm) {
       pipeline = [

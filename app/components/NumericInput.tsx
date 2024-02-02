@@ -9,6 +9,7 @@ interface NumericInputProps {
   type?: string;
   heading?: string;
   hidden?: boolean;
+  float?: boolean;
   required?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
@@ -25,6 +26,7 @@ interface NumericInputProps {
 
 export const NumericInput: React.FC<NumericInputProps> = ({
   id,
+  float,
   hidden,
   onClick,
   readOnly,
@@ -53,6 +55,7 @@ export const NumericInput: React.FC<NumericInputProps> = ({
           valueAsNumber: true,
         })}
         type="number"
+        step="0.01"
         hidden={hidden}
         onFocus={onFocus}
         onClick={onClick}

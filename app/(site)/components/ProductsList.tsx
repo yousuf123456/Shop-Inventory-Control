@@ -214,6 +214,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
         dataSourceApi="../../../../api/getVendorProducts"
         apiBodyOpts={{ getStoreProducts }}
         columnDefination={columns}
+        serverSorts={[{ label: "Item Name", fieldName: "itemName" }]}
         pageSize={100}
         count={count}
       />

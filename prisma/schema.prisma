@@ -14,17 +14,17 @@ model Store_Product {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  profit Int @default(0)
-  salePrice Int 
+  profit Float @default(0)
+  salePrice Float 
   company String
   totalStock Int @default(0)
   itemName String
   noOfSoldUnit Int @default(0)
-  totalStockCost Int @default(0)
+  totalStockCost Float @default(0)
   avgRatePerUnit Float @default(0)
   product_SKU String @unique
   correctInformation Boolean
-  totalSoldItemsPrice Int @default(0)
+  totalSoldItemsPrice Float @default(0)
   soldAvgPerUnitPrice Float @default(0)
   bike_rikshawName String
 
@@ -32,22 +32,22 @@ model Store_Product {
 }
 
 model Shop_Product {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+    id String @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  profit Int @default(0)
-  salePrice Int 
+  profit Float @default(0)
+  salePrice Float 
   company String
   totalStock Int @default(0)
   itemName String
   noOfSoldUnit Int @default(0)
-  totalStockCost Int @default(0)
+  totalStockCost Float @default(0)
   avgRatePerUnit Float @default(0)
   product_SKU String @unique
-  totalSoldItemsPrice Int @default(0)
+  correctInformation Boolean
+  totalSoldItemsPrice Float @default(0)
   soldAvgPerUnitPrice Float @default(0)
-  correctInformation Boolean?
-  bike_rikshawName String 
+  bike_rikshawName String
 
   @@unique([itemName, company, bike_rikshawName])
 }

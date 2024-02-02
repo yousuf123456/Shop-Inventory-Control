@@ -76,6 +76,7 @@ export const PurchaseList: React.FC<PurchaseListProps> = ({ count }) => {
       <DataGrid
         dataSourceApi="../../../../api/getVendorPurchases"
         columnDefination={columns}
+        hideSearchbar
         count={count}
       />
     </>

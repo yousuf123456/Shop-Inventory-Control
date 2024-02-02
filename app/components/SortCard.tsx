@@ -34,13 +34,13 @@ export const SortCard: React.FC<SortCardProps> = ({
     <div
       onClick={onSort}
       className={cn(
-        "flex gap-3 items-center transition-all px-3 py-1.5 rounded-sm w-fit bg-blue-50 hover:bg-themeBlue group cursor-pointer",
-        thisSortSelected && "bg-themeBlue"
+        "flex gap-3 items-center transition-all px-3 py-1.5 rounded-sm w-fit bg-blue-400 hover:bg-blue-600 group cursor-pointer",
+        thisSortSelected && "bg-blue-600"
       )}
     >
       <p
         className={cn(
-          "text-sm font-medium transition-all text-themeBlue group-hover:text-white",
+          "text-sm font-medium transition-all text-white group-hover:text-white",
           thisSortSelected && "text-white"
         )}
       >
@@ -49,7 +49,7 @@ export const SortCard: React.FC<SortCardProps> = ({
 
       <HiArrowCircleUp
         className={cn(
-          "text-themeBlue group-hover:text-white group-hover:opacity-100 w-5 h-5 opacity-50 transition-all rounded-full",
+          "text-white group-hover:text-white group-hover:opacity-100 w-5 h-5 transition-all rounded-full",
           thisSortSelected && "opacity-100 text-white",
           thisSortSelected &&
             //@ts-ignore

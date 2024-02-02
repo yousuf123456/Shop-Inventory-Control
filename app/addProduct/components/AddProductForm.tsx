@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { ProductInfo } from "./ProductInfo";
 import { ProductSKUInfo } from "./ProductSKUInfo";
@@ -8,7 +8,7 @@ import { Section } from "@/app/components/Section";
 import { Button } from "@/components/ui/button";
 import { addProduct } from "@/app/serverActions/addProduct";
 import BackdropLoader from "@/app/components/BackdropLoader";
-import { useRouter } from "next/navigation";
+
 import toast from "react-hot-toast";
 import { Shop_Product } from "@prisma/client";
 
@@ -38,6 +38,7 @@ export const AddProductForm: React.FC<AddProductForm> = ({
         bike_rikshawName: "",
         totalSoldItemsPrice: 0,
         soldAvgPerUnitPrice: 0,
+        correctInformation: false,
       },
     });
 
@@ -53,6 +54,7 @@ export const AddProductForm: React.FC<AddProductForm> = ({
   return (
     <>
       <BackdropLoader open={isLoading} />
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-12">
           <ProductInfo register={register} setValue={setValue} watch={watch} />

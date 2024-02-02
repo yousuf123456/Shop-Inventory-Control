@@ -69,6 +69,7 @@ export const SalesList: React.FC<SalesListProps> = ({ count }) => {
     <DataGrid
       dataSourceApi="../../../../api/getVendorSales"
       columnDefination={columns}
+      hideSearchbar
       count={count}
     />
   );
