@@ -41,7 +41,6 @@ export const ProductsList: React.FC<ProductsListProps> = ({
   const [stock, setStock] = useState(1);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
-  const [productId, setProductId] = useState("");
   const [product_SKU, setProduct_SKU] = useState("");
 
   const onAddToShop = (product_SKU: string) => {
@@ -49,9 +48,9 @@ export const ProductsList: React.FC<ProductsListProps> = ({
     setProduct_SKU(product_SKU);
   };
 
-  const onDelete = (productId: string) => {
+  const onDelete = (product_SKU: string) => {
     setOpen2(true);
-    setProductId(productId);
+    setProduct_SKU(product_SKU);
   };
 
   const columns: GridColDef[] = [
@@ -164,7 +163,10 @@ export const ProductsList: React.FC<ProductsListProps> = ({
                     params.row.product_SKU,
                     onAddToShop
                   )
-                : getShopProductDataGridActions(params.row._id.$oid, onDelete)
+                : getShopProductDataGridActions(
+                    params.row.product_SKU,
+                    onDelete
+                  )
             }
           />
         );
@@ -193,7 +195,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
   const onDeleteProduct = () => {
     setIsLaoding(true);
 
-    deleteProduct(productId)
+    deleteProduct(product_SKU)
       .then((res) => {
         if (res === "Something goes wrong") return toast.error(res);
 

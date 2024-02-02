@@ -4,18 +4,18 @@ import prisma from "../libs/prismadb";
 import { Heading } from "../components/Heading";
 import { AddProductForm } from "./components/AddProductForm";
 
-const getProducts = async (id: string | undefined, fromStore: boolean) => {
-  if (!id) return null;
+const getProducts = async (sku: string | undefined, fromStore: boolean) => {
+  if (!sku) return null;
 
   const product = fromStore
     ? await prisma.store_Product.findUnique({
         where: {
-          id: id,
+          product_SKU: sku,
         },
       })
     : await prisma.shop_Product.findUnique({
         where: {
-          id: id,
+          product_SKU: sku,
         },
       });
 
@@ -24,7 +24,7 @@ const getProducts = async (id: string | undefined, fromStore: boolean) => {
 
 interface SearchParams {
   toShop?: string;
-  id: string;
+  sku: string;
 }
 
 export default async function AddProductPage({
@@ -34,7 +34,7 @@ export default async function AddProductPage({
 }) {
   const toShop = !!(searchParams.toShop === "true");
 
-  const product = await getProducts(searchParams.id, !toShop);
+  const product = await getProducts(searchParams.sku, !toShop);
 
   return (
     <div className="flex flex-col gap-6">

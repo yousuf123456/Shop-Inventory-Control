@@ -1,11 +1,11 @@
 "use server";
 import prisma from "../libs/prismadb";
 
-export const deleteProduct = async (productId: string) => {
+export const deleteProduct = async (product_SKU: string) => {
   try {
     await prisma.shop_Product.delete({
       where: {
-        id: productId,
+        product_SKU: product_SKU,
       },
     });
 

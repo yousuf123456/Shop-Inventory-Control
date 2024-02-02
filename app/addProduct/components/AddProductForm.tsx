@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { ProductInfo } from "./ProductInfo";
 import { ProductSKUInfo } from "./ProductSKUInfo";
@@ -12,6 +12,8 @@ import BackdropLoader from "@/app/components/BackdropLoader";
 import toast from "react-hot-toast";
 import { Shop_Product } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import axios from "axios";
 
 interface AddProductForm {
   toShop: boolean;
@@ -24,7 +26,13 @@ export const AddProductForm: React.FC<AddProductForm> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, watch, setValue, control, handleSubmit } =
+  const [open, setOpen] = useState(false);
+  const [product_SKU, setProduct_SKU] = useState("");
+  const [productSKUAutoCompletes, setProductSKUAutoCompletes] = useState<
+    { product_SKU: string }[]
+  >([]);
+
+  const { register, watch, setValue, getValues, control, handleSubmit, reset } =
     useForm<FieldValues>({
       defaultValues: product || {
         profit: 0,
@@ -56,12 +64,85 @@ export const AddProductForm: React.FC<AddProductForm> = ({
     });
   };
 
+  useEffect(() => {
+    if (!product_SKU) return;
+
+    axios
+      .post("../../api/getSKUAutoCompletes", {
+        query: product_SKU,
+        toStore: !toShop,
+      })
+      .then((res) => setProductSKUAutoCompletes(res.data))
+      .catch((e) => console.log(e));
+  }, [product_SKU]);
+
+  const onAutocompleteClick = (autocomplete: string) => {
+    setProduct_SKU(autocomplete);
+  };
+
+  useEffect(() => {
+    if (!product) return;
+
+    if (getValues("product_SKU") === product.product_SKU) return;
+
+    Object.keys(product).map((Key) => {
+      //@ts-ignore
+      setValue(Key, product[Key]);
+    });
+  }, [product]);
+
+  const onImportProduct = () => {
+    if (!product_SKU) return;
+
+    if (toShop) router.push(`/addProduct?sku=${product_SKU}&toShop=true`);
+    else router.push(`/addProduct?sku=${product_SKU}`);
+  };
+
   return (
     <>
       <BackdropLoader open={isLoading} />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-12">
+          <div className="flex justify-center">
+            <div className="relative flex gap-5">
+              <Input
+                className="w-80"
+                value={product_SKU}
+                placeholder="Enter Product SKU"
+                onChange={(e) => setProduct_SKU(e.target.value)}
+                onFocus={(e) => setOpen(true)}
+                onBlur={(e) =>
+                  setTimeout(() => {
+                    setOpen(false);
+                  }, 200)
+                }
+              />
+
+              {open && productSKUAutoCompletes.length > 0 && (
+                <div className="absolute flex flex-col gap-0 p-1 top-14 left-0 w-80 h-72 overflow-y-auto bg-white shadow-lg rounded-md z-[99999]">
+                  {productSKUAutoCompletes.map((autoComplete, i) => (
+                    <div
+                      key={i}
+                      onClick={() =>
+                        onAutocompleteClick(autoComplete.product_SKU)
+                      }
+                      className="px-4 py-2 rounded-sm hover:bg-neutral-100"
+                    >
+                      <p className=" font-nunito text-black ">
+                        {autoComplete.product_SKU}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <Button type="button" onClick={onImportProduct}>
+                Import Product
+              </Button>
+            </div>
+          </div>
+
           <ProductInfo register={register} setValue={setValue} watch={watch} />
 
           <ProductSKUInfo
