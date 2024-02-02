@@ -182,6 +182,11 @@ export const DataGrid: React.FC<DataGridProps> = ({
     if (!isRefetching && paginationModel.page == 0) refetch();
   }, [searchterm, paginationModel]);
 
+  const onAutocompleteClick = (autocomplete: string) => {
+    //@ts-ignore
+    document.getElementById("search")?.value = autocomplete;
+  };
+
   return (
     <div className="flex flex-col gap-2">
       {!noFilters && serverSorts && isMoreThanOnePage > 1 && (
@@ -236,6 +241,9 @@ export const DataGrid: React.FC<DataGridProps> = ({
                 {productSKUAutoCompletes.map((autoComplete, i) => (
                   <div
                     key={i}
+                    onClick={() =>
+                      onAutocompleteClick(autoComplete.product_SKU)
+                    }
                     className="px-4 py-2 rounded-sm hover:bg-neutral-100"
                   >
                     <p className=" font-nunito text-black ">
