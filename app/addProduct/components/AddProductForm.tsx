@@ -58,8 +58,6 @@ export const AddProductForm: React.FC<AddProductForm> = ({
 
     addProduct(data, toShop, !!product, product?.id).finally(() => {
       toast.success("Succesfully Added Your Product");
-      if (toShop) router.push("/");
-      else router.push("/store");
       setIsLoading(false);
     });
   };
@@ -96,6 +94,11 @@ export const AddProductForm: React.FC<AddProductForm> = ({
 
     if (toShop) router.push(`/addProduct?sku=${product_SKU}&toShop=true`);
     else router.push(`/addProduct?sku=${product_SKU}`);
+  };
+
+  const onCreate = () => {
+    if (toShop) router.push("/addProduct?toShop=true");
+    else router.push("./addProduct");
   };
 
   return (
@@ -139,6 +142,10 @@ export const AddProductForm: React.FC<AddProductForm> = ({
 
               <Button type="button" onClick={onImportProduct}>
                 Import Product
+              </Button>
+
+              <Button type="button" variant={"ghost"} onClick={onCreate}>
+                Create Product
               </Button>
             </div>
           </div>
