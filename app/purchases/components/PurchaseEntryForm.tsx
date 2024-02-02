@@ -83,6 +83,10 @@ export const PurchaseEntryForm = ({ toStore }: { toStore: boolean }) => {
     setProductIds(newProductIds);
   };
 
+  const onClear = () => {
+    reset();
+    setProductIds([ObjectID().toHexString()]);
+  };
   return (
     <>
       <BackdropLoader open={isLoading} />
@@ -114,7 +118,10 @@ export const PurchaseEntryForm = ({ toStore }: { toStore: boolean }) => {
             </Button>
           </div>
 
-          <div className="flex justify-end mt-6">
+          <div className="flex justify-end mt-6 gap-5">
+            <Button variant={"ghost"} type="button" onClick={onClear}>
+              Clear Inputs
+            </Button>
             <Button type="submit">Confirm Purchase Entry</Button>
           </div>
         </div>

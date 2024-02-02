@@ -43,7 +43,7 @@ export const SalesEntry = ({ toStore }: { toStore: boolean }) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, watch, setValue, handleSubmit, unregister } =
+  const { register, watch, setValue, handleSubmit, unregister, reset } =
     useForm<FieldValues>();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -80,6 +80,11 @@ export const SalesEntry = ({ toStore }: { toStore: boolean }) => {
     setProductIds(newProductIds);
   };
 
+  const onClear = () => {
+    reset();
+    setProductIds([ObjectId().toHexString()]);
+  };
+
   return (
     <>
       <BackdropLoader open={isLoading} />
@@ -111,7 +116,10 @@ export const SalesEntry = ({ toStore }: { toStore: boolean }) => {
             </Button>
           </div>
 
-          <div className="flex justify-end mt-6">
+          <div className="flex justify-end mt-6 gap-5">
+            <Button variant={"ghost"} type="button" onClick={onClear}>
+              Clear Inputs
+            </Button>
             <Button type="submit">Confirm Sale Entry</Button>
           </div>
         </div>

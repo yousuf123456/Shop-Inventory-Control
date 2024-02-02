@@ -201,7 +201,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
         toast.success(res);
       })
       .finally(() => {
-        setOpen(false);
+        setOpen2(false);
         setIsLaoding(false);
       });
   };
