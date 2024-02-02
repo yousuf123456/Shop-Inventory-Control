@@ -215,7 +215,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
         </div>
       )}
       <div className="w-full flex flex-col gap-2 rounded-sm h-full relative">
-        {/* {!hideSearchbar && (
+        {!hideSearchbar && (
           <div className="absolute left-0 top-3 z-30 w-96">
             <Input
               onChange={(e) => setProduct_sku(e.target.value)}
@@ -253,7 +253,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
               </div>
             )}
           </div>
-        )} */}
+        )}
 
         <ThemeProvider theme={darkTheme}>
           <MuiDataGrid
