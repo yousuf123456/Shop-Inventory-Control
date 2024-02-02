@@ -183,8 +183,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   }, [searchterm, paginationModel]);
 
   const onAutocompleteClick = (autocomplete: string) => {
-    //@ts-ignore
-    document.getElementById("search")?.value = autocomplete;
+    setProduct_sku(autocomplete);
   };
 
   return (

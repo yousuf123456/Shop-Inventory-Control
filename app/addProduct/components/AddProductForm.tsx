@@ -11,6 +11,7 @@ import BackdropLoader from "@/app/components/BackdropLoader";
 
 import toast from "react-hot-toast";
 import { Shop_Product } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface AddProductForm {
   toShop: boolean;
@@ -42,11 +43,14 @@ export const AddProductForm: React.FC<AddProductForm> = ({
       },
     });
 
+  const router = useRouter();
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
     addProduct(data, toShop, !!product, product?.id).finally(() => {
       toast.success("Succesfully Added Your Product");
+      router.push("/");
       setIsLoading(false);
     });
   };
