@@ -50,7 +50,8 @@ export const AddProductForm: React.FC<AddProductForm> = ({
 
     addProduct(data, toShop, !!product, product?.id).finally(() => {
       toast.success("Succesfully Added Your Product");
-      router.push("/");
+      if (toShop) router.push("/");
+      else router.push("/store");
       setIsLoading(false);
     });
   };
