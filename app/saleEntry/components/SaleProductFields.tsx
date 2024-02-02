@@ -83,13 +83,13 @@ export const SaleProductFields: React.FC<SaleProductFieldsProps> = ({
             onBlur={(e) =>
               setTimeout(() => {
                 setOpen(false);
-              }, 50)
+              }, 500)
             }
             placeholder="Enter Product SKU"
           />
 
           {open && productSKUAutoCompletes.length > 0 && (
-            <div className="absolute flex flex-col gap-0 p-1 top-14 left-0 right-0 h-72 overflow-y-auto bg-white shadow-lg rounded-md">
+            <div className="absolute flex flex-col gap-0 p-1 top-14 left-0 right-0 h-72 overflow-y-auto bg-white shadow-lg rounded-md z-[99999]">
               {productSKUAutoCompletes.map((autoComplete, i) => (
                 <div
                   key={i}

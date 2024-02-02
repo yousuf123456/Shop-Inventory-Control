@@ -224,7 +224,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
               onBlur={(e) =>
                 setTimeout(() => {
                   setOpen(false);
-                }, 50)
+                }, 500)
               }
               value={product_sku}
               id="search"

@@ -43,6 +43,7 @@ export const PurchaseProductFields: React.FC<PurchaseProductFieldsProps> = ({
   const [open, setOpen] = useState(false);
 
   const onAutocompleteClick = (product_SKU: string) => {
+    console.log("Clicked");
     setValue(`product_SKU-${id}`, product_SKU);
   };
 
@@ -79,14 +80,14 @@ export const PurchaseProductFields: React.FC<PurchaseProductFieldsProps> = ({
           onBlur={(e) =>
             setTimeout(() => {
               setOpen(false);
-            }, 50)
+            }, 500)
           }
           id={`product_SKU-${id}`}
           placeholder="Enter Product SKU"
         />
 
         {open && productSKUAutoCompletes.length > 0 && (
-          <div className="absolute flex flex-col gap-0 p-1 top-20 left-0 right-0 h-72 overflow-y-auto bg-slate-950 border-[1px] border-slate-800 rounded-md">
+          <div className="absolute flex flex-col gap-0 p-1 top-20 left-0 right-0 h-72 overflow-y-auto bg-slate-950 border-[1px] border-slate-800 rounded-md z-[99999]">
             {productSKUAutoCompletes.map((autoComplete, i) => (
               <div
                 key={i}
