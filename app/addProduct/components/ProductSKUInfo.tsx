@@ -76,8 +76,8 @@ export const ProductSKUInfo: React.FC<ProductSKUInfoProps> = ({
                     <SelectValue placeholder="Unit" className=" capitalize" />
                   </SelectTrigger>
                   <SelectContent>
-                    {units.map((unit) => (
-                      <SelectItem value={unit} className="capitalize">
+                    {units.map((unit, i) => (
+                      <SelectItem key={i} value={unit} className="capitalize">
                         {unit}
                       </SelectItem>
                     ))}
