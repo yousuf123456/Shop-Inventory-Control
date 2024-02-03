@@ -11,6 +11,13 @@ import {
   UseFormWatch,
 } from "react-hook-form";
 import { Checkbox } from "@mui/material";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ProductSKUInfoProps {
   register: UseFormRegister<FieldValues>;
@@ -37,19 +44,46 @@ export const ProductSKUInfo: React.FC<ProductSKUInfoProps> = ({
     setValue("totalStockCost", totalStockCost);
   }, [totalStock, avgRatePerUnit]);
 
+  const units = ["normal", "litre", "meter", "set", "pair"];
+
   return (
     <Section className="flex flex-col gap-6">
       <SectionHeading>Product Stock Info</SectionHeading>
 
       <div className="flex flex-col gap-5">
         <div className={fieldsSectionCs}>
-          <div className={fieldContainerCs}>
-            <InputHeading>Total Stock</InputHeading>
+          <div className="flex items-end gap-3 w-full">
+            <div className={fieldContainerCs}>
+              <InputHeading>Total Stock</InputHeading>
 
-            <NumericInput
-              id="totalStock"
-              withoutValueLabel
-              register={register}
+              <NumericInput
+                id="totalStock"
+                withoutValueLabel
+                register={register}
+              />
+            </div>
+
+            <Controller
+              name="stockUnit"
+              defaultValue={"normal"}
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  onValueChange={(value) => field.onChange(value)}
+                >
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Unit" className=" capitalize" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {units.map((unit) => (
+                      <SelectItem value={unit} className="capitalize">
+                        {unit}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
             />
           </div>
 

@@ -17,7 +17,8 @@ model Store_Product {
   profit Float @default(0)
   salePrice Float 
   company String
-  totalStock Int @default(0)
+  totalStock Float @default(0)
+  stockUnit String
   itemName String
   noOfSoldUnit Int @default(0)
   totalStockCost Float @default(0)
@@ -32,13 +33,14 @@ model Store_Product {
 }
 
 model Shop_Product {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   profit Float @default(0)
   salePrice Float 
   company String
-  totalStock Int @default(0)
+  totalStock Float @default(0)
+  stockUnit String
   itemName String
   noOfSoldUnit Int @default(0)
   totalStockCost Float @default(0)

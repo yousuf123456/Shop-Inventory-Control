@@ -44,6 +44,7 @@ export const AddProductForm: React.FC<AddProductForm> = ({
         noOfSoldUnit: 0,
         avgRatePerUnit: 0,
         totalStockCost: 0,
+        stockUnit: "normal",
         bike_rikshawName: "",
         totalSoldItemsPrice: 0,
         soldAvgPerUnitPrice: 0,

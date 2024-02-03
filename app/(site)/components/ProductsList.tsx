@@ -84,17 +84,36 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       field: "totalStock",
       headerName: "Total Stock",
       type: "number",
-      width: 100,
+      width: 130,
       headerAlign: "left",
       renderCell: (params) => (
         <div className="w-full flex items-center justify-between pr-4">
-          <p
-            className={clsx(
-              params.row.totalStock <= 5 ? "text-red-500" : "text-green-500"
-            )}
-          >
-            {params.row.totalStock}
-          </p>
+          <div className="flex items-center gap-3">
+            <p
+              className={clsx(
+                params.row.totalStock <= 5 ? "text-red-500" : "text-green-500",
+                "w-6"
+              )}
+            >
+              {params.row.totalStock}
+            </p>
+
+            <p
+              className={clsx(
+                params.row.totalStock <= 5 ? "text-red-500" : "text-green-500"
+              )}
+            >
+              {params.row.stockUnit === "normal"
+                ? "nm"
+                : params.row.stockUnit === "litre"
+                ? "lt"
+                : params.row.stockUnit === "pair"
+                ? "pr"
+                : params.row.stockUnit === "meter"
+                ? "m"
+                : "set"}
+            </p>
+          </div>
 
           {!params.row.correctInformation ? (
             <X className="w-4 h-4 text-red-500" />

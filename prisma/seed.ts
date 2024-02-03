@@ -2,11 +2,14 @@ import prisma from "../app/libs/prismadb";
 
 async function main() {
   await prisma.shop_Product.updateMany({
-    where: {
-      bike_rikshawName: undefined,
-    },
     data: {
-      bike_rikshawName: "",
+      stockUnit: "normal",
+    },
+  });
+
+  await prisma.store_Product.updateMany({
+    data: {
+      stockUnit: "normal",
     },
   });
 }
