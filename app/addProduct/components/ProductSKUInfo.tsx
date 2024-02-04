@@ -88,17 +88,17 @@ export const ProductSKUInfo: React.FC<ProductSKUInfoProps> = ({
           </div>
 
           <div className={fieldContainerCs}>
-            <InputHeading>Sale Price</InputHeading>
+            <InputHeading>Per Unit Price</InputHeading>
 
-            <NumericInput id="salePrice" register={register} />
+            <NumericInput register={register} id="avgRatePerUnit" />
           </div>
         </div>
 
         <div className={fieldsSectionCs}>
           <div className={fieldContainerCs}>
-            <InputHeading>Per Unit Price</InputHeading>
+            <InputHeading>Sale Price</InputHeading>
 
-            <NumericInput register={register} id="avgRatePerUnit" />
+            <NumericInput id="salePrice" register={register} />
           </div>
 
           <div className={fieldContainerCs}>

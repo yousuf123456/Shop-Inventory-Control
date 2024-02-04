@@ -9,11 +9,30 @@ export const addProduct = async (
   isEditing: boolean,
   productId?: string
 ) => {
-  delete data.id;
+  try {
+    delete data.id;
 
-  if (!toShop) {
+    if (!toShop) {
+      if (isEditing) {
+        const updatedProduct = await prisma.store_Product.update({
+          where: {
+            id: productId,
+          },
+          data: data,
+        });
+
+        return updatedProduct;
+      }
+
+      const createdProduct = await prisma.store_Product.create({
+        data: data as any,
+      });
+
+      return createdProduct;
+    }
+
     if (isEditing) {
-      const updatedProduct = await prisma.store_Product.update({
+      const updatedProduct = await prisma.shop_Product.update({
         where: {
           id: productId,
         },
@@ -23,27 +42,12 @@ export const addProduct = async (
       return updatedProduct;
     }
 
-    const createdProduct = await prisma.store_Product.create({
+    const createdProduct = await prisma.shop_Product.create({
       data: data as any,
     });
 
     return createdProduct;
+  } catch (e) {
+    return "Something goes wrong";
   }
-
-  if (isEditing) {
-    const updatedProduct = await prisma.shop_Product.update({
-      where: {
-        id: productId,
-      },
-      data: data,
-    });
-
-    return updatedProduct;
-  }
-
-  const createdProduct = await prisma.shop_Product.create({
-    data: data as any,
-  });
-
-  return createdProduct;
 };

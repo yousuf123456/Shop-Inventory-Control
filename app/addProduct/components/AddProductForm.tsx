@@ -57,10 +57,14 @@ export const AddProductForm: React.FC<AddProductForm> = ({
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    addProduct(data, toShop, !!product, product?.id).finally(() => {
-      toast.success("Succesfully Added Your Product");
-      setIsLoading(false);
-    });
+    addProduct(data, toShop, !!product, product?.id)
+      .then((res) => {
+        if (res === "Something goes wrong") toast.error(res);
+        else toast.success("Succesfully Added Your Product");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
