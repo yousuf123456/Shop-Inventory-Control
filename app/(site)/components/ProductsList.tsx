@@ -90,9 +90,9 @@ export const ProductsList: React.FC<ProductsListProps> = ({
     },
     {
       field: "totalStock",
-      headerName: "Total Stock",
+      headerName: "Stock",
       type: "number",
-      width: 100,
+      width: 60,
       editable: true,
       headerAlign: "left",
       renderCell: (params) => (
@@ -106,24 +106,32 @@ export const ProductsList: React.FC<ProductsListProps> = ({
             >
               {params.row.totalStock}
             </p>
-
-            <p
-              className={clsx(
-                params.row.totalStock <= 5 ? "text-red-500" : "text-green-500"
-              )}
-            >
-              {params.row.stockUnit === "each"
-                ? "ea"
-                : params.row.stockUnit === "litre"
-                ? "lt"
-                : params.row.stockUnit === "pair"
-                ? "pr"
-                : params.row.stockUnit === "meter"
-                ? "m"
-                : "set"}
-            </p>
           </div>
         </div>
+      ),
+    },
+    {
+      field: "stockUnit",
+      editable: true,
+      width: 50,
+      headerName: "Unit",
+      headerAlign: "left",
+      renderCell: (params) => (
+        <p
+          className={clsx(
+            params.row.totalStock <= 5 ? "text-red-500" : "text-green-500"
+          )}
+        >
+          {params.row.stockUnit === "each"
+            ? "ea"
+            : params.row.stockUnit === "litre"
+            ? "lt"
+            : params.row.stockUnit === "pair"
+            ? "pr"
+            : params.row.stockUnit === "meter"
+            ? "m"
+            : "set"}
+        </p>
       ),
     },
     {
