@@ -7,7 +7,20 @@ import { ProductsData } from "./components/ProductsData";
 
 import Link from "next/link";
 
-export default function IndexPage() {
+interface SearchParams {
+  q?: string;
+  dir?: string;
+  page?: string;
+  sortBy?: string;
+}
+
+export default function IndexPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const page = parseInt(searchParams.page || "0");
+
   return (
     <div className="w-full flex flex-col gap-8">
       <div className="flex justify-center relative">
@@ -23,7 +36,12 @@ export default function IndexPage() {
         </Link>
       </div>
 
-      <ProductsData />
+      <ProductsData
+        page={page}
+        q={searchParams.q}
+        sortBy={searchParams.sortBy}
+        dir={parseInt(searchParams.dir || "0") || undefined}
+      />
     </div>
   );
 }

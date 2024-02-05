@@ -22,9 +22,10 @@ import { useRouter } from "next/navigation";
 
 interface SalesListProps {
   count: number;
+  data: any;
 }
 
-export const SalesList: React.FC<SalesListProps> = ({ count }) => {
+export const SalesList: React.FC<SalesListProps> = ({ count, data }) => {
   const [open, setOpen] = useState(false);
   const [saleId, setSaleId] = useState("");
 
@@ -119,11 +120,11 @@ export const SalesList: React.FC<SalesListProps> = ({ count }) => {
       <BackdropLoader open={isLoading} />
 
       <DataGrid
-        dataSourceApi="../../../../api/getVendorSales"
         columnDefination={columns}
         pageSize={100}
         hideSearchbar
         count={count}
+        data={data}
       />
 
       <Dialog open={open} onOpenChange={setOpen}>

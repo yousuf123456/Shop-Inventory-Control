@@ -4,35 +4,24 @@ import { getPaginationQueries } from "@/app/utils/getPaginationQueries";
 
 export async function POST(req: NextRequest) {
   try {
-    const { pageSize, cursor, goingNext, serverSort, tieBreaker } =
-      await req.json();
+    const { pageSize, pageNumber, serverSort } = await req.json();
 
     const pipeline = [
+      {
+        $skip: pageNumber * pageSize,
+      },
       {
         $limit: pageSize,
       },
     ] as any;
 
-    const paginationQueries = getPaginationQueries({
-      cursor,
-      goingNext,
-      serverSort,
-      tieBreaker,
-    });
-
-    pipeline[0] = {
-      $match: {
-        ...pipeline[0].$match,
-        ...(paginationQueries.matchQueries
-          ? { ...paginationQueries.matchQueries }
-          : {}),
-      },
-    };
-
-    if (paginationQueries.initialSortStage)
-      pipeline.unshift(paginationQueries.initialSortStage);
-    if (paginationQueries.finalSortStage)
-      pipeline.push(paginationQueries.finalSortStage);
+    if (serverSort) {
+      pipeline.unshift({
+        $sort: {
+          [Object.keys(serverSort)[0]]: Object.values(serverSort)[0],
+        },
+      });
+    }
 
     const vendorSales = await prisma.sale.aggregateRaw({
       pipeline: pipeline,

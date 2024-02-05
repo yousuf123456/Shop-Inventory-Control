@@ -11,6 +11,9 @@ export const addProduct = async (
 ) => {
   try {
     delete data.id;
+    delete data._id;
+    delete data.createdAt;
+    delete data.updatedAt;
 
     if (!toShop) {
       if (isEditing) {
@@ -48,6 +51,7 @@ export const addProduct = async (
 
     return createdProduct;
   } catch (e) {
+    console.log(e);
     return "Something goes wrong";
   }
 };

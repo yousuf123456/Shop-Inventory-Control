@@ -34,25 +34,27 @@ export const AddProductForm: React.FC<AddProductForm> = ({
 
   const { register, watch, setValue, getValues, control, handleSubmit, reset } =
     useForm<FieldValues>({
-      defaultValues: {
-        correctInformation: product?.correctInformation || false,
-        ...product,
-      } || {
-        profit: 0,
-        company: "",
-        itemName: "",
-        salePrice: 0,
-        totalStock: 0,
-        product_SKU: "",
-        noOfSoldUnit: 0,
-        stockUnit: "each",
-        avgRatePerUnit: 0,
-        totalStockCost: 0,
-        bike_rikshawName: "",
-        totalSoldItemsPrice: 0,
-        soldAvgPerUnitPrice: 0,
-        correctInformation: false,
-      },
+      defaultValues: product
+        ? {
+            ...product,
+            correctInformation: product.correctInformation || false,
+          }
+        : {
+            profit: 0,
+            company: "",
+            itemName: "",
+            salePrice: 0,
+            totalStock: 0,
+            product_SKU: "",
+            noOfSoldUnit: 0,
+            stockUnit: "each",
+            avgRatePerUnit: 0,
+            totalStockCost: 0,
+            bike_rikshawName: "",
+            totalSoldItemsPrice: 0,
+            soldAvgPerUnitPrice: 0,
+            correctInformation: false,
+          },
     });
 
   const router = useRouter();

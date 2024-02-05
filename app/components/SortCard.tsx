@@ -1,30 +1,36 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 import { HiArrowCircleUp } from "react-icons/hi";
+import { getSearchParamsArray } from "../utils/getSearchParamsArray";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface SortCardProps {
   sort: {
     label: string;
     fieldName: string;
   };
-  setServerSort: React.Dispatch<React.SetStateAction<{} | null>>;
   serverSort: { [key: string]: any } | null;
 }
 
-export const SortCard: React.FC<SortCardProps> = ({
-  sort,
-  setServerSort,
-  serverSort,
-}) => {
+export const SortCard: React.FC<SortCardProps> = ({ sort, serverSort }) => {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
   const onSort = () => {
-    if (serverSort !== null) {
-      return setServerSort((prev) =>
-        //@ts-ignore
-        prev[sort.fieldName] === 1 ? { [sort.fieldName]: -1 } : null
-      );
+    const serverSortVal = Object.values(serverSort || {})[0];
+    const removeSort = serverSortVal === -1;
+    const searchParamsArray = getSearchParamsArray(searchParams, [
+      "sortBy",
+      "dir",
+    ]);
+
+    if (!removeSort) {
+      searchParamsArray.push(`sortBy=${sort.fieldName}`);
+      searchParamsArray.push(`dir=${serverSortVal === 1 ? -1 : 1}`);
     }
 
-    setServerSort({ [sort.fieldName]: 1 });
+    router.push(`${pathname}?${searchParamsArray.join("&")}`);
   };
 
   const thisSortSelected =

@@ -22,18 +22,22 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { addToShop } from "@/app/serverActions/addToShop";
 import BackdropLoader from "@/app/components/BackdropLoader";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import { Check, Cross, X } from "lucide-react";
 import { deleteProduct } from "@/app/serverActions/deleteProduct";
+import { GridRowModel } from "@mui/x-data-grid";
+import { addProduct } from "@/app/serverActions/addProduct";
 
 interface ProductsListProps {
+  data: any;
   count: number;
   getStoreProducts: boolean;
 }
 
 export const ProductsList: React.FC<ProductsListProps> = ({
   count,
+  data,
   getStoreProducts,
 }) => {
   const [isLoading, setIsLaoding] = useState(false);
@@ -59,32 +63,37 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       headerName: "Name",
       width: 150,
       headerAlign: "left",
+      editable: true,
     },
     {
       field: "bike_rikshawName",
       headerName: "Model",
       width: 80,
       headerAlign: "left",
+      editable: true,
     },
     {
       field: "company",
       headerName: "Company",
       width: 100,
       headerAlign: "left",
+      editable: true,
     },
     {
       field: "avgRatePerUnit",
       headerName: "Rate Per Unit",
       width: 125,
       type: "number",
+      editable: true,
       headerAlign: "left",
-      valueGetter: (params) => params.row.avgRatePerUnit + " PKR",
+      renderCell: (params) => <>{params.row.avgRatePerUnit} PKR</>,
     },
     {
       field: "totalStock",
       headerName: "Total Stock",
       type: "number",
-      width: 130,
+      width: 100,
+      editable: true,
       headerAlign: "left",
       renderCell: (params) => (
         <div className="w-full flex items-center justify-between pr-4">
@@ -103,8 +112,8 @@ export const ProductsList: React.FC<ProductsListProps> = ({
                 params.row.totalStock <= 5 ? "text-red-500" : "text-green-500"
               )}
             >
-              {params.row.stockUnit === "normal"
-                ? "nm"
+              {params.row.stockUnit === "each"
+                ? "ea"
                 : params.row.stockUnit === "litre"
                 ? "lt"
                 : params.row.stockUnit === "pair"
@@ -114,7 +123,18 @@ export const ProductsList: React.FC<ProductsListProps> = ({
                 : "set"}
             </p>
           </div>
-
+        </div>
+      ),
+    },
+    {
+      field: "correctInformation",
+      type: "boolean",
+      editable: true,
+      width: 60,
+      headerName: "Mark",
+      headerAlign: "left",
+      renderCell: (params) => (
+        <div className="flex w-full justify-center">
           {!params.row.correctInformation ? (
             <X className="w-4 h-4 text-red-500" />
           ) : (
@@ -218,7 +238,6 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       .then((res) => {
         if (res === "Something goes wrong") return toast.error(res);
 
-        router.refresh();
         toast.success(res);
       })
       .finally(() => {
@@ -227,17 +246,28 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       });
   };
 
+  const onRowUpdate = async (newRow: GridRowModel) => {
+    const response = await addProduct(
+      newRow,
+      !getStoreProducts,
+      true,
+      newRow._id.$oid
+    );
+
+    return response;
+  };
+
   return (
     <>
       <BackdropLoader open={isLoading} />
 
       <DataGrid
-        dataSourceApi="../../../../api/getVendorProducts"
-        apiBodyOpts={{ getStoreProducts }}
-        columnDefination={columns}
         serverSorts={[{ label: "Item Name", fieldName: "itemName" }]}
+        columnDefination={columns}
+        onRowUpdate={onRowUpdate}
         pageSize={100}
         count={count}
+        data={data}
       />
 
       <Dialog open={open} onOpenChange={setOpen}>

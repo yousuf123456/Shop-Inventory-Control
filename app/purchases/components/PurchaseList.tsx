@@ -68,16 +68,17 @@ const columns: GridColDef[] = [
 
 interface PurchaseListProps {
   count: number;
+  data: any;
 }
 
-export const PurchaseList: React.FC<PurchaseListProps> = ({ count }) => {
+export const PurchaseList: React.FC<PurchaseListProps> = ({ count, data }) => {
   return (
     <>
       <DataGrid
-        dataSourceApi="../../../../api/getVendorPurchases"
         columnDefination={columns}
         hideSearchbar
         count={count}
+        data={data}
       />
     </>
   );
