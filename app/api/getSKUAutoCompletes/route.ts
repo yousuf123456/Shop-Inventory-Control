@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const pipeline = [
       {
         $search: {
-          index: "skuAutoCompletes",
+          index: "search",
           autocomplete: {
             query: query,
             path: "product_SKU",
