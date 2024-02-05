@@ -46,7 +46,7 @@ export const ProductsData: React.FC<ProductsDataProps> = async ({
         searchterm: q,
         pageNumber: page,
         serverSort: serverSort,
-        getStoreProducts: false,
+        getStoreProducts: getStoreProducts,
       }),
     }
   );
