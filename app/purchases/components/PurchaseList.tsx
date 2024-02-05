@@ -76,6 +76,7 @@ export const PurchaseList: React.FC<PurchaseListProps> = ({ count, data }) => {
     <>
       <DataGrid
         columnDefination={columns}
+        pageSize={100}
         hideSearchbar
         count={count}
         data={data}
