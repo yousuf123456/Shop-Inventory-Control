@@ -3,7 +3,7 @@ import { routes } from "./routes";
 
 export const getShopProductDataGridActions = (
   product_SKU: string,
-  onDelete: (productid: string) => any
+  onDelete: (product_SKU: string, fromStore?: boolean) => any
 ) => {
   return [
     {
@@ -23,15 +23,15 @@ export const getShopProductDataGridActions = (
 };
 
 export const getStoreProductDataGridActions = (
-  productId: string,
   product_SKU: string,
-  onAddToShop: (productId: string) => any
+  onAddToShop: (productId: string) => any,
+  onDelete: (product_SKU: string, fromStore?: boolean) => any
 ) => {
   return [
     {
       Icon: Edit,
       label: "Mangage Product",
-      href: routes.addProduct + `?id=${productId}`,
+      href: routes.addProduct + `?sku=${product_SKU}`,
     },
     {
       Icon: Plus,
@@ -39,6 +39,14 @@ export const getStoreProductDataGridActions = (
         onAddToShop(product_SKU);
       },
       label: "Add Product To Shop",
+    },
+    {
+      Icon: Delete,
+      label: "Delete Product",
+      className: "text-red-500",
+      onClick: () => {
+        onDelete(product_SKU, true);
+      },
     },
   ];
 };

@@ -198,9 +198,9 @@ export const ProductsList: React.FC<ProductsListProps> = ({
             actions={
               getStoreProducts
                 ? getStoreProductDataGridActions(
-                    params.row._id.$oid,
                     params.row.product_SKU,
-                    onAddToShop
+                    onAddToShop,
+                    onDelete
                   )
                 : getShopProductDataGridActions(
                     params.row.product_SKU,
@@ -234,7 +234,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
   const onDeleteProduct = () => {
     setIsLaoding(true);
 
-    deleteProduct(product_SKU)
+    deleteProduct(product_SKU, getStoreProducts)
       .then((res) => {
         if (res === "Something goes wrong") return toast.error(res);
 
