@@ -38,5 +38,6 @@ export const PurchaseData = async ({
 
   const data = await res.json();
 
+  console.log(data);
   return <PurchaseList count={count} data={data} />;
 };
