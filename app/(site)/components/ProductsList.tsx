@@ -86,7 +86,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       type: "number",
       editable: true,
       headerAlign: "left",
-      renderCell: (params) => <>{params.row.avgRatePerUnit} PKR</>,
+      renderCell: (params) => <>{params.row.avgRatePerUnit?.toFixed(2)} PKR</>,
     },
     {
       field: "totalStock",

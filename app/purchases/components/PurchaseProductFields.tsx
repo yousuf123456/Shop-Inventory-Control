@@ -87,14 +87,14 @@ export const PurchaseProductFields: React.FC<PurchaseProductFieldsProps> = ({
         />
 
         {open && productSKUAutoCompletes.length > 0 && (
-          <div className="absolute flex flex-col gap-0 p-1 top-20 left-0 right-0 h-72 overflow-y-auto bg-slate-950 border-[1px] border-slate-800 rounded-md z-[99999]">
+          <div className="absolute flex flex-col gap-0 p-1 top-14 left-0 right-0 h-72 overflow-y-auto bg-white shadow-lg rounded-md z-[99999]">
             {productSKUAutoCompletes.map((autoComplete, i) => (
               <div
                 key={i}
                 onClick={() => onAutocompleteClick(autoComplete.product_SKU)}
                 className="px-4 py-2 rounded-sm hover:bg-neutral-100"
               >
-                <p className="font-nunito text-black ">
+                <p className=" font-nunito text-black ">
                   {autoComplete.product_SKU}
                 </p>
               </div>
