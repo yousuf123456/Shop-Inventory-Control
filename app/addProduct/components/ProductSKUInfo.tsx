@@ -44,7 +44,7 @@ export const ProductSKUInfo: React.FC<ProductSKUInfoProps> = ({
     setValue("totalStockCost", totalStockCost);
   }, [totalStock, avgRatePerUnit]);
 
-  const units = ["normal", "litre", "meter", "set", "pair"];
+  const units = ["each", "litre", "meter", "set", "pair"];
 
   return (
     <Section className="flex flex-col gap-6">
@@ -65,7 +65,7 @@ export const ProductSKUInfo: React.FC<ProductSKUInfoProps> = ({
 
             <Controller
               name="stockUnit"
-              defaultValue={"normal"}
+              defaultValue={"each"}
               control={control}
               render={({ field }) => (
                 <Select

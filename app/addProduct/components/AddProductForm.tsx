@@ -34,7 +34,10 @@ export const AddProductForm: React.FC<AddProductForm> = ({
 
   const { register, watch, setValue, getValues, control, handleSubmit, reset } =
     useForm<FieldValues>({
-      defaultValues: product || {
+      defaultValues: {
+        correctInformation: product?.correctInformation || false,
+        ...product,
+      } || {
         profit: 0,
         company: "",
         itemName: "",
@@ -42,9 +45,9 @@ export const AddProductForm: React.FC<AddProductForm> = ({
         totalStock: 0,
         product_SKU: "",
         noOfSoldUnit: 0,
+        stockUnit: "each",
         avgRatePerUnit: 0,
         totalStockCost: 0,
-        stockUnit: "normal",
         bike_rikshawName: "",
         totalSoldItemsPrice: 0,
         soldAvgPerUnitPrice: 0,

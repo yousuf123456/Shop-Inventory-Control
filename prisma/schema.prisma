@@ -24,7 +24,7 @@ model Store_Product {
   totalStockCost Float @default(0)
   avgRatePerUnit Float @default(0)
   product_SKU String @unique
-  correctInformation Boolean
+  correctInformation Boolean?
   totalSoldItemsPrice Float @default(0)
   soldAvgPerUnitPrice Float @default(0)
   bike_rikshawName String
@@ -46,7 +46,7 @@ model Shop_Product {
   totalStockCost Float @default(0)
   avgRatePerUnit Float @default(0)
   product_SKU String @unique
-  correctInformation Boolean
+  correctInformation Boolean?
   totalSoldItemsPrice Float @default(0)
   soldAvgPerUnitPrice Float @default(0)
   bike_rikshawName String

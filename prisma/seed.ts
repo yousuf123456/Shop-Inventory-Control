@@ -2,14 +2,20 @@ import prisma from "../app/libs/prismadb";
 
 async function main() {
   await prisma.shop_Product.updateMany({
-    data: {
+    where: {
       stockUnit: "normal",
+    },
+    data: {
+      stockUnit: "each",
     },
   });
 
   await prisma.store_Product.updateMany({
-    data: {
+    where: {
       stockUnit: "normal",
+    },
+    data: {
+      stockUnit: "each",
     },
   });
 }
