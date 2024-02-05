@@ -71,36 +71,38 @@ export const PurchaseProductFields: React.FC<PurchaseProductFieldsProps> = ({
 
   return (
     <div className="flex gap-5">
-      <div className="relative flex flex-col gap-0 w-96">
+      <div className="flex flex-col gap-0 w-96">
         <InputHeading required>Product SKU</InputHeading>
-        <TextInput
-          required
-          register={register}
-          onFocus={(e) => setOpen(true)}
-          onBlur={(e) =>
-            setTimeout(() => {
-              setOpen(false);
-            }, 500)
-          }
-          id={`product_SKU-${id}`}
-          placeholder="Enter Product SKU"
-        />
 
-        {open && productSKUAutoCompletes.length > 0 && (
-          <div className="absolute flex flex-col gap-0 p-1 top-14 left-0 right-0 h-72 overflow-y-auto bg-white shadow-lg rounded-md z-[99999]">
-            {productSKUAutoCompletes.map((autoComplete, i) => (
-              <div
-                key={i}
-                onClick={() => onAutocompleteClick(autoComplete.product_SKU)}
-                className="px-4 py-2 rounded-sm hover:bg-neutral-100"
-              >
-                <p className=" font-nunito text-black ">
-                  {autoComplete.product_SKU}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="relative">
+          <TextInput
+            required
+            register={register}
+            onFocus={(e) => setOpen(true)}
+            onBlur={(e) =>
+              setTimeout(() => {
+                setOpen(false);
+              }, 500)
+            }
+            id={`product_SKU-${id}`}
+            placeholder="Enter Product SKU"
+          />
+          {open && productSKUAutoCompletes.length > 0 && (
+            <div className="absolute flex flex-col gap-0 p-1 top-14 left-0 right-0 h-72 overflow-y-auto bg-white shadow-lg rounded-md z-[99999]">
+              {productSKUAutoCompletes.map((autoComplete, i) => (
+                <div
+                  key={i}
+                  onClick={() => onAutocompleteClick(autoComplete.product_SKU)}
+                  className="px-4 py-2 rounded-sm hover:bg-neutral-100"
+                >
+                  <p className=" font-nunito text-black ">
+                    {autoComplete.product_SKU}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-col gap-0">
