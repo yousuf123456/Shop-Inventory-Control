@@ -90,6 +90,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   >([]);
 
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const [product_sku, setProduct_sku] = useState(searchParams.get("q") || "");
 
@@ -97,7 +98,10 @@ export const DataGrid: React.FC<DataGridProps> = ({
     if (!product_sku) return;
 
     axios
-      .post("../../api/getSKUAutoCompletes", { query: product_sku })
+      .post("../../api/getSKUAutoCompletes", {
+        query: product_sku,
+        toStore: pathname.includes("store"),
+      })
       .then((res) => {
         const onlyNames = res.data.map(
           (autoComplete: { product_SKU: string }) => {
@@ -111,7 +115,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
   }, [product_sku]);
 
   const router = useRouter();
-  const pathname = usePathname();
 
   const sortBy = searchParams.get("sortBy");
   const dir = searchParams.get("dir");
