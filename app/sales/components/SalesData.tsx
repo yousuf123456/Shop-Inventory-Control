@@ -25,6 +25,7 @@ export default async function SalesData({ page, dir, sortBy }: SalesDataProps) {
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-cache",
       body: JSON.stringify({
         pageSize: 100,
         pageNumber: page,

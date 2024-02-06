@@ -28,6 +28,7 @@ export const PurchaseData = async ({
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-cache",
       body: JSON.stringify({
         pageSize: 100,
         pageNumber: page,
@@ -38,6 +39,5 @@ export const PurchaseData = async ({
 
   const data = await res.json();
 
-  console.log(data);
   return <PurchaseList count={count} data={data} />;
 };
