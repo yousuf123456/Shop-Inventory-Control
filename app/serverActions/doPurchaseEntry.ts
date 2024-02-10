@@ -101,6 +101,7 @@ export const doPurchaseEntry = async (
 
     return "Done";
   } catch (e) {
+    console.log(e);
     return "Something goes wrong";
   }
 };

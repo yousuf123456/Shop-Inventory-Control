@@ -40,13 +40,14 @@ export const TextInput: React.FC<TextInputProps> = ({
   withoutHeading,
 }) => {
   return (
-    <>
+    <form autoComplete="off">
       {!takeCurrency && !withoutHeading ? (
         <InputContainer heading={heading || ""}>
           <Input
             type={type}
             hidden={hidden}
             readOnly={readOnly}
+            autoComplete="off"
             onClick={onClick}
             onFocus={onFocus}
             required={required}
@@ -65,6 +66,7 @@ export const TextInput: React.FC<TextInputProps> = ({
           </div>
 
           <Input
+            autoComplete="off"
             type={type}
             hidden={hidden}
             onFocus={onFocus}
@@ -85,6 +87,7 @@ export const TextInput: React.FC<TextInputProps> = ({
           type={type}
           hidden={hidden}
           onFocus={onFocus}
+          autoComplete="off"
           onClick={onClick}
           required={required}
           disabled={disabled}
@@ -96,6 +99,6 @@ export const TextInput: React.FC<TextInputProps> = ({
           className={cn(className)}
         />
       )}
-    </>
+    </form>
   );
 };

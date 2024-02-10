@@ -265,18 +265,21 @@ export const DataGrid: React.FC<DataGridProps> = ({
         <div className="w-full flex flex-col gap-2 rounded-sm h-full relative">
           {!hideSearchbar && (
             <div className="absolute left-0 top-3 z-30 w-96">
-              <Input
-                onChange={(e) => setProduct_sku(e.target.value)}
-                placeholder="Search Products"
-                onFocus={(e) => setOpen(true)}
-                onBlur={(e) =>
-                  setTimeout(() => {
-                    setOpen(false);
-                  }, 500)
-                }
-                value={product_sku}
-                id="search"
-              />
+              <form autoComplete="off">
+                <Input
+                  onChange={(e) => setProduct_sku(e.target.value)}
+                  placeholder="Search Products"
+                  onFocus={(e) => setOpen(true)}
+                  onBlur={(e) =>
+                    setTimeout(() => {
+                      setOpen(false);
+                    }, 500)
+                  }
+                  value={product_sku}
+                  autoComplete="off"
+                  id="search"
+                />
+              </form>
 
               <Search
                 onClick={onSearch}

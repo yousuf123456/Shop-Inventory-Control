@@ -119,18 +119,21 @@ export const AddProductForm: React.FC<AddProductForm> = ({
         <div className="flex flex-col gap-12">
           <div className="flex justify-center">
             <div className="relative flex gap-5">
-              <Input
-                className="w-80"
-                value={product_SKU}
-                placeholder="Enter Product SKU"
-                onChange={(e) => setProduct_SKU(e.target.value)}
-                onFocus={(e) => setOpen(true)}
-                onBlur={(e) =>
-                  setTimeout(() => {
-                    setOpen(false);
-                  }, 200)
-                }
-              />
+              <form autoComplete="off">
+                <Input
+                  className="w-80"
+                  autoComplete="off"
+                  value={product_SKU}
+                  placeholder="Enter Product SKU"
+                  onChange={(e) => setProduct_SKU(e.target.value)}
+                  onFocus={(e) => setOpen(true)}
+                  onBlur={(e) =>
+                    setTimeout(() => {
+                      setOpen(false);
+                    }, 200)
+                  }
+                />
+              </form>
 
               {open && productSKUAutoCompletes.length > 0 && (
                 <div className="absolute flex flex-col gap-0 p-1 top-14 left-0 w-80 h-72 overflow-y-auto bg-white shadow-lg rounded-md z-[99999]">
