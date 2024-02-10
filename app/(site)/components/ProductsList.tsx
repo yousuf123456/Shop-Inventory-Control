@@ -20,9 +20,9 @@ import {
 import { InputHeading } from "@/app/components/InputHeading";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { addToShop } from "@/app/serverActions/addToShop";
+import { addToShop_Store } from "@/app/serverActions/addToShop_Store";
 import BackdropLoader from "@/app/components/BackdropLoader";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { Check, Cross, X } from "lucide-react";
 import { deleteProduct } from "@/app/serverActions/deleteProduct";
@@ -47,7 +47,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
   const [open2, setOpen2] = useState(false);
   const [product_SKU, setProduct_SKU] = useState("");
 
-  const onAddToShop = (product_SKU: string) => {
+  const onAddToShop_Store_Store = (product_SKU: string) => {
     setOpen(true);
     setProduct_SKU(product_SKU);
   };
@@ -207,11 +207,12 @@ export const ProductsList: React.FC<ProductsListProps> = ({
               getStoreProducts
                 ? getStoreProductDataGridActions(
                     params.row.product_SKU,
-                    onAddToShop,
+                    onAddToShop_Store_Store,
                     onDelete
                   )
                 : getShopProductDataGridActions(
                     params.row.product_SKU,
+                    onAddToShop_Store_Store,
                     onDelete
                   )
             }
@@ -223,10 +224,10 @@ export const ProductsList: React.FC<ProductsListProps> = ({
 
   const router = useRouter();
 
-  const onAddStockToShop = () => {
+  const onAddStockToShop_Store = () => {
     setIsLaoding(true);
 
-    addToShop(product_SKU, stock)
+    addToShop_Store(product_SKU, stock, getStoreProducts)
       .then((res) => {
         if (res === "Something goes wrong") return toast.error(res);
 
@@ -281,7 +282,9 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add Product To Shop</DialogTitle>
+            <DialogTitle>
+              Add Product To {getStoreProducts ? "Shop" : "Store"}
+            </DialogTitle>
           </DialogHeader>
 
           <div className="flex flex-col gap-0">
@@ -302,8 +305,8 @@ export const ProductsList: React.FC<ProductsListProps> = ({
             >
               Cancel
             </Button>
-            <Button size={"sm"} onClick={onAddStockToShop}>
-              Add Stock To Shop
+            <Button size={"sm"} onClick={onAddStockToShop_Store}>
+              Add Stock
             </Button>
           </div>
         </DialogContent>

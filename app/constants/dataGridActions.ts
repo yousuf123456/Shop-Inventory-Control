@@ -3,6 +3,7 @@ import { routes } from "./routes";
 
 export const getShopProductDataGridActions = (
   product_SKU: string,
+  onAddToStore: (productId: string) => any,
   onDelete: (product_SKU: string, fromStore?: boolean) => any
 ) => {
   return [
@@ -10,6 +11,13 @@ export const getShopProductDataGridActions = (
       Icon: Edit,
       label: "Mangage Product",
       href: routes.addProduct + `?sku=${product_SKU}&toShop=true`,
+    },
+    {
+      Icon: Plus,
+      onClick: () => {
+        onAddToStore(product_SKU);
+      },
+      label: "Add Product To Store",
     },
     {
       Icon: Delete,
