@@ -1,1 +1,1 @@
-export const baseApiUrl = "http://localhost:3000/api";
+export const baseApiUrl = "shop-inventory-control.vercel.app/api";
