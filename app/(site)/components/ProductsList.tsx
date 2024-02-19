@@ -130,6 +130,8 @@ export const ProductsList: React.FC<ProductsListProps> = ({
             ? "pr"
             : params.row.stockUnit === "meter"
             ? "m"
+            : params.row.stockUnit === "kilogram"
+            ? "kg"
             : "set"}
         </p>
       ),

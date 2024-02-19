@@ -72,3 +72,17 @@ export const getSalesDataGridActions = (
     },
   ];
 };
+
+export const getPurchasesDataGridActions = (
+  purchaseId: string,
+  onDelete: (saleId: string) => any
+) => {
+  return [
+    {
+      Icon: Delete,
+      label: "Delete Purchase",
+      className: "text-red-500",
+      onClick: () => onDelete(purchaseId),
+    },
+  ];
+};

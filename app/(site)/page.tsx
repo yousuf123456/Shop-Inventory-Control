@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { ProductsData } from "./components/ProductsData";
 
 import Link from "next/link";
+import axios from "axios";
+import { GetProductStats } from "../components/GetProductStats";
+import { baseApiUrl } from "../config/config";
 
 interface SearchParams {
   q?: string;
@@ -14,7 +17,7 @@ interface SearchParams {
   sortBy?: string;
 }
 
-export default function IndexPage({
+export default async function IndexPage({
   searchParams,
 }: {
   searchParams: SearchParams;
@@ -34,6 +37,21 @@ export default function IndexPage({
             Add Product To Shop
           </Button>
         </Link>
+
+        <div className="absolute left-0 top-0 text-white -translate-y-1/2">
+          <GetProductStats
+            triggerLabel="Get Profit"
+            apiEndpoint={`${baseApiUrl}/getProductsTotal`}
+          />
+        </div>
+
+        <div className="absolute left-32 top-0 text-white -translate-y-1/2">
+          <GetProductStats
+            triggerLabel="Get Total Stock Cost"
+            extraBodyParams={{ getStockTotal: true }}
+            apiEndpoint={`${baseApiUrl}/getProductsTotal`}
+          />
+        </div>
       </div>
 
       <ProductsData

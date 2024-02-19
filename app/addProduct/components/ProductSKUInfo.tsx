@@ -44,7 +44,7 @@ export const ProductSKUInfo: React.FC<ProductSKUInfoProps> = ({
     setValue("totalStockCost", totalStockCost);
   }, [totalStock, avgRatePerUnit]);
 
-  const units = ["each", "litre", "meter", "set", "pair"];
+  const units = ["each", "litre", "meter", "set", "kilogram", "pair"];
 
   return (
     <Section className="flex flex-col gap-6">

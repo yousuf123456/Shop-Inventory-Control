@@ -1,4 +1,4 @@
-import { Sale } from "@prisma/client";
+import { Purchase, Sale } from "@prisma/client";
 
 export type SaleProductType = {
   product_SKU: string;
@@ -18,6 +18,6 @@ export type PurchaseProductType = {
   noOfPurchasedUnit: number;
 };
 
-export type PurchaseType = Sale & {
-  products: SaleProductType[];
+export type PurchaseType = Purchase & {
+  products: PurchaseProductType[];
 };

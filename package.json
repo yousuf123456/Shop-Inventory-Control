@@ -29,6 +29,8 @@
     "next": "14.0.3",
     "next-themes": "^0.2.1",
     "react": "^18",
+    "react-currency-format": "^1.1.0",
+    "react-date-picker": "^10.6.0",
     "react-dom": "^18",
     "react-hook-form": "^7.46.1",
     "react-hot-toast": "^2.4.1",
@@ -40,6 +42,7 @@
   "devDependencies": {
     "@types/node": "^20.11.15",
     "@types/react": "^18.2.37",
+    "@types/react-currency-format": "^1.0.4",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",

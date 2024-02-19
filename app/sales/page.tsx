@@ -1,6 +1,8 @@
 import React from "react";
 import { Heading } from "../components/Heading";
 import SalesData from "./components/SalesData";
+import { GetProductStats } from "../components/GetProductStats";
+import { baseApiUrl } from "../config/config";
 
 interface SearchParams {
   dir?: string;
@@ -19,6 +21,14 @@ export default function SalesPage({
     <div className="flex flex-col gap-10">
       <div className="relative flex justify-center w-full">
         <Heading>Sales</Heading>
+
+        <div className="absolute left-6 top-0 text-white">
+          <GetProductStats
+            triggerLabel="Get Total Sales Bill"
+            extraBodyParams={{ getStockTotal: true }}
+            apiEndpoint={`${baseApiUrl}/getTotalSaleAmmount`}
+          />
+        </div>
       </div>
 
       <SalesData
