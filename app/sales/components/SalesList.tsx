@@ -49,7 +49,7 @@ export const SalesList: React.FC<SalesListProps> = ({ count, data }) => {
       field: "purchasedProducts",
       headerName:
         "Purchased Products ( Product SKU - Units Sold - Per Unit Price - Total Purchase Bill )",
-      flex: 3,
+      width: 550,
       headerAlign: "left",
       renderCell: (params) => (
         <div className="flex flex-col gap-3 py-4">
