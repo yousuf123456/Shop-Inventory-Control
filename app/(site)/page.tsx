@@ -38,7 +38,7 @@ export default async function IndexPage({
           </Button>
         </Link>
 
-        <div className="absolute left-32 top-0 text-white -translate-y-1/2">
+        <div className="absolute left-0 top-0 text-white -translate-y-1/2">
           <GetProductStats
             triggerLabel="Get Total Stock Cost"
             extraBodyParams={{ getStockTotal: true }}
