@@ -1,9 +1,17 @@
 import prisma from "../app/libs/prismadb";
 
 async function main() {
-  await prisma.store_Product.updateMany({
+  await prisma.shop_Product.updateMany({
+    where: {
+      stockUnit: "kilogram",
+    },
     data: {
-      stockUnit: "each",
+      stockUnit: "kg",
+    },
+  });
+  await prisma.sale.updateMany({
+    data: {
+      profit: 0,
     },
   });
 }

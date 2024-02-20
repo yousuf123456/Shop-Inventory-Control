@@ -29,6 +29,13 @@ export default function SalesPage({
             apiEndpoint={`${baseApiUrl}/getTotalSaleAmmount`}
           />
         </div>
+
+        <div className="absolute left-48 top-0 text-white -translate-y-1/2">
+          <GetProductStats
+            triggerLabel="Get Profit"
+            apiEndpoint={`${baseApiUrl}/getSaleProfit`}
+          />
+        </div>
       </div>
 
       <SalesData

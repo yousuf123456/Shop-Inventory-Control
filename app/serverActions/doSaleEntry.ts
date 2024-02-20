@@ -65,6 +65,7 @@ export const doSaleEntry = async (
       products: data,
     };
 
+    let totalSaleProfit = 0;
     await prisma.$transaction([
       ...data.map((saleProductData) => {
         const product = products.filter(
@@ -80,6 +81,8 @@ export const doSaleEntry = async (
         const saleProfit =
           (saleProductData.soldPricePerUnit - product.avgRatePerUnit) *
           saleProductData.noOfUnitsToSale;
+
+        totalSaleProfit += saleProfit;
 
         const newProfit = product.profit + saleProfit;
 
@@ -119,7 +122,9 @@ export const doSaleEntry = async (
         });
       }),
 
-      prisma.sale.create({ data: { ...salesData, inStore: toStore } }),
+      prisma.sale.create({
+        data: { ...salesData, inStore: toStore, profit: totalSaleProfit },
+      }),
     ]);
 
     return "Done";
