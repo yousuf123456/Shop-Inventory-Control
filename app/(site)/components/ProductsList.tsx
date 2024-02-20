@@ -119,6 +119,7 @@ export const ProductsList: React.FC<ProductsListProps> = ({
       renderCell: (params) => (
         <p
           className={clsx(
+            "py-4",
             params.row.totalStock <= 5 ? "text-red-500" : "text-green-500"
           )}
         >
