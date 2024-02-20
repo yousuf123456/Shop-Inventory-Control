@@ -82,6 +82,13 @@ export const SalesList: React.FC<SalesListProps> = ({ count, data }) => {
       valueGetter: (params) => params.row.totalSaleBill + " PKR",
     },
     {
+      field: "profit",
+      headerName: "Total Profit",
+      width: 150,
+      headerAlign: "left",
+      valueGetter: (params) => params.row.profit + " PKR",
+    },
+    {
       field: "actions",
       headerName: "Actions",
       width: 200,
