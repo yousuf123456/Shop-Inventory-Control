@@ -336,9 +336,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
                   // zIndex: 0,
                 },
                 "& .MuiDataGrid-row": {
-                  // zIndex: "0",
-                  // paddingY: "12px",
-                  height: "52px",
                   backgroundColor: "#fafafa",
                   fontFamily: "var(--font-roboto)",
                   color: "black",

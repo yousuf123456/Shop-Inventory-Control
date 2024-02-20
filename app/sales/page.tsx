@@ -30,7 +30,7 @@ export default function SalesPage({
           />
         </div>
 
-        <div className="absolute left-48 top-0 text-white -translate-y-1/2">
+        <div className="absolute left-52 top-0 text-white">
           <GetProductStats
             triggerLabel="Get Profit"
             apiEndpoint={`${baseApiUrl}/getSaleProfit`}

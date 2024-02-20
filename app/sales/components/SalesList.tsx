@@ -52,7 +52,7 @@ export const SalesList: React.FC<SalesListProps> = ({ count, data }) => {
       flex: 3,
       headerAlign: "left",
       renderCell: (params) => (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 py-4">
           {params.row?.products?.map(
             (purchaseProduct: SaleProductType, i: number) => (
               <div className="flex items-center gap-0" key={i}>

@@ -79,7 +79,7 @@ export const PurchaseList: React.FC<PurchaseListProps> = ({ count, data }) => {
       width: 550,
       headerAlign: "left",
       renderCell: (params) => (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 py-4">
           {params.row.products.map(
             (purchaseProduct: PurchaseProductType, i: number) => (
               <div className="flex items-center gap-0" key={i}>

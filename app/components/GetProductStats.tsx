@@ -75,7 +75,7 @@ export const GetProductStats: React.FC<GetProductStatsProps> = ({
               <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
             </div>
           )}
-          {stat && (
+          {stat !== null && (
             <h1 className="text-2xl text-center font-roboto text-blue-500">
               <CurrencyFormat
                 displayType="text"
