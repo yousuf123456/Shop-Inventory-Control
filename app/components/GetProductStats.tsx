@@ -60,19 +60,6 @@ export const GetProductStats: React.FC<GetProductStatsProps> = ({
       .finally(() => setIsLoading(false));
   };
 
-  const from: string = watch("from");
-  const to: string = watch("to");
-
-  useEffect(() => {
-    if (!from || !to) return;
-
-    const newFrom = new Date(from).setHours(0, 0, 0, 0);
-    const newTo = new Date(to).setHours(24, 60, 60, 60);
-
-    setValue("from", newFrom);
-    setValue("to", newTo);
-  }, [from, to]);
-
   return (
     <>
       <Dialog>
@@ -105,7 +92,17 @@ export const GetProductStats: React.FC<GetProductStatsProps> = ({
               <Controller
                 control={control}
                 name="from"
-                render={({ field }) => <DatePicker {...field} />}
+                render={({ field }) => (
+                  <DatePicker
+                    {...field}
+                    onChange={(date: any) => {
+                      if (!date) return field.onChange(null);
+                      const formated = new Date(date);
+                      formated.setHours(0, 0, 0, 0);
+                      field.onChange(formated);
+                    }}
+                  />
+                )}
               />
             </div>
             <div className="flex flex-col gap-0">
@@ -114,7 +111,17 @@ export const GetProductStats: React.FC<GetProductStatsProps> = ({
               <Controller
                 control={control}
                 name="to"
-                render={({ field }) => <DatePicker {...field} />}
+                render={({ field }) => (
+                  <DatePicker
+                    {...field}
+                    onChange={(date: any) => {
+                      if (!date) return field.onChange(null);
+                      const formated = new Date(date);
+                      formated.setHours(12, 60, 59, 60);
+                      field.onChange(formated);
+                    }}
+                  />
+                )}
               />
             </div>
           </div>
