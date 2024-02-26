@@ -60,14 +60,14 @@ export const GetProductStats: React.FC<GetProductStatsProps> = ({
       .finally(() => setIsLoading(false));
   };
 
-  const from: Date = watch("from");
-  const to: Date = watch("to");
+  const from: string = watch("from");
+  const to: string = watch("to");
 
   useEffect(() => {
     if (!from || !to) return;
 
-    const newFrom = from.setHours(0, 0, 0, 0);
-    const newTo = to.setHours(0, 0, 0, 0);
+    const newFrom = new Date(from).setHours(0, 0, 0, 0);
+    const newTo = new Date(to).setHours(24, 60, 60, 60);
 
     setValue("from", newFrom);
     setValue("to", newTo);
