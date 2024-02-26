@@ -39,7 +39,7 @@ export const GetProductStats: React.FC<GetProductStatsProps> = ({
     setStat(null);
   }, []);
 
-  const { control, getValues } = useForm();
+  const { control, getValues, watch, setValue } = useForm();
 
   const onCalculate = () => {
     setIsLoading(true);
@@ -59,6 +59,19 @@ export const GetProductStats: React.FC<GetProductStatsProps> = ({
       })
       .finally(() => setIsLoading(false));
   };
+
+  const from: Date = watch("from");
+  const to: Date = watch("to");
+
+  useEffect(() => {
+    if (!from || !to) return;
+
+    const newFrom = from.setHours(0, 0, 0, 0);
+    const newTo = to.setHours(0, 0, 0, 0);
+
+    setValue("from", newFrom);
+    setValue("to", newTo);
+  }, [from, to]);
 
   return (
     <>
