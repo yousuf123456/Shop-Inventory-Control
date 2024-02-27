@@ -15,6 +15,8 @@ export const addProduct = async (
     delete data.createdAt;
     delete data.updatedAt;
 
+    data.itemName = data.itemName.trim();
+
     if (!toShop) {
       if (isEditing) {
         const updatedProduct = await prisma.store_Product.update({

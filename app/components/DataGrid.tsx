@@ -1,15 +1,17 @@
 "use client";
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   DataGrid as MuiDataGrid,
   GridColDef,
   GridRowModel,
+  useGridApiContext,
+  useGridSelector,
+  gridPageCountSelector,
 } from "@mui/x-data-grid";
 
 import axios from "axios";
 
-import { useQuery } from "@tanstack/react-query";
 import { CustomGridToolbar } from "./CustomGridToolbar";
 
 import {
@@ -21,7 +23,11 @@ import {
 import { Search, SortAsc, SortDesc } from "lucide-react";
 
 import { CustomNoRowsOverlay } from "./CustomNoRowsOverlay";
-import { ThemeProvider, createTheme } from "@mui/material";
+import {
+  TablePaginationProps,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
 import { Input } from "@/components/ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getSearchParamsArray } from "../utils/getSearchParamsArray";
@@ -35,7 +41,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { addProduct } from "../serverActions/addProduct";
 
 const darkTheme = createTheme({
   palette: {
@@ -379,7 +384,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
               getRowHeight={() => "auto"}
               checkboxSelection={false}
               pageSizeOptions={[5]}
-              paginationMode="server"
               slots={{
                 noRowsOverlay: CustomNoRowsOverlay,
                 noResultsOverlay: CustomNoRowsOverlay,
