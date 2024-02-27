@@ -16,8 +16,8 @@ export const addProduct = async (
     delete data.updatedAt;
 
     data.itemName = data.itemName.trim();
-    data.bike_rikshawName = data.bike_rikshawName.strim();
-    data.company = data.modal.company();
+    data.bike_rikshawName = data.bike_rikshawName.trim();
+    data.company = data.company.trim();
 
     if (!toShop) {
       if (isEditing) {
