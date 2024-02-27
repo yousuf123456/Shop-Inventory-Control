@@ -367,6 +367,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
               loading={isLoading}
               processRowUpdate={processRowUpdate}
               editMode="row"
+              paginationMode="server"
               rows={data || []}
               getRowId={(row) => row._id.$oid}
               paginationModel={{ page: currentPage, pageSize: pageSize || 5 }}
