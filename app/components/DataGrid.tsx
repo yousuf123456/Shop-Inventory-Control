@@ -439,6 +439,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
               checkboxSelection={false}
               pageSizeOptions={[5]}
               slots={{
+                pagination: CustomPagination,
                 noRowsOverlay: CustomNoRowsOverlay,
                 noResultsOverlay: CustomNoRowsOverlay,
                 ...(!noFilters ? { toolbar: CustomGridToolbar } : {}),
