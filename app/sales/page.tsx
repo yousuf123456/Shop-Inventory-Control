@@ -8,6 +8,9 @@ interface SearchParams {
   dir?: string;
   page?: string;
   sortBy?: string;
+  filterBy?: string;
+  operator?: string;
+  value?: string;
 }
 
 export default function SalesPage({
@@ -41,6 +44,9 @@ export default function SalesPage({
       <SalesData
         page={page}
         sortBy={searchParams.sortBy}
+        filterBy={searchParams.filterBy}
+        value={searchParams.value}
+        operator={searchParams.operator}
         dir={parseInt(searchParams.dir || "0") || undefined}
       />
     </div>

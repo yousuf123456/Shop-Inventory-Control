@@ -1,12 +1,30 @@
 import prisma from "../../libs/prismadb";
 import { NextRequest, NextResponse } from "next/server";
 
+export const getMongodbOperatorFromMuiOperator = (muiOperator: string) => {
+  if (muiOperator === "<") return "$lte";
+  if (muiOperator === ">") return "$gte";
+  if (muiOperator === "=") return "$eq";
+
+  return null;
+};
+
 export async function POST(req: NextRequest) {
   try {
-    const { pageSize, pageNumber, serverSort, searchterm, getStoreProducts } =
-      await req.json();
+    const {
+      pageSize,
+      pageNumber,
+      serverSort,
+      searchterm,
+      getStoreProducts,
+      filterBy,
+      operator,
+      value,
+    } = await req.json();
 
     const toSkip = pageNumber * pageSize;
+
+    const mongoOperator = getMongodbOperatorFromMuiOperator(operator);
 
     let pipeline = [
       {
@@ -16,6 +34,16 @@ export async function POST(req: NextRequest) {
         $limit: pageSize,
       },
     ] as any;
+
+    if (filterBy && mongoOperator && value) {
+      pipeline.unshift({
+        $match: {
+          [filterBy]: {
+            [mongoOperator]: parseFloat(value),
+          },
+        },
+      });
+    }
 
     if (serverSort)
       pipeline.unshift({

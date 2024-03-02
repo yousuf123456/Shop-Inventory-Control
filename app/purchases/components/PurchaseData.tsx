@@ -10,12 +10,18 @@ interface PurchaseDataProps {
   page: number;
   dir: number | undefined;
   sortBy: string | undefined;
+  filterBy: string | undefined;
+  operator: string | undefined;
+  value: string | undefined;
 }
 
 export const PurchaseData = async ({
   page,
   dir,
   sortBy,
+  filterBy,
+  value,
+  operator,
 }: PurchaseDataProps) => {
   const count = await getPurcahsesCount();
 
@@ -30,6 +36,9 @@ export const PurchaseData = async ({
       },
       cache: "no-cache",
       body: JSON.stringify({
+        filterBy,
+        value,
+        operator,
         pageSize: 100,
         pageNumber: page,
         serverSort: serverSort,

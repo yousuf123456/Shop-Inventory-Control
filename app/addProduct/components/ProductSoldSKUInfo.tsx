@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Section } from "@/app/components/Section";
 import { SectionHeading } from "@/app/components/SectionHeading";
 import { InputHeading } from "@/app/components/InputHeading";
@@ -38,12 +38,10 @@ export const ProductSoldSKUInfo: React.FC<ProductSoldSKUInfoProps> = ({
   }, [noOfSoldUnits, soldAvgPerUnitPrice]);
 
   useEffect(() => {
-    // if (!soldAvgPerUnitPrice || !noOfSoldUnits || !avgPricePerUnit) return;
-
     const soldPriceDiff = soldAvgPerUnitPrice - avgPricePerUnit;
     const profit = soldPriceDiff * noOfSoldUnits;
 
-    setValue("profit", profit);
+    setValue("profit", profit?.toFixed(2));
   }, [soldAvgPerUnitPrice, noOfSoldUnits, avgPricePerUnit]);
 
   return (

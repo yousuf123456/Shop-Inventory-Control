@@ -20,11 +20,17 @@ interface ProductsDataProps {
   dir: number | undefined;
   getStoreProducts?: boolean;
   sortBy: string | undefined;
+  filterBy: string | undefined;
+  operator: string | undefined;
+  value: string | undefined;
 }
 
 export const ProductsData: React.FC<ProductsDataProps> = async ({
   getStoreProducts,
+  filterBy,
+  operator,
   sortBy,
+  value,
   page,
   dir,
   q,
@@ -42,6 +48,9 @@ export const ProductsData: React.FC<ProductsDataProps> = async ({
       },
       cache: "no-cache",
       body: JSON.stringify({
+        value,
+        filterBy,
+        operator,
         pageSize: 100,
         searchterm: q,
         pageNumber: page,

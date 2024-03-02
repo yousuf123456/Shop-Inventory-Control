@@ -20,7 +20,7 @@ model Store_Product {
   totalStock Float @default(0)
   stockUnit String
   itemName String
-  noOfSoldUnit Int @default(0)
+  noOfSoldUnit Float @default(0)
   totalStockCost Float @default(0)
   avgRatePerUnit Float @default(0)
   product_SKU String @unique
@@ -42,7 +42,7 @@ model Shop_Product {
   totalStock Float @default(0)
   stockUnit String
   itemName String
-  noOfSoldUnit Int @default(0)
+  noOfSoldUnit Float @default(0)
   totalStockCost Float @default(0)
   avgRatePerUnit Float @default(0)
   product_SKU String @unique

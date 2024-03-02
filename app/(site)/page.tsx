@@ -15,6 +15,9 @@ interface SearchParams {
   dir?: string;
   page?: string;
   sortBy?: string;
+  filterBy?: string;
+  operator?: string;
+  value?: string;
 }
 
 export default async function IndexPage({
@@ -51,6 +54,9 @@ export default async function IndexPage({
         page={page}
         q={searchParams.q}
         sortBy={searchParams.sortBy}
+        filterBy={searchParams.filterBy}
+        value={searchParams.value}
+        operator={searchParams.operator}
         dir={parseInt(searchParams.dir || "0") || undefined}
       />
     </div>

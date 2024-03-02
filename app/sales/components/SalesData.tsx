@@ -11,9 +11,19 @@ interface SalesDataProps {
   page: number;
   dir: number | undefined;
   sortBy: string | undefined;
+  filterBy: string | undefined;
+  operator: string | undefined;
+  value: string | undefined;
 }
 
-export default async function SalesData({ page, dir, sortBy }: SalesDataProps) {
+export default async function SalesData({
+  page,
+  dir,
+  sortBy,
+  filterBy,
+  value,
+  operator,
+}: SalesDataProps) {
   const count = await getSalesCount();
 
   const serverSort = sortBy && dir ? { [sortBy]: dir } : undefined;
@@ -27,6 +37,9 @@ export default async function SalesData({ page, dir, sortBy }: SalesDataProps) {
       },
       cache: "no-cache",
       body: JSON.stringify({
+        filterBy,
+        value,
+        operator,
         pageSize: 100,
         pageNumber: page,
         serverSort: serverSort,

@@ -8,7 +8,11 @@ import {
   useGridApiContext,
   useGridSelector,
   gridPageCountSelector,
+  GridFilterModel,
+  GridPagination,
 } from "@mui/x-data-grid";
+
+import MuiPagination from "@mui/material/Pagination";
 
 import axios from "axios";
 
@@ -20,7 +24,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { Search, SortAsc, SortDesc } from "lucide-react";
+import { Filter, Search, SortAsc, SortDesc } from "lucide-react";
 
 import { CustomNoRowsOverlay } from "./CustomNoRowsOverlay";
 import {
@@ -60,6 +64,31 @@ function computeMutation(newRow: GridRowModel, oldRow: GridRowModel) {
     return true;
 
   return null;
+}
+
+function Pagination({
+  page,
+  onPageChange,
+  className,
+}: Pick<TablePaginationProps, "page" | "onPageChange" | "className">) {
+  const apiRef = useGridApiContext();
+  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+
+  return (
+    <MuiPagination
+      color="primary"
+      className={className}
+      count={pageCount}
+      page={page + 1}
+      onChange={(event, newPage) => {
+        onPageChange(event as any, newPage - 1);
+      }}
+    />
+  );
+}
+
+function CustomPagination(props: any) {
+  return <GridPagination ActionsComponent={Pagination} {...props} />;
 }
 
 interface DataGridProps {
@@ -133,7 +162,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   };
 
   const onSearch = () => {
-    const paramsToRemove = ["page", "q"];
+    const paramsToRemove = ["page", "q", "filterBy", "value", "operator"];
 
     const isValidQuery = product_sku.length > 0;
     if (!isValidQuery) paramsToRemove.push("q");
@@ -155,6 +184,27 @@ export const DataGrid: React.FC<DataGridProps> = ({
   const onPaginationModelChange = (currentPaginationModel: any) => {
     const searchParamsArray = getSearchParamsArray(searchParams, ["page"]);
     searchParamsArray.push(`page=${currentPaginationModel.page}`);
+
+    router.push(`${pathname}?${searchParamsArray.join("&")}`);
+  };
+
+  const onFilterModelChange = (filterModal: GridFilterModel) => {
+    const searchParamsArray = getSearchParamsArray(searchParams, [
+      "filterBy",
+      "operator",
+      "value",
+    ]);
+
+    if (!(filterModal.items.length > 0))
+      return router.push(`${pathname}?${searchParamsArray.join("&")}`);
+
+    const { field, value, operator } = filterModal.items[0];
+    if (!field || !value || !operator)
+      return router.push(`${pathname}?${searchParamsArray.join("&")}`);
+
+    searchParamsArray.push(`filterBy=${field}`);
+    searchParamsArray.push(`value=${value}`);
+    searchParamsArray.push(`operator=${operator}`);
 
     router.push(`${pathname}?${searchParamsArray.join("&")}`);
   };
@@ -218,7 +268,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
     }
 
     const { newRow, oldRow } = promiseArguments;
-    const mutation = computeMutation(newRow, oldRow);
 
     return (
       <Dialog open={!!promiseArguments}>
@@ -246,27 +295,29 @@ export const DataGrid: React.FC<DataGridProps> = ({
       {renderConfirmDialog()}
 
       <div className="flex flex-col gap-2">
-        {!noFilters && serverSorts && isMoreThanOnePage > 1 && (
-          <div className="relative left-16">
-            <Popover>
-              <PopoverTrigger className="flex items-center gap-2 font-roboto border-[1px] text-[15px] leading-5 border-sky-500 px-3 py-1 rounded-2xl text-blue-500">
-                Server Sorts
-                <SortDesc className="w-5 h-5 text-blue-500" />
-                <SortAsc className="w-5 h-5 text-blue-500" />
-              </PopoverTrigger>
+        <div className="flex gap-5 items-center">
+          {!noFilters && serverSorts && isMoreThanOnePage > 1 && (
+            <div className="relative">
+              <Popover>
+                <PopoverTrigger className="flex items-center gap-2 font-roboto border-[1px] text-[15px] leading-5 border-sky-500 px-3 py-1 rounded-2xl text-blue-500">
+                  Server Sorts
+                  <SortDesc className="w-5 h-5 text-blue-500" />
+                  <SortAsc className="w-5 h-5 text-blue-500" />
+                </PopoverTrigger>
 
-              <PopoverContent className="z-[9999]">
-                <div className="w-full flex flex-col gap-1">
-                  <div className="flex gap-3 flex-wrap">
-                    {serverSorts?.map((sort, i) => (
-                      <SortCard key={i} sort={sort} serverSort={serverSort} />
-                    ))}
+                <PopoverContent className="z-[9999]">
+                  <div className="w-full flex flex-col gap-1">
+                    <div className="flex gap-3 flex-wrap">
+                      {serverSorts?.map((sort, i) => (
+                        <SortCard key={i} sort={sort} serverSort={serverSort} />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </PopoverContent>
-            </Popover>
-          </div>
-        )}
+                </PopoverContent>
+              </Popover>
+            </div>
+          )}
+        </div>
         <div className="w-full flex flex-col gap-2 rounded-sm h-full relative">
           {!hideSearchbar && (
             <div className="absolute left-0 top-3 z-30 w-96">
@@ -315,7 +366,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
             <MuiDataGrid
               sx={{
                 minHeight: "450px",
-                maxHeight: "800px",
+                maxHeight: "650px",
                 "& .MuiDataGrid-virtualScroller::-webkit-scrollbar": {
                   height: "0.5em",
                 },
@@ -365,6 +416,8 @@ export const DataGrid: React.FC<DataGridProps> = ({
                 },
               }}
               loading={isLoading}
+              filterMode="server"
+              onFilterModelChange={onFilterModelChange}
               processRowUpdate={processRowUpdate}
               editMode="row"
               paginationMode="server"

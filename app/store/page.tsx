@@ -16,6 +16,9 @@ interface SearchParams {
   dir?: string;
   page?: string;
   sortBy?: string;
+  filterBy?: string;
+  operator?: string;
+  value?: string;
 }
 
 export default function StorePage({
@@ -53,6 +56,9 @@ export default function StorePage({
           page={page}
           getStoreProducts
           q={searchParams.q}
+          filterBy={searchParams.filterBy}
+          value={searchParams.value}
+          operator={searchParams.operator}
           sortBy={searchParams.sortBy}
           dir={parseInt(searchParams.dir || "0") || undefined}
         />
