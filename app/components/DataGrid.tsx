@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 import {
   DataGrid as MuiDataGrid,
@@ -52,6 +52,10 @@ const darkTheme = createTheme({
   },
 });
 
+const gridContext = createContext<{ pageCount: number }>({
+  pageCount: 0,
+});
+
 function computeMutation(newRow: GridRowModel, oldRow: GridRowModel) {
   const allFieldsPresent =
     newRow.itemName &&
@@ -71,8 +75,7 @@ function Pagination({
   onPageChange,
   className,
 }: Pick<TablePaginationProps, "page" | "onPageChange" | "className">) {
-  const apiRef = useGridApiContext();
-  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+  const { pageCount } = useContext(gridContext);
 
   return (
     <MuiPagination
@@ -267,8 +270,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
       return null;
     }
 
-    const { newRow, oldRow } = promiseArguments;
-
     return (
       <Dialog open={!!promiseArguments}>
         <DialogContent>
@@ -362,91 +363,96 @@ export const DataGrid: React.FC<DataGridProps> = ({
             </div>
           )}
 
-          <ThemeProvider theme={darkTheme}>
-            <MuiDataGrid
-              sx={{
-                minHeight: "450px",
-                maxHeight: "650px",
-                "& .MuiDataGrid-virtualScroller::-webkit-scrollbar": {
-                  height: "0.5em",
-                },
-                "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-track": {
-                  background: "#f1f1f1",
-                },
-                "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb": {
-                  backgroundColor: "#e2e8f0",
-                },
-                "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover":
-                  {
-                    background: "#cbd5e1",
+          <gridContext.Provider
+            value={{ pageCount: Math.ceil(count / (pageSize || 5)) }}
+          >
+            <ThemeProvider theme={darkTheme}>
+              <MuiDataGrid
+                pagination
+                sx={{
+                  minHeight: "450px",
+                  maxHeight: "650px",
+                  "& .MuiDataGrid-virtualScroller::-webkit-scrollbar": {
+                    height: "0.5em",
                   },
-                "& .MuiDataGrid-cell": {
-                  borderBottom: "none",
-                  justifyContent: "flex-start",
-                },
-                "& .MuiCheckbox-root": {
-                  color: "white",
-                },
-                "&, [class^=MuiDataGrid]": {
-                  border: "none",
-                  // zIndex: 0,
-                },
-                "& .MuiDataGrid-row": {
-                  backgroundColor: "#fafafa",
-                  fontFamily: "var(--font-roboto)",
-                  color: "black",
-                },
-                "& .MuiDataGrid-row:hover": {
-                  backgroundColor: "#f5f5f5",
-                },
-                "& .MuiDataGrid-footerContainer": {
-                  backgroundColor: "white",
-                },
-                "& .MuiTablePagination-root": {
-                  fontFamily: "var(--font-roboto)",
-                  borderTop: "1px",
-                  color: "black",
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                  color: "black",
-                  borderBottom: "none",
-                  backgroundColor: "white",
-                  fontFamily: "var(--font-nunito)",
-                  paddingX: "0px",
-                },
-              }}
-              loading={isLoading}
-              filterMode="server"
-              onFilterModelChange={onFilterModelChange}
-              processRowUpdate={processRowUpdate}
-              editMode="row"
-              paginationMode="server"
-              rows={data || []}
-              getRowId={(row) => row._id.$oid}
-              paginationModel={{ page: currentPage, pageSize: pageSize || 5 }}
-              disableColumnFilter={noFilters}
-              columns={columnDefination}
-              rowCount={count}
-              disableColumnMenu={true}
-              initialState={{
-                pagination: {
-                  paginationModel: {
-                    pageSize: 5,
+                  "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-track": {
+                    background: "#f1f1f1",
                   },
-                },
-              }}
-              getRowHeight={() => "auto"}
-              checkboxSelection={false}
-              pageSizeOptions={[5]}
-              slots={{
-                pagination: CustomPagination,
-                noRowsOverlay: CustomNoRowsOverlay,
-                noResultsOverlay: CustomNoRowsOverlay,
-                ...(!noFilters ? { toolbar: CustomGridToolbar } : {}),
-              }}
-              onPaginationModelChange={onPaginationModelChange}
-            />
-          </ThemeProvider>
+                  "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb": {
+                    backgroundColor: "#e2e8f0",
+                  },
+                  "& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover":
+                    {
+                      background: "#cbd5e1",
+                    },
+                  "& .MuiDataGrid-cell": {
+                    borderBottom: "none",
+                    justifyContent: "flex-start",
+                  },
+                  "& .MuiCheckbox-root": {
+                    color: "white",
+                  },
+                  "&, [class^=MuiDataGrid]": {
+                    border: "none",
+                    // zIndex: 0,
+                  },
+                  "& .MuiDataGrid-row": {
+                    backgroundColor: "#fafafa",
+                    fontFamily: "var(--font-roboto)",
+                    color: "black",
+                  },
+                  "& .MuiDataGrid-row:hover": {
+                    backgroundColor: "#f5f5f5",
+                  },
+                  "& .MuiDataGrid-footerContainer": {
+                    backgroundColor: "white",
+                  },
+                  "& .MuiTablePagination-root": {
+                    fontFamily: "var(--font-roboto)",
+                    borderTop: "1px",
+                    color: "black",
+                  },
+                  "& .MuiDataGrid-columnHeaders": {
+                    color: "black",
+                    borderBottom: "none",
+                    backgroundColor: "white",
+                    fontFamily: "var(--font-nunito)",
+                    paddingX: "0px",
+                  },
+                }}
+                loading={isLoading}
+                filterMode="server"
+                onFilterModelChange={onFilterModelChange}
+                processRowUpdate={processRowUpdate}
+                editMode="row"
+                paginationMode="server"
+                rows={data || []}
+                getRowId={(row) => row._id.$oid}
+                paginationModel={{ page: currentPage, pageSize: pageSize || 5 }}
+                disableColumnFilter={noFilters}
+                columns={columnDefination}
+                rowCount={count}
+                disableColumnMenu={true}
+                initialState={{
+                  pagination: {
+                    paginationModel: {
+                      pageSize: 5,
+                    },
+                  },
+                }}
+                getRowHeight={() => "auto"}
+                checkboxSelection={false}
+                pageSizeOptions={[5]}
+                slots={{
+                  pagination: CustomPagination,
+                  noRowsOverlay: CustomNoRowsOverlay,
+                  noResultsOverlay: CustomNoRowsOverlay,
+                  ...(!noFilters ? { toolbar: CustomGridToolbar } : {}),
+                }}
+                onPaginationModelChange={onPaginationModelChange}
+              />
+            </ThemeProvider>
+          </gridContext.Provider>
         </div>
       </div>
     </>
