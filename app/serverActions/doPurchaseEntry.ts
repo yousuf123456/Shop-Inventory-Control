@@ -97,6 +97,17 @@ export const doPurchaseEntry = async (
           products: data,
         },
       }),
+
+      ...data.map((purchaseProductData) => {
+        return prisma.history.create({
+          data: {
+            product_sku: purchaseProductData.product_SKU,
+            actionType: toStore ? "purchase_store" : "purchase_shop",
+            numOfUnits: purchaseProductData.noOfPurchasedUnit,
+            price: purchaseProductData.perUnitPrice,
+          },
+        });
+      }),
     ]);
 
     return "Done";

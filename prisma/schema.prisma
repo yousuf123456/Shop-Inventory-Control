@@ -72,3 +72,21 @@ model Purchase {
   inStore Boolean?
   products Json[]
 }
+
+enum ActionType {
+  sale_shop
+  purchase_shop
+  sale_store
+  purchase_store
+  storeTransfer
+  shopTransfer
+}
+
+model History {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  price Float
+  numOfUnits Float
+  actionType ActionType
+  product_sku String @unique  
+  createdAt DateTime @default(now())
+}

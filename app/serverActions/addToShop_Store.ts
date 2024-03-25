@@ -50,6 +50,15 @@ export const addToShop_Store = async (
               totalStockCost: { decrement: stockCost },
             },
           }),
+
+          prisma.history.create({
+            data: {
+              actionType: "shopTransfer",
+              numOfUnits: stock,
+              price: 0,
+              product_sku: product_SKU,
+            },
+          }),
         ]);
 
         revalidatePath("/store");
@@ -82,6 +91,15 @@ export const addToShop_Store = async (
               totalStockCost: {
                 decrement: storeProduct.avgRatePerUnit * stock,
               },
+            },
+          }),
+
+          prisma.history.create({
+            data: {
+              actionType: "shopTransfer",
+              numOfUnits: stock,
+              price: 0,
+              product_sku: product_SKU,
             },
           }),
         ]);
@@ -129,6 +147,14 @@ export const addToShop_Store = async (
               totalStockCost: { decrement: stockCost },
             },
           }),
+          prisma.history.create({
+            data: {
+              actionType: "storeTransfer",
+              numOfUnits: stock,
+              price: 0,
+              product_sku: product_SKU,
+            },
+          }),
         ]);
 
         revalidatePath("/");
@@ -160,6 +186,15 @@ export const addToShop_Store = async (
               totalStockCost: {
                 decrement: shop_product.avgRatePerUnit * stock,
               },
+            },
+          }),
+
+          prisma.history.create({
+            data: {
+              actionType: "storeTransfer",
+              numOfUnits: stock,
+              price: 0,
+              product_sku: product_SKU,
             },
           }),
         ]);

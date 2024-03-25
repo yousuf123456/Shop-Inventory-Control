@@ -38,6 +38,8 @@ export const Header = () => {
         <HeaderLink href={routes.purchases} linkName="Purchases" />
 
         <NavMenuLink links={purchaseEntryLinks} label="Purchase Entry" />
+
+        <HeaderLink href={routes.purchases} linkName="History" />
       </div>
     </div>
   );

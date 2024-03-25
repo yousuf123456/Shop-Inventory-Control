@@ -125,6 +125,17 @@ export const doSaleEntry = async (
       prisma.sale.create({
         data: { ...salesData, inStore: toStore, profit: totalSaleProfit },
       }),
+
+      ...data.map((saleProductData) => {
+        return prisma.history.create({
+          data: {
+            product_sku: saleProductData.product_SKU,
+            actionType: toStore ? "sale_store" : "sale_shop",
+            numOfUnits: saleProductData.noOfUnitsToSale,
+            price: saleProductData.soldPricePerUnit,
+          },
+        });
+      }),
     ]);
 
     return "Done";
