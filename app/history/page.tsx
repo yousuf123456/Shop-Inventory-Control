@@ -1,5 +1,5 @@
 import React from "react";
 
-export const page = () => {
+export default function HistoryPage() {
   return <div>Page still being developed</div>;
-};
+}
