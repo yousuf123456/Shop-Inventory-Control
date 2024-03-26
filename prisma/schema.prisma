@@ -86,7 +86,8 @@ model History {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   price Float
   numOfUnits Float
+  inShop Boolean?
   actionType ActionType
-  product_sku String @unique  
+  product_sku String  
   createdAt DateTime @default(now())
 }

@@ -1,17 +1,36 @@
+import { History } from "@prisma/client";
 import prisma from "../app/libs/prismadb";
 
 async function main() {
-  const store_products = await prisma.store_Product.findMany();
-  store_products.map(async (storeProduct) => {
-    await prisma.store_Product.update({
-      where: {
-        id: storeProduct.id,
-      },
-      data: {
-        itemName: storeProduct.itemName.trim(),
-      },
-    });
-  });
+  const history = [
+    {
+      actionType: "sale_shop",
+      product_sku: "test-test-test",
+      price: 100,
+      numOfUnits: 15,
+    },
+    {
+      actionType: "purchase_shop",
+      product_sku: "test-test-test",
+      price: 100,
+      numOfUnits: 15,
+    },
+    {
+      actionType: "storeTransfer",
+      product_sku: "test-test-test",
+      price: 0,
+      numOfUnits: 15,
+    },
+    {
+      actionType: "shopTransfer",
+      product_sku: "test-test-test",
+      price: 0,
+      numOfUnits: 15,
+    },
+  ] as History[];
+
+  await prisma.history.deleteMany();
+  await prisma.history.createMany({ data: history });
 }
 
 main()

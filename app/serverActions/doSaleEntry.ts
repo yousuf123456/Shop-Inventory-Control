@@ -133,6 +133,7 @@ export const doSaleEntry = async (
             actionType: toStore ? "sale_store" : "sale_shop",
             numOfUnits: saleProductData.noOfUnitsToSale,
             price: saleProductData.soldPricePerUnit,
+            inShop: !toStore,
           },
         });
       }),

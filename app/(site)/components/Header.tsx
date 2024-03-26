@@ -39,7 +39,7 @@ export const Header = () => {
 
         <NavMenuLink links={purchaseEntryLinks} label="Purchase Entry" />
 
-        <HeaderLink href={routes.purchases} linkName="History" />
+        <HeaderLink href={routes.history} linkName="History" />
       </div>
     </div>
   );

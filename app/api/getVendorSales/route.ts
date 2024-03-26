@@ -34,6 +34,12 @@ export async function POST(req: NextRequest) {
           [Object.keys(serverSort)[0]]: Object.values(serverSort)[0],
         },
       });
+    } else {
+      pipeline.unshift({
+        $sort: {
+          _id: -1,
+        },
+      });
     }
 
     const vendorSales = await prisma.sale.aggregateRaw({

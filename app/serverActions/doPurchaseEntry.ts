@@ -105,6 +105,7 @@ export const doPurchaseEntry = async (
             actionType: toStore ? "purchase_store" : "purchase_shop",
             numOfUnits: purchaseProductData.noOfPurchasedUnit,
             price: purchaseProductData.perUnitPrice,
+            inShop: !toStore,
           },
         });
       }),

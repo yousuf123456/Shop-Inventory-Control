@@ -63,6 +63,11 @@ export async function POST(req: NextRequest) {
         {
           $limit: pageSize,
         },
+        {
+          $sort: {
+            _id: -1,
+          },
+        },
       ];
     }
 
