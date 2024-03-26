@@ -67,8 +67,8 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
             </p>
           ) : isEditingType && historyAction.editedFields ? (
             <p className={cn(baseTextCs, "flex gap-2")}>
-              {Object.keys(historyAction.editedFields).map((Key) => (
-                <p>
+              {Object.keys(historyAction.editedFields).map((Key, i) => (
+                <p key={i}>
                   <span className="font-medium text-zinc-600">{Key}</span> was
                   changed from{" "}
                   <span className={focusTextCs}>
