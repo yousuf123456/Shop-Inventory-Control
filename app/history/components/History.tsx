@@ -34,7 +34,7 @@ export const ActionsHistory = async ({
   if (!product_sku) {
     return (
       <div className="flex flex-col gap-16 items-center">
-        <h1 className="mt-16 text-2xl text-center font-semibold text-zinc-500">
+        <h1 className="mt-16 text-2xl text-center font-semibold text-zinc-600">
           Please Choose a Product SKU
         </h1>
 
@@ -51,7 +51,7 @@ export const ActionsHistory = async ({
   if (!(historyActions.length > 0)) {
     return (
       <div className="flex flex-col gap-16 items-center">
-        <h1 className="mt-16 text-2xl text-center font-semibold text-zinc-500">
+        <h1 className="mt-16 text-2xl text-center font-semibold text-zinc-600">
           No History Was Found
         </h1>
 

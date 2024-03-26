@@ -74,6 +74,7 @@ model Purchase {
 }
 
 enum ActionType {
+  editing
   sale_shop
   purchase_shop
   sale_store
@@ -87,6 +88,7 @@ model History {
   price Float
   numOfUnits Float
   inShop Boolean?
+  editedFields Json?
   actionType ActionType
   product_sku String  
   createdAt DateTime @default(now())

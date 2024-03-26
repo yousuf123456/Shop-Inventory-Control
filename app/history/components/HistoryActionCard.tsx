@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { History } from "@prisma/client";
-import { DollarSign, Repeat, ShoppingBag } from "lucide-react";
+import { DollarSign, Pencil, Repeat, ShoppingBag } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import React from "react";
 
@@ -23,6 +23,10 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
     historyAction.actionType === "sale_shop" ||
     historyAction.actionType === "sale_store";
 
+  const isEditingType =
+    historyAction.actionType === "editing" && historyAction.editedFields;
+  const editedFields = historyAction.editedFields as any;
+
   const distance = formatDistanceToNow(historyAction.createdAt, {
     addSuffix: true,
   });
@@ -34,6 +38,8 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
           <ShoppingBag className={cn(defaultIconCs, "text-purple-500/75")} />
         ) : isSaleType ? (
           <DollarSign className={cn(defaultIconCs, "text-green-500/75")} />
+        ) : isEditingType ? (
+          <Pencil className={cn(defaultIconCs, "text-pink-500/75")} />
         ) : (
           <Repeat className={cn(defaultIconCs, "text-amber-500/75")} />
         )}
@@ -58,6 +64,23 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
               <span className={focusTextCs}>
                 {historyAction.inShop ? "Shop" : "Store"}
               </span>
+            </p>
+          ) : isEditingType && historyAction.editedFields ? (
+            <p className={cn(baseTextCs, "flex gap-2")}>
+              {Object.keys(historyAction.editedFields).map((Key) => (
+                <p>
+                  <span className="font-medium text-zinc-600">{Key}</span> was
+                  changed from{" "}
+                  <span className={focusTextCs}>
+                    {editedFields[Key]["old"]}
+                  </span>{" "}
+                  to{" "}
+                  <span className={focusTextCs}>
+                    {editedFields[Key]["new"]}
+                  </span>
+                  ,
+                </p>
+              ))}
             </p>
           ) : (
             <p className={cn(baseTextCs)}>
