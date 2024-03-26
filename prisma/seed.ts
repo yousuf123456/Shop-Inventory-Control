@@ -30,7 +30,6 @@ async function main() {
   ] as History[];
 
   await prisma.history.deleteMany();
-  await prisma.history.createMany({ data: history });
 }
 
 main()
