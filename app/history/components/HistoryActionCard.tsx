@@ -96,8 +96,9 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
           )}
 
           <p className="text-zinc-500/80 text-sm">
-            {distance}
-            {/* {format(new Date(historyAction.createdAt), "h:mm a, dd MMM yyyy")} */}
+            {new Date(historyAction.createdAt) < new Date(Date.now() - 86400000)
+              ? format(new Date(historyAction.createdAt), "h:mm a, dd MMM yyyy")
+              : distance}
           </p>
         </div>
       </div>
