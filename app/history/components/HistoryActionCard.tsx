@@ -125,7 +125,7 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
             </p>
 
             {isSaleType && historyAction.saleId && (
-              <DeleteProductSale onDelete={onProductSaleDelete} />
+              <DeleteProductSale deleteSale={onProductSaleDelete} />
             )}
           </div>
         </div>
