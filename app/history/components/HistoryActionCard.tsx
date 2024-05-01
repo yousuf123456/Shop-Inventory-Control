@@ -3,9 +3,6 @@ import { History } from "@prisma/client";
 import { DollarSign, Pencil, Repeat, ShoppingBag } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { deleteProductSale } from "@/app/serverActions/deleteProductSale";
-import toast from "react-hot-toast";
 import { DeleteProductSale } from "./DeleteProductSale";
 
 interface HistoryActionCardProps {
@@ -34,20 +31,6 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
   const distance = formatDistanceToNow(historyAction.createdAt, {
     addSuffix: true,
   });
-
-  const onProductSaleDelete = () => {
-    if (historyAction.inShop === null || !historyAction.saleId) return;
-
-    deleteProductSale({
-      historyId: historyAction.id,
-      productSKU: historyAction.product_sku,
-      saleId: historyAction.saleId,
-      inShop: historyAction.inShop,
-    }).then((res) => {
-      if (res === "Succesfully Deleted the Sale") return toast.success(res);
-      toast.error(res);
-    });
-  };
 
   return (
     <div className="px-8 py-6 border-b border-zinc-200">
@@ -125,7 +108,7 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
             </p>
 
             {isSaleType && historyAction.saleId && (
-              <DeleteProductSale deleteSale={onProductSaleDelete} />
+              <DeleteProductSale historyAction={historyAction} />
             )}
           </div>
         </div>
