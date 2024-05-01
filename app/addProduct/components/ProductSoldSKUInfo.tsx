@@ -37,12 +37,12 @@ export const ProductSoldSKUInfo: React.FC<ProductSoldSKUInfoProps> = ({
     setValue("totalSoldItemsPrice", totalSoldItemsPrice);
   }, [noOfSoldUnits, soldAvgPerUnitPrice]);
 
-  useEffect(() => {
-    const soldPriceDiff = soldAvgPerUnitPrice - avgPricePerUnit;
-    const profit = soldPriceDiff * noOfSoldUnits;
+  // useEffect(() => {
+  //   const soldPriceDiff = soldAvgPerUnitPrice - avgPricePerUnit;
+  //   const profit = soldPriceDiff * noOfSoldUnits;
 
-    setValue("profit", profit?.toFixed(2));
-  }, [soldAvgPerUnitPrice, noOfSoldUnits, avgPricePerUnit]);
+  //   setValue("profit", profit?.toFixed(2));
+  // }, [soldAvgPerUnitPrice, noOfSoldUnits, avgPricePerUnit]);
 
   return (
     <Section className="flex flex-col gap-6">

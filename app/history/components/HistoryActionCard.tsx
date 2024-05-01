@@ -3,6 +3,9 @@ import { History } from "@prisma/client";
 import { DollarSign, Pencil, Repeat, ShoppingBag } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import React from "react";
+import { Button } from "@/components/ui/button";
+import { deleteProductSale } from "@/app/serverActions/deleteProductSale";
+import toast from "react-hot-toast";
 
 interface HistoryActionCardProps {
   historyAction: History;
@@ -30,6 +33,20 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
   const distance = formatDistanceToNow(historyAction.createdAt, {
     addSuffix: true,
   });
+
+  const onProductSaleDelete = () => {
+    if (historyAction.inShop === null || !historyAction.saleId) return;
+
+    deleteProductSale({
+      historyId: historyAction.id,
+      productSKU: historyAction.product_sku,
+      saleId: historyAction.saleId,
+      inShop: historyAction.inShop,
+    }).then((res) => {
+      if (res === "Succesfully Deleted the Sale") return toast.success(res);
+      toast.error(res);
+    });
+  };
 
   return (
     <div className="px-8 py-6 border-b border-zinc-200">
@@ -95,11 +112,27 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
             </p>
           )}
 
-          <p className="text-zinc-500/80 text-sm">
-            {new Date(historyAction.createdAt) < new Date(Date.now() - 86400000)
-              ? format(new Date(historyAction.createdAt), "h:mm a, dd MMM yyyy")
-              : distance}
-          </p>
+          <div className="flex justify-between w-full items-center">
+            <p className="text-zinc-500/80 text-sm">
+              {new Date(historyAction.createdAt) <
+              new Date(Date.now() - 86400000)
+                ? format(
+                    new Date(historyAction.createdAt),
+                    "h:mm a, dd MMM yyyy"
+                  )
+                : distance}
+            </p>
+
+            {isSaleType && historyAction.saleId && (
+              <Button
+                size={"sm"}
+                variant={"destructive"}
+                onClick={onProductSaleDelete}
+              >
+                Delete Sale
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>

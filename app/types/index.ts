@@ -1,6 +1,7 @@
 import { Purchase, Sale } from "@prisma/client";
 
 export type SaleProductType = {
+  profit: number;
   product_SKU: string;
   totalSalePrice: number;
   noOfUnitsToSale: number;

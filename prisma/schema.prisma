@@ -81,13 +81,16 @@ enum ActionType {
   purchase_store
   storeTransfer
   shopTransfer
+  sale_delete
 }
 
 model History {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   price Float
   numOfUnits Float
+  saleId String?
   inShop Boolean?
+  soldAt DateTime?
   editedFields Json?
   actionType ActionType
   product_sku String  

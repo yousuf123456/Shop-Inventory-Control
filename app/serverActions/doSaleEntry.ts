@@ -78,13 +78,24 @@ export const doSaleEntry = async (
           product.noOfSoldUnit + saleProductData.noOfUnitsToSale;
         const newSoldAvgPerUnitPrice = newTotalSalePrice / newNoOfSoldUnit;
 
-        const saleProfit =
+        const productSaleProfit =
           (saleProductData.soldPricePerUnit - product.avgRatePerUnit) *
           saleProductData.noOfUnitsToSale;
 
-        totalSaleProfit += saleProfit;
+        salesData.products = salesData.products.map((productData) => {
+          if (productData.product_SKU === saleProductData.product_SKU) {
+            return {
+              ...productData,
+              profit: productSaleProfit,
+            };
+          }
 
-        const newProfit = product.profit + saleProfit;
+          return productData;
+        });
+
+        totalSaleProfit += productSaleProfit;
+
+        const newProfit = product.profit + productSaleProfit;
 
         const newTotalStock =
           product.totalStock - saleProductData.noOfUnitsToSale;
@@ -105,27 +116,28 @@ export const doSaleEntry = async (
               profit: newProfit,
             },
           });
-        }
-
-        return prisma.shop_Product.update({
-          where: {
-            id: product.id,
-          },
-          data: {
-            soldAvgPerUnitPrice: newSoldAvgPerUnitPrice,
-            totalSoldItemsPrice: newTotalSalePrice,
-            totalStockCost: newTotalStockCost,
-            noOfSoldUnit: newNoOfSoldUnit,
-            totalStock: newTotalStock,
-            profit: newProfit,
-          },
-        });
+        } else
+          return prisma.shop_Product.update({
+            where: {
+              id: product.id,
+            },
+            data: {
+              soldAvgPerUnitPrice: newSoldAvgPerUnitPrice,
+              totalSoldItemsPrice: newTotalSalePrice,
+              totalStockCost: newTotalStockCost,
+              noOfSoldUnit: newNoOfSoldUnit,
+              totalStock: newTotalStock,
+              profit: newProfit,
+            },
+          });
       }),
+    ]);
 
-      prisma.sale.create({
-        data: { ...salesData, inStore: toStore, profit: totalSaleProfit },
-      }),
+    const createdSale = await prisma.sale.create({
+      data: { ...salesData, inStore: toStore, profit: totalSaleProfit },
+    });
 
+    await prisma.$transaction([
       ...data.map((saleProductData) => {
         return prisma.history.create({
           data: {
@@ -133,6 +145,7 @@ export const doSaleEntry = async (
             actionType: toStore ? "sale_store" : "sale_shop",
             numOfUnits: saleProductData.noOfUnitsToSale,
             price: saleProductData.soldPricePerUnit,
+            saleId: createdSale.id,
             inShop: !toStore,
           },
         });
