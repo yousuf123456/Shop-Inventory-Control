@@ -1,4 +1,4 @@
-import React from "react";
+"use server";
 import prisma from "../libs/prismadb";
 import { SaleProductType } from "../types";
 
@@ -45,6 +45,7 @@ export const deleteProductSale = async ({
   const newProductProfit = product.profit - productSale.profit;
   const newTotalSoldItemsPrice =
     product.totalSoldItemsPrice - productSale.totalSalePrice;
+  const newNoOfSoldUnits = product.noOfSoldUnit - productSale.noOfUnitsToSale;
 
   await prisma.$transaction([
     inShop
@@ -53,6 +54,7 @@ export const deleteProductSale = async ({
           data: {
             profit: newProductProfit,
             totalStock: newTotalStock,
+            noOfSoldUnit: newNoOfSoldUnits,
             totalStockCost: newTotalStockCost,
             totalSoldItemsPrice: newTotalSoldItemsPrice,
           },
@@ -62,6 +64,7 @@ export const deleteProductSale = async ({
           data: {
             profit: newProductProfit,
             totalStock: newTotalStock,
+            noOfSoldUnit: newNoOfSoldUnits,
             totalStockCost: newTotalStockCost,
             totalSoldItemsPrice: newTotalSoldItemsPrice,
           },
