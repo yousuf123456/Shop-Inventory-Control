@@ -6,6 +6,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { deleteProductSale } from "@/app/serverActions/deleteProductSale";
 import toast from "react-hot-toast";
+import { DeleteProductSale } from "./DeleteProductSale";
 
 interface HistoryActionCardProps {
   historyAction: History;
@@ -124,13 +125,7 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
             </p>
 
             {isSaleType && historyAction.saleId && (
-              <Button
-                size={"sm"}
-                variant={"destructive"}
-                onClick={onProductSaleDelete}
-              >
-                Delete Sale
-              </Button>
+              <DeleteProductSale onDelete={onProductSaleDelete} />
             )}
           </div>
         </div>
