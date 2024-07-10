@@ -43,7 +43,6 @@ export const PurchaseProductFields: React.FC<PurchaseProductFieldsProps> = ({
   const [open, setOpen] = useState(false);
 
   const onAutocompleteClick = (product_SKU: string) => {
-    console.log("Clicked");
     setValue(`product_SKU-${id}`, product_SKU);
   };
 
@@ -57,7 +56,7 @@ export const PurchaseProductFields: React.FC<PurchaseProductFieldsProps> = ({
     if (!noOfPurchasedUnit || !perUnitPrice) return;
 
     const totalPurchasedBill = noOfPurchasedUnit * perUnitPrice;
-    setValue(`totalPurchaseBill-${id}`, totalPurchasedBill);
+    setValue(`totalPurchaseBill-${id}`, totalPurchasedBill.toFixed(2));
   }, [noOfPurchasedUnit, perUnitPrice]);
 
   useEffect(() => {

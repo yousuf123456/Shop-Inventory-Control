@@ -53,7 +53,7 @@ export const SaleProductFields: React.FC<SaleProductFieldsProps> = ({
     if (!noOfUnitsToSale || !soldPricePerUnit) return;
 
     const totalSalePrice = noOfUnitsToSale * soldPricePerUnit;
-    setValue(`totalSalePrice-${id}`, totalSalePrice);
+    setValue(`totalSalePrice-${id}`, totalSalePrice.toFixed(2));
   }, [noOfUnitsToSale, soldPricePerUnit]);
 
   useEffect(() => {
