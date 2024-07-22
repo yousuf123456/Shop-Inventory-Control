@@ -1,5 +1,5 @@
 "use server";
-import { el } from "date-fns/locale";
+
 import prisma from "../libs/prismadb";
 import { SaleProductType, SaleType } from "../types";
 

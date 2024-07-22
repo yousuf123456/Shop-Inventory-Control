@@ -82,6 +82,7 @@ enum ActionType {
   storeTransfer
   shopTransfer
   sale_delete
+  purchase_delete
 }
 
 model History {
@@ -90,6 +91,7 @@ model History {
   numOfUnits Float
   saleId String?
   inShop Boolean?
+  purchaseId String?
   soldAt DateTime?
   editedFields Json?
   actionType ActionType

@@ -1,12 +1,7 @@
 "use server";
 
 import prisma from "../libs/prismadb";
-import {
-  PurchaseProductType,
-  PurchaseType,
-  SaleProductType,
-  SaleType,
-} from "../types";
+import { PurchaseProductType, PurchaseType } from "../types";
 
 export const deletePurchase = async (purchaseId: string) => {
   const purchase = (await prisma.purchase.findUnique({

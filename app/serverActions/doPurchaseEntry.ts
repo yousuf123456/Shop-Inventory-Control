@@ -89,15 +89,17 @@ export const doPurchaseEntry = async (
               },
             });
       }),
+    ]);
 
-      prisma.purchase.create({
-        data: {
-          totalPurchaseBill,
-          inStore: toStore,
-          products: data,
-        },
-      }),
+    const createdPurchase = await prisma.purchase.create({
+      data: {
+        totalPurchaseBill,
+        inStore: toStore,
+        products: data,
+      },
+    });
 
+    await prisma.$transaction([
       ...data.map((purchaseProductData) => {
         return prisma.history.create({
           data: {
@@ -105,6 +107,7 @@ export const doPurchaseEntry = async (
             actionType: toStore ? "purchase_store" : "purchase_shop",
             numOfUnits: purchaseProductData.noOfPurchasedUnit,
             price: purchaseProductData.perUnitPrice,
+            purchaseId: createdPurchase.id,
             inShop: !toStore,
           },
         });

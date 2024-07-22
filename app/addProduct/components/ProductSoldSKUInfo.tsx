@@ -34,15 +34,8 @@ export const ProductSoldSKUInfo: React.FC<ProductSoldSKUInfoProps> = ({
     if (!noOfSoldUnits || !soldAvgPerUnitPrice) return;
 
     const totalSoldItemsPrice = noOfSoldUnits * soldAvgPerUnitPrice;
-    setValue("totalSoldItemsPrice", totalSoldItemsPrice);
+    setValue("totalSoldItemsPrice", totalSoldItemsPrice.toFixed(2));
   }, [noOfSoldUnits, soldAvgPerUnitPrice]);
-
-  // useEffect(() => {
-  //   const soldPriceDiff = soldAvgPerUnitPrice - avgPricePerUnit;
-  //   const profit = soldPriceDiff * noOfSoldUnits;
-
-  //   setValue("profit", profit?.toFixed(2));
-  // }, [soldAvgPerUnitPrice, noOfSoldUnits, avgPricePerUnit]);
 
   return (
     <Section className="flex flex-col gap-6">

@@ -110,6 +110,9 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
             {isSaleType && historyAction.saleId && (
               <DeleteProductSale historyAction={historyAction} />
             )}
+            {isPurchaseType && historyAction.saleId && (
+              <DeleteProductSale historyAction={historyAction} />
+            )}
           </div>
         </div>
       </div>
