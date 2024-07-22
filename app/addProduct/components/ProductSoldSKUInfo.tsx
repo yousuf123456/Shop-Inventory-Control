@@ -24,10 +24,9 @@ export const ProductSoldSKUInfo: React.FC<ProductSoldSKUInfoProps> = ({
   const fieldsSectionCs = "w-full flex items-center gap-36";
   const fieldContainerCs = "w-full flex flex-col gap-0";
 
-  const [noOfSoldUnits, soldAvgPerUnitPrice, avgPricePerUnit] = watch([
+  const [noOfSoldUnits, soldAvgPerUnitPrice] = watch([
     "noOfSoldUnit",
     "soldAvgPerUnitPrice",
-    "avgRatePerUnit",
   ]);
 
   useEffect(() => {

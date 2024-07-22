@@ -39,6 +39,7 @@ export const AddProductForm: React.FC<AddProductForm> = ({
             ...product,
             avgRatePerUnit: product.avgRatePerUnit.toFixed(2),
             correctInformation: product.correctInformation || false,
+            soldAvgPerUnitPrice: product.soldAvgPerUnitPrice.toFixed(2),
           }
         : {
             profit: 0,
