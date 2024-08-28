@@ -1,13 +1,13 @@
 "use client";
+import React, { useState } from "react";
+
 import { History } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { deleteProductSale } from "@/app/serverActions/deleteProductSale";
 import { Loader2 } from "lucide-react";
 import { deleteProductPurchase } from "@/app/serverActions/deleteProductPurchase";
 
-export const DeleteProductSale = ({
+export const DeleteProductPurchase = ({
   historyAction,
 }: {
   historyAction: History;

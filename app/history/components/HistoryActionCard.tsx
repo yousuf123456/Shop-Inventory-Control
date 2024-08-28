@@ -1,9 +1,10 @@
+import React from "react";
 import { cn } from "@/lib/utils";
 import { History } from "@prisma/client";
 import { DollarSign, Pencil, Repeat, ShoppingBag } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
-import React from "react";
 import { DeleteProductSale } from "./DeleteProductSale";
+import { DeleteProductPurchase } from "./DeleteProductPurchase";
 
 interface HistoryActionCardProps {
   historyAction: History;
@@ -110,8 +111,9 @@ export const HistoryActionCard: React.FC<HistoryActionCardProps> = ({
             {isSaleType && historyAction.saleId && (
               <DeleteProductSale historyAction={historyAction} />
             )}
-            {isPurchaseType && historyAction.saleId && (
-              <DeleteProductSale historyAction={historyAction} />
+
+            {isPurchaseType && historyAction.purchaseId && (
+              <DeleteProductPurchase historyAction={historyAction} />
             )}
           </div>
         </div>
