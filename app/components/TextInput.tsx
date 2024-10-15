@@ -18,6 +18,7 @@ interface TextInputProps {
   takeCurrency?: boolean;
   onBlur?: (e: any) => void;
   withoutHeading?: boolean;
+  validate?: (value: any) => any;
   onFocus?: (params: any) => void;
   register: UseFormRegister<FieldValues>;
 }
@@ -32,6 +33,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   required,
   disabled,
   onFocus,
+  validate,
   onBlur,
   register,
   className,
@@ -56,6 +58,7 @@ export const TextInput: React.FC<TextInputProps> = ({
             {...register(id, {
               required: required,
               onBlur: (e) => onBlur && onBlur(e as any),
+              validate: validate,
             })}
           />
         </InputContainer>
@@ -78,6 +81,7 @@ export const TextInput: React.FC<TextInputProps> = ({
             placeholder={placeholder}
             {...register(id, {
               required: required,
+              validate: validate,
             })}
             className={cn(className)}
           />
@@ -95,6 +99,7 @@ export const TextInput: React.FC<TextInputProps> = ({
           placeholder={placeholder}
           {...register(id, {
             required: required,
+            validate: validate,
           })}
           className={cn(className)}
         />

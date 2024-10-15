@@ -28,6 +28,7 @@ export const DeleteProductPurchase = ({
       .then((res) => {
         if (res === "Succesfully Deleted the Purchase")
           return toast.success(res);
+
         toast.error(res);
       })
       .finally(() => setIsLoading(false));

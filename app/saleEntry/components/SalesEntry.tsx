@@ -43,23 +43,31 @@ export const SalesEntry = ({ toStore }: { toStore: boolean }) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, watch, setValue, handleSubmit, unregister, reset } =
-    useForm<FieldValues>();
+  const {
+    register,
+    watch,
+    setValue,
+    handleSubmit,
+    unregister,
+    reset,
+    getValues,
+    formState,
+  } = useForm<FieldValues>();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     const structuredData = getStructuredProductsData(data, productIds);
+    console.log("Submiting");
+    // doSaleEntry(structuredData as SaleProductType[], toStore)
+    //   .then((res) => {
+    //     if (res?.includes("Not Enough Stock")) return toast.error(res);
+    //     if (res?.includes("Invalid Product SKU")) return toast.error(res);
+    //     if (res === "Something goes wrong") return toast.error(res);
 
-    doSaleEntry(structuredData as SaleProductType[], toStore)
-      .then((res) => {
-        if (res?.includes("Not Enough Stock")) return toast.error(res);
-        if (res?.includes("Invalid Product SKU")) return toast.error(res);
-        if (res === "Something goes wrong") return toast.error(res);
-
-        toast.success("Succesfully Did A Sale Entry");
-      })
-      .finally(() => setIsLoading(false));
+    //     toast.success("Succesfully Did A Sale Entry");
+    //   })
+    //   .finally(() => setIsLoading(false));
   };
 
   const addNewProduct = () => {
@@ -99,6 +107,8 @@ export const SalesEntry = ({ toStore }: { toStore: boolean }) => {
               toStore={toStore}
               register={register}
               setValue={setValue}
+              formState={formState}
+              getValues={getValues}
               removeProduct={removeProduct}
               productSKUAutoCompletes={productSKUAutoCompletes}
               setProductSKUAutoCompletes={setProductSKUAutoCompletes}

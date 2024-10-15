@@ -32,7 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${nunito.variable} ${roboto.variable}`}>
-      <body className={inter.className}>
+      <body className={nunito.className}>
         <TanstackProvider>
           <ToasterContext />
           <div className="px-16 flex flex-col gap-12 bg-white min-h-screen py-44 pb-16">

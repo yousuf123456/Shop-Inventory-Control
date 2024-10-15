@@ -1,18 +1,19 @@
 import { InputHeading } from "@/app/components/InputHeading";
 import { NumericInput } from "@/app/components/NumericInput";
 import { TextInput } from "@/app/components/TextInput";
-import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
 
-import {
-  FieldValues,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from "react-hook-form";
+import { FieldValues, UseFormReturn } from "react-hook-form";
 
-interface SaleProductFieldsProps {
+type SaleProductFieldsProps = {
+  id: string;
+  toStore: boolean;
+  removeProduct: (id: string) => void;
+  productSKUAutoCompletes: {
+    product_SKU: string;
+  }[];
   setProductSKUAutoCompletes: React.Dispatch<
     React.SetStateAction<
       {
@@ -20,27 +21,23 @@ interface SaleProductFieldsProps {
       }[]
     >
   >;
-  productSKUAutoCompletes: {
-    product_SKU: string;
-  }[];
-  setValue: UseFormSetValue<FieldValues>;
-  register: UseFormRegister<FieldValues>;
-  removeProduct: (id: string) => void;
-  watch: UseFormWatch<FieldValues>;
-  toStore: boolean;
-  id: string;
-}
+} & Pick<
+  UseFormReturn<FieldValues, any, undefined>,
+  "watch" | "getValues" | "register" | "setValue" | "formState"
+>;
 
-export const SaleProductFields: React.FC<SaleProductFieldsProps> = ({
+export const SaleProductFields = ({
   id,
   watch,
   toStore,
   register,
   setValue,
+  getValues,
+  formState,
   removeProduct,
-  setProductSKUAutoCompletes,
   productSKUAutoCompletes,
-}) => {
+  setProductSKUAutoCompletes,
+}: SaleProductFieldsProps) => {
   const [open, setOpen] = useState(false);
 
   const [noOfUnitsToSale, soldPricePerUnit, product_SKU] = watch([
@@ -69,14 +66,31 @@ export const SaleProductFields: React.FC<SaleProductFieldsProps> = ({
     setValue(`product_SKU-${id}`, product_SKU);
   };
 
+  const validateUniqueSKU = (value: string, formValues: FieldValues) => {
+    const skuFields = Object.keys(formValues).filter((key) =>
+      key.startsWith("product_SKU-")
+    );
+    const skus = skuFields.map((field) => formValues[field]);
+    return (
+      skus.filter((sku) => sku === value).length <= 1 || "SKU must be unique"
+    );
+  };
+
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-5 items-end">
       <div className="flex flex-col gap-0 w-96 flex-shrink-0">
         <InputHeading required>Product SKU</InputHeading>
 
-        <div className=" relative">
+        {formState.errors[`product_SKU-${id}`] && (
+          <span className="text-sm text-red-500">
+            {formState.errors[`product_SKU-${id}`]?.message as string}
+          </span>
+        )}
+
+        <div className="relative">
           <TextInput
             required
+            validate={(value: string) => validateUniqueSKU(value, getValues())}
             register={register}
             id={`product_SKU-${id}`}
             onFocus={(e) => setOpen(true)}
