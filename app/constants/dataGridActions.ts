@@ -10,7 +10,7 @@ export const getShopProductDataGridActions = (
     {
       Icon: Edit,
       label: "Mangage Product",
-      href: routes.addProduct + `?sku=${product_SKU}&toShop=true`,
+      href: routes.addProduct("shop") + `&product_SKU=${product_SKU}`,
     },
     {
       Icon: Plus,
@@ -39,7 +39,7 @@ export const getStoreProductDataGridActions = (
     {
       Icon: Edit,
       label: "Mangage Product",
-      href: routes.addProduct + `?sku=${product_SKU}`,
+      href: routes.addProduct("store") + `&product_SKU=${product_SKU}`,
     },
     {
       Icon: Plus,

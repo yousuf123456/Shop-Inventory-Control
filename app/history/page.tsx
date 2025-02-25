@@ -1,18 +1,19 @@
 import React from "react";
-import { SelectProduct } from "./components/SelectProduct";
-import { ActionsHistory } from "./components/History";
+import { ImportExistingProduct } from "../_components/ImportExistingProduct";
+import { ProductHistory } from "./_components/ProductHistory";
 
 export default function HistoryPage({
   searchParams,
 }: {
-  searchParams: { product_sku?: string; page?: string };
+  searchParams: { product_SKU?: string; page?: string };
 }) {
   return (
     <div className="flex flex-col gap-8">
-      <SelectProduct />{" "}
-      <ActionsHistory
-        product_sku={searchParams.product_sku}
-        page={parseInt(searchParams.page || "0")}
+      <ImportExistingProduct />
+
+      <ProductHistory
+        product_SKU={searchParams.product_SKU}
+        page={parseInt(searchParams.page || "1") - 1}
       />
     </div>
   );

@@ -1,25 +1,30 @@
 import React from "react";
-import { Heading } from "../components/Heading";
-import { SalesEntry } from "./components/SalesEntry";
+import { Heading } from "../_components/Heading";
+import { SaleEntryForm } from "./_components/SaleEntryForm";
+import { notFound } from "next/navigation";
 
 interface SearchParams {
-  toStore?: string;
+  location: "store" | "shop";
 }
 
-export default function SalesEntryPage({
+export default function SaleEntryPage({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
-  const toStore = !!(searchParams.toStore === "true");
+  const { location } = searchParams;
+
+  if (!location) notFound();
 
   return (
     <div className="flex flex-col gap-10">
       <div className="flex justify-center">
-        <Heading>Sale Entry To {toStore ? "Store" : "Shop"}</Heading>
+        <Heading>
+          Sale Entry To {location === "store" ? "Store" : "Shop"}
+        </Heading>
       </div>
 
-      <SalesEntry toStore={toStore} />
+      <SaleEntryForm location={location} />
     </div>
   );
 }

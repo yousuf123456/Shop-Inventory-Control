@@ -1,17 +1,13 @@
 import React from "react";
-import { Heading } from "../components/Heading";
-import SalesData from "./components/SalesData";
-import { GetProductStats } from "../components/GetProductStats";
-import { baseApiUrl } from "../config/config";
 
-interface SearchParams {
-  dir?: string;
-  page?: string;
-  sortBy?: string;
-  filterBy?: string;
-  operator?: string;
-  value?: string;
-}
+import { Heading } from "../_components/Heading";
+import { DateRangeStatsViewer } from "../_components/DateRangeStatsViewer";
+
+import SalesData from "./_components/SalesData";
+
+import { PaginationQuerySearchParams } from "../_types";
+
+type SearchParams = PaginationQuerySearchParams;
 
 export default function SalesPage({
   searchParams,
@@ -26,28 +22,30 @@ export default function SalesPage({
         <Heading>Sales</Heading>
 
         <div className="absolute left-6 top-0 text-white">
-          <GetProductStats
-            triggerLabel="Get Total Sales Bill"
-            extraBodyParams={{ getStockTotal: true }}
-            apiEndpoint={`${baseApiUrl}/getTotalSaleAmmount`}
+          <DateRangeStatsViewer
+            buttonLabel="Get Total Sales Bill"
+            dataParams={{ getStockTotal: true }}
+            endpoint={`/api/getTotalSaleAmmount`}
           />
         </div>
 
         <div className="absolute left-52 top-0 text-white">
-          <GetProductStats
-            triggerLabel="Get Profit"
-            apiEndpoint={`${baseApiUrl}/getSaleProfit`}
+          <DateRangeStatsViewer
+            buttonLabel="Get Profit"
+            endpoint={`/api/getSaleProfit`}
           />
         </div>
       </div>
 
       <SalesData
         page={page}
-        sortBy={searchParams.sortBy}
-        filterBy={searchParams.filterBy}
-        value={searchParams.value}
-        operator={searchParams.operator}
-        dir={parseInt(searchParams.dir || "0") || undefined}
+        q={searchParams.q}
+        sortByField={searchParams.sortByField}
+        sortDir={
+          searchParams.sortDir
+            ? (parseInt(searchParams.sortDir) as -1 | 1)
+            : undefined
+        }
       />
     </div>
   );

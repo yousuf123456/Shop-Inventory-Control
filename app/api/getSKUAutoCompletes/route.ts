@@ -1,9 +1,9 @@
-import prisma from "@/app/libs/prismadb";
+import prisma from "@/app/_libs/prismadb";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { query, toStore } = await req.json();
+    const { query, location } = await req.json();
 
     const pipeline = [
       {
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
       },
     ];
 
-    if (toStore) {
+    if (location === "store") {
       const autocompleteData = await prisma.store_Product.aggregateRaw({
         pipeline: pipeline,
       });

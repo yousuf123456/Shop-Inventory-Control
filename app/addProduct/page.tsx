@@ -1,48 +1,44 @@
 import React from "react";
+import prisma from "../_libs/prismadb";
 
-import prisma from "../libs/prismadb";
-import { Heading } from "../components/Heading";
-import { AddProductForm } from "./components/AddProductForm";
+import { Heading } from "../_components/Heading";
+import { AddProductForm } from "./_components/AddProductForm";
+import { notFound } from "next/navigation";
 
-const getProducts = async (sku: string | undefined, fromStore: boolean) => {
-  if (!sku) return null;
+const getProduct = async (product_SKU: string, location: "store" | "shop") => {
+  if (location === "shop") {
+    return await prisma.shop_Product.findUnique({ where: { product_SKU } });
+  }
 
-  const product = fromStore
-    ? await prisma.store_Product.findUnique({
-        where: {
-          product_SKU: sku,
-        },
-      })
-    : await prisma.shop_Product.findUnique({
-        where: {
-          product_SKU: sku,
-        },
-      });
-
-  return product;
+  return await prisma.store_Product.findUnique({ where: { product_SKU } });
 };
 
 interface SearchParams {
-  toShop?: string;
-  sku: string;
+  product_SKU?: string;
+  location?: "store" | "shop";
 }
-
 export default async function AddProductPage({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
-  const toShop = !!(searchParams.toShop === "true");
+  const { product_SKU, location } = searchParams;
 
-  const product = await getProducts(searchParams.sku, !toShop);
+  if (!location) notFound();
+
+  const existingProduct = product_SKU
+    ? await getProduct(product_SKU, location)
+    : undefined;
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex justify-center">
-        <Heading>Add Product To {toShop ? "Shop" : "Store"}</Heading>
+        <Heading>
+          Add Product To {location === "shop" ? "Shop" : "Store"}
+        </Heading>
       </div>
 
-      <AddProductForm toShop={toShop} product={product} />
+      <AddProductForm location={location} product={existingProduct} />
     </div>
   );
 }

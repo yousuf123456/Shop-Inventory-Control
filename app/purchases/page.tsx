@@ -1,17 +1,12 @@
 import React from "react";
-import { Heading } from "../components/Heading";
-import { PurchaseData } from "./components/PurchaseData";
-import { baseApiUrl } from "../config/config";
-import { GetProductStats } from "../components/GetProductStats";
+import { Heading } from "../_components/Heading";
+import { DateRangeStatsViewer } from "../_components/DateRangeStatsViewer";
 
-interface SearchParams {
-  dir?: string;
-  page?: string;
-  sortBy?: string;
-  filterBy?: string;
-  operator?: string;
-  value?: string;
-}
+import { PurchaseData } from "./_components/PurchaseData";
+
+import { PaginationQuerySearchParams } from "../_types";
+
+type SearchParams = PaginationQuerySearchParams;
 
 export default function PurchasePage({
   searchParams,
@@ -26,21 +21,23 @@ export default function PurchasePage({
         <Heading>Purchases</Heading>
 
         <div className="absolute left-6 top-0 text-white">
-          <GetProductStats
-            triggerLabel="Get Total Purchases Bill"
-            extraBodyParams={{ getStockTotal: true }}
-            apiEndpoint={`${baseApiUrl}/getTotalPurchaseAmmount`}
+          <DateRangeStatsViewer
+            buttonLabel="Get Total Purchases Bill"
+            dataParams={{ getStockTotal: true }}
+            endpoint={`/api/getTotalPurchaseAmmount`}
           />
         </div>
       </div>
 
       <PurchaseData
         page={page}
-        sortBy={searchParams.sortBy}
-        filterBy={searchParams.filterBy}
-        value={searchParams.value}
-        operator={searchParams.operator}
-        dir={parseInt(searchParams.dir || "0") || undefined}
+        q={searchParams.q}
+        sortByField={searchParams.sortByField}
+        sortDir={
+          searchParams.sortDir
+            ? (parseInt(searchParams.sortDir) as -1 | 1)
+            : undefined
+        }
       />
     </div>
   );

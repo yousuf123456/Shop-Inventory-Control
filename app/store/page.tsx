@@ -2,24 +2,16 @@ import React from "react";
 
 import { routes } from "../constants/routes";
 import { Button } from "@/components/ui/button";
-import { Heading } from "@/app/components/Heading";
+import { Heading } from "@/app/_components/Heading";
 
-import { ProductsData } from "@/app/(site)/components/ProductsData";
+import { ProductsData } from "@/app/(site)/_components/ProductsData";
 
 import Link from "next/link";
-import { GetProductStats } from "../components/GetProductStats";
-import { baseApiUrl } from "../config/config";
-import BackdropLoader from "../components/BackdropLoader";
+import { DateRangeStatsViewer } from "../_components/DateRangeStatsViewer";
+import { baseApiUrl } from "../_config/config";
+import { PaginationQuerySearchParams } from "../_types";
 
-interface SearchParams {
-  q?: string;
-  dir?: string;
-  page?: string;
-  sortBy?: string;
-  filterBy?: string;
-  operator?: string;
-  value?: string;
-}
+type SearchParams = PaginationQuerySearchParams;
 
 export default function StorePage({
   searchParams,
@@ -29,40 +21,39 @@ export default function StorePage({
   const page = parseInt(searchParams.page || "0");
 
   return (
-    <>
-      <div className="w-full flex flex-col gap-8">
-        <div className="flex justify-center relative">
-          <Heading>Store Products</Heading>
+    <div className="w-full flex flex-col gap-8">
+      <div className="flex justify-center relative">
+        <Heading>Store Products</Heading>
 
-          <Link href={`${routes.addProduct}`}>
-            <Button
-              size={"sm"}
-              className="absolute right-0 top-0 text-white -translate-y-1/2"
-            >
-              Add Product To Store
-            </Button>
-          </Link>
+        <Link href={`${routes.addProduct("store")}`}>
+          <Button
+            size={"sm"}
+            className="absolute right-0 top-0 text-white -translate-y-1/2"
+          >
+            Add Product To Store
+          </Button>
+        </Link>
 
-          <div className="absolute left-0 top-0 text-white -translate-y-1/2">
-            <GetProductStats
-              triggerLabel="Get Total Stock Cost"
-              apiEndpoint={`${baseApiUrl}/getProductsTotal`}
-              extraBodyParams={{ fromStore: true, getStockTotal: true }}
-            />
-          </div>
+        <div className="absolute left-0 top-0 text-white -translate-y-1/2">
+          <DateRangeStatsViewer
+            buttonLabel="Get Total Stock Cost"
+            endpoint={`${baseApiUrl}/getProductsTotal`}
+            dataParams={{ fromStore: true, getStockTotal: true }}
+          />
         </div>
-
-        <ProductsData
-          page={page}
-          getStoreProducts
-          q={searchParams.q}
-          filterBy={searchParams.filterBy}
-          value={searchParams.value}
-          operator={searchParams.operator}
-          sortBy={searchParams.sortBy}
-          dir={parseInt(searchParams.dir || "0") || undefined}
-        />
       </div>
-    </>
+
+      <ProductsData
+        fromStore
+        page={page}
+        q={searchParams.q}
+        sortByField={searchParams.sortByField}
+        sortDir={
+          searchParams.sortDir
+            ? (parseInt(searchParams.sortDir) as -1 | 1)
+            : undefined
+        }
+      />
+    </div>
   );
 }

@@ -1,12 +1,13 @@
 import "./globals.css";
-import type { Metadata } from "next";
-import { Inter, Nunito, Roboto } from "next/font/google";
-import { Header } from "./(site)/components/Header";
-import { ThemeProvider } from "./components/themeProvider";
-import { TanstackProvider } from "./components/TanstackProvider";
-import { ToasterContext } from "./context/ToasterContext";
 
-const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from "next";
+
+import { GeistSans } from "geist/font/sans";
+import { Nunito, Roboto } from "next/font/google";
+
+import { Header } from "./(site)/_components/Header";
+
+import { Toaster } from "@/components/ui/sonner";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -31,16 +32,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${nunito.variable} ${roboto.variable}`}>
+    <html
+      lang="en"
+      className={`${nunito.variable} ${roboto.variable} ${GeistSans.className}`}
+    >
       <body className={nunito.className}>
-        <TanstackProvider>
-          <ToasterContext />
-          <div className="px-16 flex flex-col gap-12 bg-white min-h-screen py-44 pb-16">
-            <Header />
+        <Toaster
+          toastOptions={{
+            classNames: {
+              error: "group-[.toaster]:text-red-500",
+              success: "group-[.toaster]:text-green-500",
+            },
+          }}
+        />
 
-            {children}
-          </div>
-        </TanstackProvider>
+        <div className="px-16 flex flex-col gap-12 bg-white min-h-screen py-44 pb-16">
+          <Header />
+
+          {children}
+        </div>
       </body>
     </html>
   );

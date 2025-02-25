@@ -60,8 +60,16 @@ model Sale {
   updatedAt DateTime @updatedAt
   totalSaleBill Int
   inStore Boolean?
-  products Json[]
+  products SaleProduct[]
   profit Float
+}
+
+type SaleProduct {
+  profit Int
+  product_SKU String
+  totalSalePrice Int
+  noOfUnitsToSale Int
+  soldPricePerUnit Int
 }
 
 model Purchase {
@@ -70,7 +78,14 @@ model Purchase {
   updatedAt DateTime @updatedAt
   totalPurchaseBill Int
   inStore Boolean?
-  products Json[]
+  products PurchaseProduct[]
+}
+
+type PurchaseProduct {
+  product_SKU String
+  perUnitPrice Int
+  totalPurchaseBill Int
+  noOfPurchasedUnit Int
 }
 
 enum ActionType {
