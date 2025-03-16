@@ -53,7 +53,7 @@ export const ImportExistingProduct = () => {
           className="w-80"
           placeholder="Enter Product SKU"
           onFocus={() => setFocused(true)}
-          onBlur={() => setTimeout(() => setFocused(false), 100)}
+          onBlur={() => setTimeout(() => setFocused(false), 500)}
           onChange={(e) => {
             debounce(() => searchSKU(e.target.value), 500)();
 
