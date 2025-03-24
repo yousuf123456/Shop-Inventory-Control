@@ -62,7 +62,7 @@ export const PurchaseEntryFormField: React.FC<PurchaseEntryFormFieldProps> = ({
           placeholder="Enter Product SKU"
           {...register(`purchaseProducts.${fieldIndex}.product_SKU`)}
           onFocus={() => setFocused(true)}
-          onBlur={() => setTimeout(() => setFocused(false), 100)}
+          onBlur={() => setTimeout(() => setFocused(false), 400)}
           onChange={debounce((e) => searchSKU(e.target.value), 500)}
         />
 

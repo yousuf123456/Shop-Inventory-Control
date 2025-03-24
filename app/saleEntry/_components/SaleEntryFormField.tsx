@@ -61,7 +61,7 @@ export const SaleEntryFormField: React.FC<SaleEntryFormFieldProps> = ({
           placeholder="Enter Product SKU"
           {...register(`saleProducts.${fieldIndex}.product_SKU`)}
           onFocus={() => setFocused(true)}
-          onBlur={() => setTimeout(() => setFocused(false), 100)}
+          onBlur={() => setTimeout(() => setFocused(false), 400)}
           onChange={debounce((e) => searchSKU(e.target.value), 500)}
         />
 
