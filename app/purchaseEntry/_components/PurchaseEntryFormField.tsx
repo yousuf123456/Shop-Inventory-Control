@@ -98,6 +98,7 @@ export const PurchaseEntryFormField: React.FC<PurchaseEntryFormFieldProps> = ({
         <Label>Stock</Label>
 
         <Input
+          step={"0.01"}
           type="number"
           {...register(`purchaseProducts.${fieldIndex}.noOfPurchasedUnit`, {
             valueAsNumber: true,
@@ -115,6 +116,7 @@ export const PurchaseEntryFormField: React.FC<PurchaseEntryFormFieldProps> = ({
         <Label>Per Unit Price (PKR)</Label>
 
         <Input
+          step={"0.01"}
           type="number"
           {...register(`purchaseProducts.${fieldIndex}.perUnitPrice`, {
             valueAsNumber: true,
@@ -132,6 +134,7 @@ export const PurchaseEntryFormField: React.FC<PurchaseEntryFormFieldProps> = ({
         <Label>Total Price (PKR)</Label>
 
         <Input
+          step={"0.01"}
           type="number"
           {...register(`purchaseProducts.${fieldIndex}.totalPurchaseBill`, {
             valueAsNumber: true,

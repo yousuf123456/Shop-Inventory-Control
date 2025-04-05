@@ -18,8 +18,8 @@ const defaultFormValues = {
       profit: 0,
       product_SKU: "",
       totalSalePrice: 0,
-      noOfUnitsToSale: 0,
-      soldPricePerUnit: 0,
+      noOfUnitsToSale: undefined,
+      soldPricePerUnit: undefined,
     },
   ],
 };
@@ -50,13 +50,17 @@ export const SaleEntryForm = ({ location }: { location: "store" | "shop" }) => {
       profit: 0,
       product_SKU: "",
       totalSalePrice: 0,
-      noOfUnitsToSale: 0,
-      soldPricePerUnit: 0,
-    });
+      noOfUnitsToSale: undefined,
+      soldPricePerUnit: undefined,
+    } as unknown as FormData["saleProducts"][0]);
   };
 
   const removeField = (index: number) => {
     remove(index);
+  };
+
+  const clear = () => {
+    reset();
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -114,10 +118,21 @@ export const SaleEntryForm = ({ location }: { location: "store" | "shop" }) => {
         </Button>
       </div>
 
-      <Button type="submit" disabled={isLoading}>
-        Confirm Sale Entry{" "}
-        {isLoading && <Loader2 className="w-4 h-4 animate-spin ml-3" />}
-      </Button>
+      <div className="flex gap-5">
+        <Button
+          type="button"
+          onClick={clear}
+          disabled={isLoading}
+          variant={"outline"}
+        >
+          Clear Entry
+        </Button>
+
+        <Button type="submit" disabled={isLoading}>
+          Confirm Sale Entry{" "}
+          {isLoading && <Loader2 className="w-4 h-4 animate-spin ml-3" />}
+        </Button>
+      </div>
     </form>
   );
 };

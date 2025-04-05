@@ -47,7 +47,7 @@ export const SaleEntryFormField: React.FC<SaleEntryFormFieldProps> = ({
     // Set the total sale price
     setValue(
       `saleProducts.${fieldIndex}.totalSalePrice`,
-      noOfUnitsToSale * soldPricePerUnit
+      parseFloat((noOfUnitsToSale * soldPricePerUnit).toFixed(2))
     );
   }, [noOfUnitsToSale, soldPricePerUnit]);
 
@@ -72,7 +72,7 @@ export const SaleEntryFormField: React.FC<SaleEntryFormFieldProps> = ({
         )}
 
         {searchResults.length > 0 && focused && (
-          <div className="absolute inset-x-0 top-[110%] shadow p-3 max-h-64 overflow-y-auto">
+          <div className="absolute inset-x-0 top-[110%] shadow p-3 max-h-64 z-50 bg-white overflow-y-auto">
             {searchResults.map((result, i) => (
               <div
                 key={i}
@@ -97,6 +97,7 @@ export const SaleEntryFormField: React.FC<SaleEntryFormFieldProps> = ({
         <Label>Stock</Label>
 
         <Input
+          step={"0.01"}
           type="number"
           {...register(`saleProducts.${fieldIndex}.noOfUnitsToSale`, {
             valueAsNumber: true,
@@ -114,6 +115,7 @@ export const SaleEntryFormField: React.FC<SaleEntryFormFieldProps> = ({
         <Label>Per Unit Price (PKR)</Label>
 
         <Input
+          step={"0.01"}
           type="number"
           {...register(`saleProducts.${fieldIndex}.soldPricePerUnit`, {
             valueAsNumber: true,
@@ -131,6 +133,7 @@ export const SaleEntryFormField: React.FC<SaleEntryFormFieldProps> = ({
         <Label>Total Price (PKR)</Label>
 
         <Input
+          step={"0.01"}
           type="number"
           {...register(`saleProducts.${fieldIndex}.totalSalePrice`, {
             valueAsNumber: true,

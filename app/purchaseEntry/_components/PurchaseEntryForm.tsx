@@ -15,9 +15,9 @@ const defaultFormValues = {
   purchaseProducts: [
     {
       product_SKU: "",
-      perUnitPrice: 0,
-      noOfPurchasedUnit: 0,
       totalPurchaseBill: 0,
+      perUnitPrice: undefined,
+      noOfPurchasedUnit: undefined,
     },
   ],
 };
@@ -50,14 +50,18 @@ export const PurchaseEntryForm = ({
   const appendField = () => {
     append({
       product_SKU: "",
-      perUnitPrice: 0,
       totalPurchaseBill: 0,
-      noOfPurchasedUnit: 0,
-    });
+      perUnitPrice: undefined,
+      noOfPurchasedUnit: undefined,
+    } as unknown as FormData["purchaseProducts"][0]);
   };
 
   const removeField = (index: number) => {
     remove(index);
+  };
+
+  const clear = () => {
+    reset();
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -118,10 +122,21 @@ export const PurchaseEntryForm = ({
         </Button>
       </div>
 
-      <Button type="submit" disabled={isLoading}>
-        Confirm Purchase Entry{" "}
-        {isLoading && <Loader2 className="w-4 h-4 animate-spin ml-3" />}
-      </Button>
+      <div className="flex gap-5">
+        <Button
+          type="button"
+          onClick={clear}
+          disabled={isLoading}
+          variant={"outline"}
+        >
+          Clear Entry
+        </Button>
+
+        <Button type="submit" disabled={isLoading}>
+          Confirm Purchase Entry{" "}
+          {isLoading && <Loader2 className="w-4 h-4 animate-spin ml-3" />}
+        </Button>
+      </div>
     </form>
   );
 };
