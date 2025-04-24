@@ -6,18 +6,18 @@ import { toast } from "sonner";
 
 export const TestActionComponent = () => {
   const test = async () => {
-    const promise = test_action();
-
-    toast.promise(promise, {
-      loading: "Updating the product stock..",
-      success: (result) => {
-        return result;
-      },
-      error: (data) => {
-        console.log(data.message);
-        return data.message;
-      },
-    });
+    const response = await test_action();
+    console.log(response);
+    // toast.promise(promise, {
+    //   loading: "Updating the product stock..",
+    //   success: (result) => {
+    //     return result;
+    //   },
+    //   error: (data) => {
+    //     console.log(data.message);
+    //     return data.message;
+    //   },
+    // });
   };
 
   return <Button onClick={test}>Execute server action</Button>;
