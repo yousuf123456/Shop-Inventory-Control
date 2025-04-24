@@ -7,7 +7,7 @@ import { toast } from "sonner";
 export const TestActionComponent = () => {
   const test = async () => {
     const response = await test_action();
-    console.log(response);
+    toast.success(response);
     // toast.promise(promise, {
     //   loading: "Updating the product stock..",
     //   success: (result) => {
