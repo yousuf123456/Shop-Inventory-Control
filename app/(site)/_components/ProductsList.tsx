@@ -69,11 +69,15 @@ export const ProductsList: React.FC<ProductsListProps> = ({
     toast.promise(promise, {
       loading: "Updating the product stock..",
       success: (result) => {
+        console.log(result);
         if (result.success) return result.message;
 
         throw new Error(result.message);
       },
-      error: (data) => data.message,
+      error: (data) => {
+        console.log(data.message);
+        return data.message;
+      },
       finally: () => {
         setAction(null);
         setIsLaoding(false);
