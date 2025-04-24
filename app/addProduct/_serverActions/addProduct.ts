@@ -4,7 +4,7 @@ import { ServerActionResult } from "@/app/_types";
 
 import { FormData } from "../_components/formSchema";
 import { Shop_Product, Store_Product } from "@prisma/client";
-import { getUserAuth } from "@/app/_serverFn/getUserAuth";
+// import { getUserAuth } from "@/app/_serverFn/getUserAuth";
 
 // Helper function to fetch an existing product from either the store or shop
 const getExistingProduct = async (
@@ -64,10 +64,10 @@ export const addProduct = async (
   params: Parameters
 ): Promise<ServerActionResult> => {
   try {
-    const { isAuthenticated } = await getUserAuth();
+    // const { isAuthenticated } = await getUserAuth();
 
-    if (!isAuthenticated)
-      return { success: false, message: "User not authenticated!" };
+    // if (!isAuthenticated)
+    //   return { success: false, message: "User not authenticated!" };
 
     const { location, productData, existingProductId } = params;
 

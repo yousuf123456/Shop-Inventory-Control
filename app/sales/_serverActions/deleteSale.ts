@@ -1,6 +1,6 @@
 "use server";
 import prisma from "@/app/_libs/prismadb";
-import { getUserAuth } from "@/app/_serverFn/getUserAuth";
+// import { getUserAuth } from "@/app/_serverFn/getUserAuth";
 import { ServerActionResult } from "@/app/_types";
 import { SaleProduct } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -11,10 +11,10 @@ export const deleteSale = async ({
   saleId,
 }: Parameters): Promise<ServerActionResult> => {
   try {
-    const { isAuthenticated } = await getUserAuth();
+    // const { isAuthenticated } = await getUserAuth();
 
-    if (!isAuthenticated)
-      return { success: false, message: "User not authenticated!" };
+    // if (!isAuthenticated)
+    //   return { success: false, message: "User not authenticated!" };
 
     const sale = await prisma.sale.findUnique({
       where: { id: saleId },

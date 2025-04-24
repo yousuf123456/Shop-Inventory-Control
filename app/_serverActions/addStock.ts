@@ -1,7 +1,6 @@
 "use server";
 
 import prisma from "../_libs/prismadb";
-// import auth0 from "../_libs/auth0";
 
 import ObjectID from "bson-objectid";
 import { revalidatePath } from "next/cache";

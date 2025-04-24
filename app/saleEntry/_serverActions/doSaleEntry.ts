@@ -3,7 +3,7 @@ import prisma from "../../_libs/prismadb";
 
 import { SaleProduct } from "@prisma/client";
 import { ServerActionResult } from "@/app/_types";
-import { getUserAuth } from "@/app/_serverFn/getUserAuth";
+// import { getUserAuth } from "@/app/_serverFn/getUserAuth";
 
 // Calculate the total sale bill by summing up the totalSalePrice of all sale products
 const getTotalSaleBill = (saleProducts: SaleProduct[]) => {
@@ -179,10 +179,10 @@ export const doSaleEntry = async ({
   location,
 }: Parameters): Promise<ServerActionResult> => {
   try {
-    const { isAuthenticated } = await getUserAuth();
+    // const { isAuthenticated } = await getUserAuth();
 
-    if (!isAuthenticated)
-      return { success: false, message: "User not authenticated!" };
+    // if (!isAuthenticated)
+    //   return { success: false, message: "User not authenticated!" };
 
     // Calculate the total sale bill
     const totalSaleBill = getTotalSaleBill(saleProducts);
