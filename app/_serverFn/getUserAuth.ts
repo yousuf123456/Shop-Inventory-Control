@@ -1,6 +1,6 @@
 "use server";
 
-import { auth0 } from "../_libs/auth0";
+import auth0 from "../_libs/auth0";
 
 export const getUserAuth = async () => {
   try {
