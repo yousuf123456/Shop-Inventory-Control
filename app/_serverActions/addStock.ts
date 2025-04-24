@@ -16,13 +16,13 @@ type Parameters = {
 export const addStock = async (
   params: Parameters
 ): Promise<ServerActionResult> => {
+  const session = await auth0.getSession();
+
+  // console.log(isAuthenticated);
+  if (!session?.user)
+    return { success: false, message: "User not authenticated!" };
+
   try {
-    const session = await auth0.getSession();
-
-    // console.log(isAuthenticated);
-    if (!session?.user)
-      return { success: false, message: "User not authenticated!" };
-
     const { stock, addToStore, product_SKU } = params;
 
     // If stock from store to shop needs to be added

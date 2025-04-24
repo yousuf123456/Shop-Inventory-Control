@@ -33,6 +33,7 @@
     "lucide-react": "^0.292.0",
     "next": "14.0.3",
     "next-themes": "^0.2.1",
+    "re": "^0.1.4",
     "react": "^18",
     "react-currency-format": "^1.1.0",
     "react-date-picker": "^10.6.0",
