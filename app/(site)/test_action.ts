@@ -1,6 +1,20 @@
 "use server";
+import prisma from "../_libs/prismadb";
+
+import ObjectID from "bson-objectid";
+import { revalidatePath } from "next/cache";
+import { ServerActionResult } from "../_types";
 
 export const test_action = async () => {
-  console.log("Executed");
-  return "Response";
+  try {
+    await prisma.shop_Product.findFirst();
+
+    ObjectID() as unknown as ServerActionResult;
+    revalidatePath("/");
+
+    console.log("response");
+  } catch {
+    console.log("Executed");
+    return "Response error";
+  }
 };
