@@ -18,6 +18,7 @@ export const addStock = async (
   try {
     const { isAuthenticated } = await getUserAuth();
 
+    console.log(isAuthenticated);
     if (!isAuthenticated)
       return { success: false, message: "User not authenticated!" };
 
