@@ -1,5 +1,6 @@
 "use server";
 import prisma from "../_libs/prismadb";
+import { getUserAuth } from "../_serverFn/getUserAuth";
 import { ServerActionResult } from "../_types";
 
 type Parameters = {
@@ -11,6 +12,11 @@ export const deleteProduct = async (
   params: Parameters
 ): Promise<ServerActionResult> => {
   try {
+    const { isAuthenticated } = await getUserAuth();
+
+    if (!isAuthenticated)
+      return { success: false, message: "User not authenticated!" };
+
     const { product_SKU, fromStore } = params;
 
     // If product needs to be deleted from store

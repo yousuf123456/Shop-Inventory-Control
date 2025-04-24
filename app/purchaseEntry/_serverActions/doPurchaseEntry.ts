@@ -3,6 +3,7 @@ import prisma from "../../_libs/prismadb";
 
 import { PurchaseProduct } from "@prisma/client";
 import { ServerActionResult } from "../../_types";
+import { getUserAuth } from "@/app/_serverFn/getUserAuth";
 
 // Calculate the total purchase bill by summing up the totalPurchasePrice of all purchase products
 const getTotalPurchaseBill = (purchaseProducts: PurchaseProduct[]) => {
@@ -140,6 +141,11 @@ export const doPurchaseEntry = async ({
   location,
 }: Parameters): Promise<ServerActionResult> => {
   try {
+    const { isAuthenticated } = await getUserAuth();
+
+    if (!isAuthenticated)
+      return { success: false, message: "User not authenticated!" };
+
     // Calculate the grand total purchase bill
     const totalPurchaseBill = getTotalPurchaseBill(purchaseProducts);
 

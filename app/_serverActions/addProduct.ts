@@ -5,6 +5,7 @@ import prisma from "../_libs/prismadb";
 import { Shop_Product } from "@prisma/client";
 import { FieldValues } from "react-hook-form";
 import { ServerActionResult } from "../_types";
+import { getUserAuth } from "../_serverFn/getUserAuth";
 
 const createEditingHistory = async (
   newProduct: Shop_Product,
@@ -54,6 +55,11 @@ export const addProduct = async (
   params: Parameters
 ): Promise<ServerActionResult> => {
   try {
+    const { isAuthenticated } = await getUserAuth();
+
+    if (!isAuthenticated)
+      return { success: false, message: "User not authenticated!" };
+
     const { data, productId, isEditing, addToStore } = params;
 
     delete data.id;

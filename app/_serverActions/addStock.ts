@@ -4,8 +4,8 @@ import prisma from "../_libs/prismadb";
 
 import ObjectID from "bson-objectid";
 import { revalidatePath } from "next/cache";
-import { Shop_Product, Store_Product } from "@prisma/client";
 import { ServerActionResult } from "../_types";
+import { getUserAuth } from "../_serverFn/getUserAuth";
 
 type Parameters = {
   stock: number;
@@ -16,6 +16,11 @@ export const addStock = async (
   params: Parameters
 ): Promise<ServerActionResult> => {
   try {
+    const { isAuthenticated } = await getUserAuth();
+
+    if (!isAuthenticated)
+      return { success: false, message: "User not authenticated!" };
+
     const { stock, addToStore, product_SKU } = params;
 
     // If stock from store to shop needs to be added
