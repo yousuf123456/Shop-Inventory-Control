@@ -13,6 +13,7 @@ export const test_action = async () => {
     revalidatePath("/");
 
     console.log("response");
+    return "Response";
   } catch {
     console.log("Executed");
     return "Response error";
