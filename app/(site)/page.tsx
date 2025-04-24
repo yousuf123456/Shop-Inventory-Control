@@ -8,8 +8,6 @@ import { ProductsData } from "./_components/ProductsData";
 import Link from "next/link";
 import { PaginationQuerySearchParams } from "../_types";
 import { DateRangeStatsViewer } from "../_components/DateRangeStatsViewer";
-import { test_action } from "./test_action";
-import { TestActionComponent } from "./_components/test_action";
 
 type SearchParams = PaginationQuerySearchParams;
 
@@ -23,8 +21,6 @@ export default async function IndexPage({
   return (
     <div className="w-full flex flex-col gap-8">
       <div className="flex justify-center relative">
-        <TestActionComponent />
-
         <Heading>Shop Products</Heading>
 
         <Link href={`${routes.addProduct("shop")}`}>

@@ -60,30 +60,37 @@ export const ProductsList: React.FC<ProductsListProps> = ({
     setProduct_SKU(product_SKU);
   };
 
-  const onConfirmAddStock = () => {
+  const onConfirmAddStock = async () => {
     if (!product_SKU || action !== "addStock") return;
     setIsLaoding(true);
 
-    const promise = addStock({ addToStore: !fromStore, product_SKU, stock });
+    const res = await addStock({ addToStore: !fromStore, product_SKU, stock });
 
-    toast.promise(promise, {
-      loading: "Updating the product stock..",
-      success: (result) => {
-        console.log(result);
-        if (result.success) return result.message;
+    if (res.success) toast.success(res.message);
+    else toast.error(res.message);
 
-        throw new Error(result.message);
-      },
-      error: (data) => {
-        console.log(data.message);
-        return data.message;
-      },
-      finally: () => {
-        setAction(null);
-        setIsLaoding(false);
-        setConfirmActionDialogOpen(false);
-      },
-    });
+    setAction(null);
+    setIsLaoding(false);
+    setConfirmActionDialogOpen(false);
+
+    // toast.promise(promise, {
+    //   loading: "Updating the product stock..",
+    //   success: (result) => {
+    //     console.log(result);
+    //     if (result.success) return result.message;
+
+    //     throw new Error(result.message);
+    //   },
+    //   error: (data) => {
+    //     console.log(data.message);
+    //     return data.message;
+    //   },
+    //   finally: () => {
+    //     setAction(null);
+    //     setIsLaoding(false);
+    //     setConfirmActionDialogOpen(false);
+    //   },
+    // });
   };
 
   const onConfirmDelete = async () => {
