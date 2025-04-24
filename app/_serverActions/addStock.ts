@@ -1,11 +1,12 @@
 "use server";
 
 import prisma from "../_libs/prismadb";
+import { auth0 } from "../_libs/auth0";
 
 import ObjectID from "bson-objectid";
 import { revalidatePath } from "next/cache";
 import { ServerActionResult } from "../_types";
-import { getUserAuth } from "../_serverFn/getUserAuth";
+// import { getUserAuth } from "../_serverFn/getUserAuth";
 
 type Parameters = {
   stock: number;
@@ -16,10 +17,10 @@ export const addStock = async (
   params: Parameters
 ): Promise<ServerActionResult> => {
   try {
-    const { isAuthenticated } = await getUserAuth();
+    const session = await auth0.getSession();
 
-    console.log(isAuthenticated);
-    if (!isAuthenticated)
+    // console.log(isAuthenticated);
+    if (!session?.user)
       return { success: false, message: "User not authenticated!" };
 
     const { stock, addToStore, product_SKU } = params;
