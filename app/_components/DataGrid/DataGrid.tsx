@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getSearchParamsArray } from "../../_utils";
 import { SortCard } from "./SortCard";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 import {
   Dialog,
@@ -39,7 +39,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
-import { SortConfig, SortOption } from "../../_types";
+import { ServerActionResult, SortConfig, SortOption } from "../../_types";
 
 const gridContext = createContext<{ pageCount: number }>({
   pageCount: 0,
@@ -91,7 +91,7 @@ interface DataGridProps {
   disableSearchbar?: boolean;
   columnDefination: GridColDef[];
   sortOptionsArray?: SortOption[];
-  onRowUpdate?: (newRow: GridRowModel) => any;
+  onRowUpdate?: (newRow: GridRowModel) => Promise<ServerActionResult>;
 }
 
 export const DataGrid: React.FC<DataGridProps> = ({
@@ -241,8 +241,8 @@ export const DataGrid: React.FC<DataGridProps> = ({
       const response = await onRowUpdate(newRow);
       setIsLoading(false);
 
-      if (response === "Something goes wrong") {
-        throw new Error(response);
+      if (!response.success) {
+        throw new Error(response.message);
       }
 
       toast.success("Succesfully Updated The Data");

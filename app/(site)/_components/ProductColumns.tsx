@@ -2,14 +2,16 @@ import { memo } from "react";
 import clsx from "clsx";
 
 import { Check, X } from "lucide-react";
-import { GridColDef } from "@mui/x-data-grid/models/colDef/gridColDef";
+
 import { DatagridActions } from "@/app/_components/DataGrid/DatagridActions";
 import {
   getShopProductDataGridActions,
   getStoreProductDataGridActions,
 } from "@/app/constants/dataGridActions";
+
 import { GridRenderCellParams } from "@mui/x-data-grid/models/params/gridCellParams";
 import { GridTreeNodeWithRender } from "@mui/x-data-grid/models/gridRows";
+import { GridColDef } from "@mui/x-data-grid/models/colDef/gridColDef";
 
 type Params = {
   fromStore: boolean;
@@ -46,12 +48,14 @@ export const getProductColumns = ({
     },
     {
       field: "avgRatePerUnit",
-      headerName: "Rate Per Unit",
-      width: 125,
+      headerName: "Rate Per Unit (PKR)",
       type: "number",
+      width: 125,
       editable: true,
       headerAlign: "left",
-      valueGetter: (params) => `${params.row.avgRatePerUnit?.toFixed(2)} PKR`,
+      valueGetter: (params) => {
+        return parseFloat(params.row.avgRatePerUnit?.toFixed(2));
+      },
     },
     {
       field: "totalStock",

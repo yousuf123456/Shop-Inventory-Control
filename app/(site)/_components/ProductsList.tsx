@@ -25,6 +25,7 @@ import { addProduct } from "@/app/_serverActions/addProduct";
 
 import { getProductColumns } from "./ProductColumns";
 import { toast } from "sonner";
+import { ServerActionResult } from "@/app/_types";
 
 interface ProductsListProps {
   count: number;
@@ -64,33 +65,33 @@ export const ProductsList: React.FC<ProductsListProps> = ({
     if (!product_SKU || action !== "addStock") return;
     setIsLaoding(true);
 
-    const res = await addStock({ addToStore: !fromStore, product_SKU, stock });
+    const res = addStock({ addToStore: !fromStore, product_SKU, stock });
 
-    if (res.success) toast.success(res.message);
-    else toast.error(res.message);
+    // if (res.success) toast.success(res.message);
+    // else toast.error(res.message);
 
-    setAction(null);
-    setIsLaoding(false);
-    setConfirmActionDialogOpen(false);
+    // setAction(null);
+    // setIsLaoding(false);
+    // setConfirmActionDialogOpen(false);
 
-    // toast.promise(promise, {
-    //   loading: "Updating the product stock..",
-    //   success: (result) => {
-    //     console.log(result);
-    //     if (result.success) return result.message;
+    toast.promise(res, {
+      loading: "Updating the product stock..",
+      success: (result) => {
+        console.log(result);
+        if (result.success) return result.message;
 
-    //     throw new Error(result.message);
-    //   },
-    //   error: (data) => {
-    //     console.log(data.message);
-    //     return data.message;
-    //   },
-    //   finally: () => {
-    //     setAction(null);
-    //     setIsLaoding(false);
-    //     setConfirmActionDialogOpen(false);
-    //   },
-    // });
+        throw new Error(result.message);
+      },
+      error: (data) => {
+        console.log(data);
+        return data.message;
+      },
+      finally: () => {
+        setAction(null);
+        setIsLaoding(false);
+        setConfirmActionDialogOpen(false);
+      },
+    });
   };
 
   const onConfirmDelete = async () => {
@@ -116,7 +117,9 @@ export const ProductsList: React.FC<ProductsListProps> = ({
     });
   };
 
-  const onRowUpdate = async (newRow: GridRowModel) => {
+  const onRowUpdate = async (
+    newRow: GridRowModel
+  ): Promise<ServerActionResult> => {
     const response = await addProduct({
       data: newRow,
       isEditing: true,
