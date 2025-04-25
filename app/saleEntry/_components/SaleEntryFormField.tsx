@@ -13,17 +13,18 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 import debounce from "debounce";
-import axios from "axios";
-import { useSearchParams } from "next/navigation";
-import { useSearchSKU } from "@/app/_hooks";
 
 interface SaleEntryFormFieldProps {
   fieldIndex: number;
   watch: UseFormWatch<FormData>;
   errors: FieldErrors<FormData>;
+  searchSKU: (query: string) => void;
   setValue: UseFormSetValue<FormData>;
   register: UseFormRegister<FormData>;
   removeField: (index: number) => void;
+  searchResults: {
+    product_SKU: string;
+  }[];
 }
 
 export const SaleEntryFormField: React.FC<SaleEntryFormFieldProps> = ({
@@ -31,12 +32,12 @@ export const SaleEntryFormField: React.FC<SaleEntryFormFieldProps> = ({
   errors,
   register,
   setValue,
+  searchSKU,
   fieldIndex,
   removeField,
+  searchResults,
 }) => {
   const [focused, setFocused] = useState(false);
-
-  const { searchResults, searchSKU } = useSearchSKU();
 
   const noOfUnitsToSale = watch(`saleProducts.${fieldIndex}.noOfUnitsToSale`);
   const soldPricePerUnit = watch(`saleProducts.${fieldIndex}.soldPricePerUnit`);

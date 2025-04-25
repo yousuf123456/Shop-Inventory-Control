@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { PurchaseEntryFormField } from "./PurchaseEntryFormField";
 import { doPurchaseEntry } from "../_serverActions/doPurchaseEntry";
 import { toast } from "sonner";
+import { useSearchSKU } from "@/app/_hooks";
 
 const defaultFormValues = {
   purchaseProducts: [
@@ -85,6 +86,8 @@ export const PurchaseEntryForm = ({
     });
   };
 
+  const { searchResults, searchSKU } = useSearchSKU();
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -93,13 +96,15 @@ export const PurchaseEntryForm = ({
       <div className="flex flex-col w-full items-end gap-3">
         {fields.map((field, index) => (
           <PurchaseEntryFormField
-            key={field.id}
             watch={watch}
+            key={field.id}
             errors={errors}
             fieldIndex={index}
             setValue={setValue}
             register={register}
+            searchSKU={searchSKU}
             removeField={removeField}
+            searchResults={searchResults}
           />
         ))}
 

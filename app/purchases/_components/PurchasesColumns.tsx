@@ -15,16 +15,9 @@ interface Parameters {
 export const getPurchasesColumns = ({ onDelete }: Parameters) => {
   const columns: GridColDef[] = [
     {
-      field: "_id",
-      headerName: "Purchase Id",
-      width: 250,
-      headerAlign: "left",
-      valueGetter: (params) => params.row.id,
-    },
-    {
       field: "createdAt",
       headerName: "Purchased At",
-      width: 130,
+      width: 160,
       headerAlign: "left",
       valueGetter: (params) =>
         format(new Date(params.row.createdAt), "dd MMM yyyy"),
@@ -33,7 +26,7 @@ export const getPurchasesColumns = ({ onDelete }: Parameters) => {
       field: "purchasedProducts",
       headerName:
         "Purchased Products ( Product SKU - Units Purchased - Per Unit Price - Total Purchase Bill )",
-      width: 550,
+      width: 700,
       headerAlign: "left",
       renderCell: (params) => <PurchaseProducts {...params} />,
     },
@@ -65,17 +58,18 @@ const PurchaseProducts = memo(
       <div className="flex flex-col gap-3 py-4">
         {params.row.products.map(
           (purchaseProduct: PurchaseProduct, i: number) => (
-            <div className="flex items-center gap-0" key={i}>
-              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-[270px]">
+            <div className="flex items-center gap-0 border-b" key={i}>
+              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-[320px]">
                 {purchaseProduct.product_SKU}
               </p>
+
               <p className="text-small font-roboto text-blue-500 line-clamp-1 w-16">
                 {purchaseProduct.noOfPurchasedUnit}
               </p>
-              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-20">
+              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-24">
                 {purchaseProduct.perUnitPrice} PKR
               </p>
-              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-20">
+              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-24">
                 {purchaseProduct.totalPurchaseBill} PKR
               </p>
             </div>

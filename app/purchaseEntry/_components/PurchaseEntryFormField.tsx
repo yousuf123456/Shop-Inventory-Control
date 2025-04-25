@@ -19,9 +19,13 @@ interface PurchaseEntryFormFieldProps {
   fieldIndex: number;
   watch: UseFormWatch<FormData>;
   errors: FieldErrors<FormData>;
+  searchSKU: (query: string) => void;
   setValue: UseFormSetValue<FormData>;
   register: UseFormRegister<FormData>;
   removeField: (index: number) => void;
+  searchResults: {
+    product_SKU: string;
+  }[];
 }
 
 export const PurchaseEntryFormField: React.FC<PurchaseEntryFormFieldProps> = ({
@@ -29,12 +33,12 @@ export const PurchaseEntryFormField: React.FC<PurchaseEntryFormFieldProps> = ({
   errors,
   setValue,
   register,
+  searchSKU,
   fieldIndex,
   removeField,
+  searchResults,
 }) => {
   const [focused, setFocused] = useState(false);
-
-  const { searchResults, searchSKU } = useSearchSKU();
 
   const noOfPurchasedUnit = watch(
     `purchaseProducts.${fieldIndex}.noOfPurchasedUnit`
@@ -48,7 +52,7 @@ export const PurchaseEntryFormField: React.FC<PurchaseEntryFormFieldProps> = ({
     // Set the total sale price
     setValue(
       `purchaseProducts.${fieldIndex}.totalPurchaseBill`,
-      noOfPurchasedUnit * perUnitPrice
+      parseFloat((noOfPurchasedUnit * perUnitPrice).toFixed(2))
     );
   }, [noOfPurchasedUnit, perUnitPrice]);
 
@@ -62,7 +66,7 @@ export const PurchaseEntryFormField: React.FC<PurchaseEntryFormFieldProps> = ({
           placeholder="Enter Product SKU"
           {...register(`purchaseProducts.${fieldIndex}.product_SKU`)}
           onFocus={() => setFocused(true)}
-          onBlur={() => setTimeout(() => setFocused(false), 400)}
+          onBlur={() => setTimeout(() => setFocused(false), 500)} // Adds a delay so when user clicks on the search, the click gets processed and value is set before the search recomendations are closed
           onChange={debounce((e) => searchSKU(e.target.value), 500)}
         />
 
@@ -73,7 +77,7 @@ export const PurchaseEntryFormField: React.FC<PurchaseEntryFormFieldProps> = ({
         )}
 
         {searchResults.length > 0 && focused && (
-          <div className="absolute inset-x-0 top-[110%] shadow p-3 max-h-64 overflow-y-auto">
+          <div className="absolute inset-x-0 top-[110%] z-50 bg-white shadow p-3 max-h-64 overflow-y-auto">
             {searchResults.map((result, i) => (
               <div
                 key={i}

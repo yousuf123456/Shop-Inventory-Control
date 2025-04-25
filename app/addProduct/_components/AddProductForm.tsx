@@ -23,6 +23,23 @@ interface AddProductFormProps {
 export const AddProductForm = ({ location, product }: AddProductFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  // Transforming all the floats with more than 2 extra points to be exactly 2 points
+  const existingProduct = React.useMemo(() => {
+    if (!product) return null;
+
+    let transformedValues: any = {};
+
+    const productKeys = Object.keys(product) as (keyof typeof product)[];
+
+    productKeys.forEach((key) => {
+      if (typeof product[key] === "number") {
+        transformedValues[key] = parseFloat(product[key].toFixed(2));
+      } else transformedValues[key] = product[key];
+    });
+
+    return transformedValues;
+  }, [product]);
+
   const {
     watch,
     reset,
@@ -33,14 +50,14 @@ export const AddProductForm = ({ location, product }: AddProductFormProps) => {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(ProductSchema),
-    defaultValues: product ? product : defaultValues,
+    defaultValues: existingProduct ? existingProduct : defaultValues,
   });
 
   useEffect(() => {
-    if (!product) return reset(defaultValues);
+    if (!existingProduct) return reset(defaultValues);
 
-    reset(product);
-  }, [product, reset]);
+    reset(existingProduct);
+  }, [existingProduct, reset]);
 
   const router = useRouter();
 

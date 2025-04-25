@@ -26,7 +26,7 @@ export const getSalesColumns = ({ onDelete }: Parameters) => {
       field: "products",
       headerName:
         "Sold Products ( Product SKU - Units Sold - Per Unit Price - Total Purchase Bill )",
-      width: 680,
+      width: 660,
       headerAlign: "left",
       renderCell: (params) => <SaleProducts {...params} />,
     },
@@ -42,7 +42,7 @@ export const getSalesColumns = ({ onDelete }: Parameters) => {
       headerName: "Total Profit",
       width: 120,
       headerAlign: "left",
-      valueGetter: (params) => params.row.profit + " PKR",
+      valueGetter: (params) => params.row.profit?.toFixed(2) + " PKR",
     },
     {
       field: "actions",
@@ -64,17 +64,17 @@ const SaleProducts = memo(
 
         {params.row.products.length > 0 &&
           params.row.products.map((soldProduct: SaleProduct, i: number) => (
-            <div className="flex items-center gap-0" key={i}>
-              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-[344px]">
+            <div className="flex items-center gap-0 border-b" key={i}>
+              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-[320px]">
                 {soldProduct.product_SKU}
               </p>
-              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-20">
+              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-16">
                 {soldProduct.noOfUnitsToSale}
               </p>
-              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-28">
+              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-24">
                 {soldProduct.soldPricePerUnit} PKR
               </p>
-              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-28">
+              <p className="text-small font-roboto text-blue-500 line-clamp-1 w-24">
                 {soldProduct.totalSalePrice} PKR
               </p>
             </div>

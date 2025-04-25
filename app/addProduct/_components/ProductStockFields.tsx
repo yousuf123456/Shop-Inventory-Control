@@ -46,6 +46,7 @@ export const ProductStockFields: React.FC<ProductInfoFieldsProps> = ({
   }, [totalStock, avgRatePerUnit]);
 
   const units = ["each", "litre", "meter", "set", "kg", "pair"];
+
   return (
     <div className="p-5 rounded border">
       <h3 className="text-xl font-medium text-gray-800">Product Stock Info</h3>
@@ -56,7 +57,11 @@ export const ProductStockFields: React.FC<ProductInfoFieldsProps> = ({
             <Label>Total Stock</Label>
 
             <div className="flex items-center gap-4">
-              <Input {...register("totalStock", { valueAsNumber: true })} />
+              <Input
+                step={"0.01"}
+                type="number"
+                {...register("totalStock", { valueAsNumber: true })}
+              />
 
               <Controller
                 name="stockUnit"
@@ -92,7 +97,11 @@ export const ProductStockFields: React.FC<ProductInfoFieldsProps> = ({
           <div className="flex flex-col gap-1 w-full">
             <Label>Per Unit Price</Label>
 
-            <Input {...register("avgRatePerUnit", { valueAsNumber: true })} />
+            <Input
+              step={"0.01"}
+              type="number"
+              {...register("avgRatePerUnit", { valueAsNumber: true })}
+            />
 
             {errors.avgRatePerUnit && (
               <Label className="text-red-500">
@@ -106,7 +115,11 @@ export const ProductStockFields: React.FC<ProductInfoFieldsProps> = ({
           <div className="flex flex-col gap-1 w-full">
             <Label>Sale Price</Label>
 
-            <Input {...register("salePrice", { valueAsNumber: true })} />
+            <Input
+              step={"0.01"}
+              type="number"
+              {...register("salePrice", { valueAsNumber: true })}
+            />
 
             {errors.salePrice && (
               <Label className="text-red-500">{errors.salePrice.message}</Label>
@@ -116,7 +129,11 @@ export const ProductStockFields: React.FC<ProductInfoFieldsProps> = ({
           <div className="flex flex-col gap-1 w-full">
             <Label>Total Stock Cost</Label>
 
-            <Input {...register("totalStockCost", { valueAsNumber: true })} />
+            <Input
+              step={"0.01"}
+              type="number"
+              {...register("totalStockCost", { valueAsNumber: true })}
+            />
 
             {errors.totalStockCost && (
               <Label className="text-red-500">

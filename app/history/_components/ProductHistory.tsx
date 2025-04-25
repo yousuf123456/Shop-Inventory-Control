@@ -53,8 +53,6 @@ export const ProductHistory: React.FC<ProductHistoryProps> = async ({
     );
   }
 
-  console.log(productHistory[0]);
-
   const numOfPages = Math.ceil(totalCount / 30);
 
   return (

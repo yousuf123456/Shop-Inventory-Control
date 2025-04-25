@@ -11,6 +11,7 @@ import { SaleEntryFormField } from "./SaleEntryFormField";
 import { doSaleEntry } from "../_serverActions/doSaleEntry";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useSearchSKU } from "@/app/_hooks";
 
 const defaultFormValues = {
   saleProducts: [
@@ -81,6 +82,8 @@ export const SaleEntryForm = ({ location }: { location: "store" | "shop" }) => {
     });
   };
 
+  const { searchResults, searchSKU } = useSearchSKU();
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -95,7 +98,9 @@ export const SaleEntryForm = ({ location }: { location: "store" | "shop" }) => {
             fieldIndex={index}
             setValue={setValue}
             register={register}
+            searchSKU={searchSKU}
             removeField={removeField}
+            searchResults={searchResults}
           />
         ))}
 

@@ -50,7 +50,11 @@ export const ProductSoldStockFields: React.FC<ProductSoldStockFieldsProps> = ({
           <div className="flex flex-col gap-1 w-full">
             <Label>Total Sold Stock</Label>
 
-            <Input {...register("noOfSoldUnit", { valueAsNumber: true })} />
+            <Input
+              step={"0.01"}
+              type="number"
+              {...register("noOfSoldUnit", { valueAsNumber: true })}
+            />
 
             {errors.noOfSoldUnit && (
               <Label className="text-red-500">
@@ -63,6 +67,8 @@ export const ProductSoldStockFields: React.FC<ProductSoldStockFieldsProps> = ({
             <Label>Sold Price</Label>
 
             <Input
+              step={"0.01"}
+              type="number"
               {...register("soldAvgPerUnitPrice", { valueAsNumber: true })}
             />
 
@@ -79,6 +85,8 @@ export const ProductSoldStockFields: React.FC<ProductSoldStockFieldsProps> = ({
             <Label>Total Sale</Label>
 
             <Input
+              step={"0.01"}
+              type="number"
               {...register("totalSoldItemsPrice", { valueAsNumber: true })}
             />
 
@@ -92,7 +100,11 @@ export const ProductSoldStockFields: React.FC<ProductSoldStockFieldsProps> = ({
           <div className="flex flex-col gap-1 w-full">
             <Label>Profit</Label>
 
-            <Input {...register("profit", { valueAsNumber: true })} />
+            <Input
+              step={"0.01"}
+              type="number"
+              {...register("profit", { valueAsNumber: true })}
+            />
 
             {errors.profit && (
               <Label className="text-red-500">{errors.profit.message}</Label>
