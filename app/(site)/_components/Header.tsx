@@ -2,6 +2,7 @@ import React from "react";
 import { HeaderLink } from "./HeaderLink";
 import { routes } from "@/app/constants/routes";
 import { NavMenuLink } from "./NavMenuLink";
+import Image from "next/image";
 
 export const Header = () => {
   const productLinks = [
@@ -25,7 +26,11 @@ export const Header = () => {
   ];
 
   return (
-    <div className="py-4 px-32 w-full bg-white fixed top-0 left-0 z-[50] shadow-sm">
+    <div className="py-3 px-32 w-full bg-white fixed top-0 left-0 z-[50] shadow-md flex items-center">
+      <div className="w-auto aspect-square h-12 relative">
+        <Image src={"/logo.png"} alt="Logo" fill />
+      </div>
+
       <div className="w-full flex justify-around items-center p-4 ">
         <NavMenuLink label="Products" links={productLinks} />
 
