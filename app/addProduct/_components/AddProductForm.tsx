@@ -27,12 +27,13 @@ export const AddProductForm = ({ location, product }: AddProductFormProps) => {
   const existingProduct = React.useMemo(() => {
     if (!product) return null;
 
-    let transformedValues: any = {};
+    let transformedValues: { [key: string]: any } = {};
 
     const productKeys = Object.keys(product) as (keyof typeof product)[];
 
     productKeys.forEach((key) => {
       if (typeof product[key] === "number") {
+        //@ts-ignore
         transformedValues[key] = parseFloat(product[key].toFixed(2));
       } else transformedValues[key] = product[key];
     });
