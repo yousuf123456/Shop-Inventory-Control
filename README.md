@@ -39,14 +39,14 @@
   <p align="center">
     Inventory management system for retail shops to keep track of products' stock or finances. 
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/yousuf123456/Shop-Inventory-Control"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
     &middot;
-    <a href="https://github.com/github_username/repo_name/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/yousuf123456/Shop-Inventory-Control/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
-    <a href="https://github.com/github_username/repo_name/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/yousuf123456/Shop-Inventory-Control/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    &middot;
   </p>
 </div>
 
@@ -59,7 +59,8 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#key-features">Key Features</a></li>
+        <li><a href="#tech-stack">Tech Stack</a></li>
       </ul>
     </li>
     <li>
@@ -70,11 +71,9 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -88,7 +87,7 @@
 **Shop Inventory Control** is a web-based inventory and finance management system for retail shopkeepers. 
 It helps track stock, sales, purchases, and profits across shop and store with a user-friendly interface.
 
-#### Key Features: 
+### Key Features: 
 
 **📦 Dual-Location Inventory Management**
 + Track stock separately for Shop and Store.
@@ -115,7 +114,7 @@ This project is ideal for shopkeepers looking for a simple, efficient solution t
 
 
 
-## Built With
+### Tech Stack
 
 | Layer        | Technology                                    | Purpose                                                           |
 | ------------ | --------------------------------------------- | ----------------------------------------------------------------- |
@@ -194,26 +193,12 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+💡 Got ideas or improvements? Your contributions are welcome that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
@@ -225,9 +210,11 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Top contributors:
+Currently, I have solely worked on this web app.
+Be the first one to join me in shaping this project better😊.
 
-<a href="https://github.com/github_username/repo_name/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=github_username/repo_name" alt="contrib.rocks image" />
+<a href="https://github.com/yousuf123456/Shop-Inventory-Control/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=yousuf123456/Shop-Inventory-Control" alt="contrib.rocks image" />
 </a>
 
 
@@ -235,7 +222,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the project_license. See `LICENSE.txt` for more information.
+Licensed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -244,20 +231,7 @@ Distributed under the project_license. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
+Muhammad Yousuf - [Linkedin](www.linkedin.com/in/muhammad-yousuf-dev) - m.yousuf.developer@gmail.com
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -265,18 +239,18 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo_name/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/yousuf123456/Shop-Inventory-Control.svg?style=for-the-badge
+[contributors-url]: https://github.com/yousuf123456/Shop-Inventory-Control/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/yousuf123456/Shop-Inventory-Control.svg?style=for-the-badge
+[forks-url]: https://github.com/yousuf123456/Shop-Inventory-Control/network/members
+[stars-shield]: https://img.shields.io/github/stars/yousuf123456/Shop-Inventory-Control.svg?style=for-the-badge
+[stars-url]: https://github.com/yousuf123456/Shop-Inventory-Control/stargazers
+[issues-shield]: https://img.shields.io/github/issues/yousuf123456/Shop-Inventory-Control.svg?style=for-the-badge
+[issues-url]: https://github.com/yousuf123456/Shop-Inventory-Control/issues
+[license-shield]: https://img.shields.io/github/license/yousuf123456/Shop-Inventory-Control.svg?style=for-the-badge
+[license-url]: https://github.com/yousuf123456/Shop-Inventory-Control/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://www.linkedin.com/in/muhammad-yousuf-dev/
 [product-screenshot]: /public/Shop-Inventory-Control-SS.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
